@@ -109,7 +109,7 @@ class GameVm:
         checkAndHandleBallStuck()
         checkAndHandleBallExit()
         for i in 0..<pegs.count {
-            if CollisionPhysics.isColliding(object1: ball, object2: pegs[i]) {
+            if ball.isColliding(with: pegs[i]) {
                 pegs[i].effectWhenHit(gameStateManager: &gameStateManager)
             }
             ball.handleCollisionWithImmovableObject(object: &pegs[i])
