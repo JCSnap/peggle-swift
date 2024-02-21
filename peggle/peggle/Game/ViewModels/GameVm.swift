@@ -176,7 +176,7 @@ enum ScreenPosition {
         case .topLeft:
             return CGPoint(x: 0, y: 40)
         case .topCenter:
-            return CGPoint(x: screenBounds.size.width / 2, y: 40)
+            return CGPoint(x: screenBounds.size.width / 2, y: 10)
         case .topRight:
             return CGPoint(x: screenBounds.size.width, y: 40)
         }

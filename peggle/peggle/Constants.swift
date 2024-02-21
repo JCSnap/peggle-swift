@@ -8,7 +8,7 @@
 import Foundation
 
 struct Constants {
-    static let defaultAssetRadius = 40.0
+    static let defaultAssetRadius = 20.0
     static let defaultMaxLevelNameLength = 30
 
     static let defaultPersistenceManager = LocalPersistenceManager.self
