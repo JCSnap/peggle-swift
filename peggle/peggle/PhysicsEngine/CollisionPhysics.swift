@@ -132,3 +132,7 @@ enum Axis {
 enum BoundsSide {
     case left, right, top, bottom
 }
+
+protocol CollisionPhysicsBehaviour {
+    mutating func handleBoundaryCollision(within bounds: CGRect)
+}
