@@ -13,6 +13,7 @@ class PhysicsGameStateManager {
     var ball = PhysicsBall(ball: Ball(center: .zero))
     var ballCountRemaining: Int = Constants.defaultBallCount
     var pegs: [PhysicsPeg] = []
+    var bucket: PhysicsBucket = PhysicsBucket(bucket: Bucket(center: CGPoint(x: -100, y: -100)))
     var cannonAngle: CGFloat = .zero
     var score: Int = 0
     var finalScore: Int?
@@ -29,6 +30,7 @@ class PhysicsGameStateManager {
 
     func initialiseStartStates() {
         ball.velocity = .zero
+        bucket.center = ScreenPosition.bottomCenter.point(for: screenBounds)
         WorldPhysics.applyForceWithAngle(to: &ball,
                                          deltaTime: Constants.defaultCannonTimeInterval,
                                          radian: cannonAngle,

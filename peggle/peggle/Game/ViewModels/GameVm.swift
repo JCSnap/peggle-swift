@@ -30,6 +30,9 @@ class GameVm:
         get { gameStateManager.pegs }
         set { gameStateManager.pegs = newValue }
     }
+    var bucket: PhysicsBucket {
+        get { gameStateManager.bucket }
+    }
     var cannonAngle: CGFloat {
         get { gameStateManager.cannonAngle }
         set { gameStateManager.cannonAngle = newValue }
@@ -170,15 +173,24 @@ enum ScreenPosition {
     case topLeft
     case topCenter
     case topRight
+    case bottomLeft
+    case bottomCenter
+    case bottomRight
 
     func point(for screenBounds: CGRect) -> CGPoint {
         switch self {
         case .topLeft:
-            return CGPoint(x: 0, y: 40)
+            return CGPoint(x: 0, y: 10)
         case .topCenter:
             return CGPoint(x: screenBounds.size.width / 2, y: 10)
         case .topRight:
-            return CGPoint(x: screenBounds.size.width, y: 40)
+            return CGPoint(x: screenBounds.size.width, y: 10)
+        case .bottomLeft:
+            return CGPoint(x: 0, y: screenBounds.size.height - 100)
+        case .bottomCenter:
+            return CGPoint(x: screenBounds.size.width / 2, y: screenBounds.size.height - 100)
+        case .bottomRight:
+            return CGPoint(x: screenBounds.size.width, y: screenBounds.size.height - 100)
         }
     }
 }

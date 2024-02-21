@@ -23,6 +23,8 @@ struct GameBoardView: View {
                 CannonView()
                     .rotationEffect(.radians(Double(viewModel.cannonAngle)))
                     .position(CGPoint(x: viewModel.screenBounds.width / 2, y: geometry.safeAreaInsets.top))
+                BucketView()
+                    .position(viewModel.bucket.center)
                 if viewModel.isAiming {
                     DottedLineShape(angle: viewModel.cannonAngle + (.pi / 2), length: 450)
                         .stroke(style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round, dash: [5, 3]))
@@ -104,6 +106,7 @@ protocol GameBoardViewDelegate: AnyObject {
     var pegs: [PhysicsPeg] { get }
     var cannonAngle: CGFloat { get }
     var ball: PhysicsBall { get }
+    var bucket: PhysicsBucket { get }
     var screenBounds: CGRect { get }
     var isAiming: Bool { get }
 
