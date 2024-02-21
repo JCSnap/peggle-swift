@@ -105,7 +105,7 @@ class GameVm:
         gameStateManager.updateObjects(for: timerManager.timeInterval)
         WorldPhysics.applyGravity(to: &ball, deltaTime: timerManager.timeInterval)
         ball.handleBoundaryCollision(within: screenBounds)
-        CollisionPhysics.handleBoundaryCollision(for: &bucket, within: screenBounds)
+        bucket.handleBoundaryCollision(within: screenBounds)
         checkAndHandleBallStuck()
         checkAndHandleBallExit()
         for i in 0..<pegs.count {

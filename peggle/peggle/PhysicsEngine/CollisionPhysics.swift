@@ -26,12 +26,6 @@ struct CollisionPhysics {
         object2.velocity -= getImpulse(object1: object1, object2: object2)
     }
 
-    static func handleBoundaryCollision<T: RectangularPhysicsObject>(for object: inout T, within bounds: CGRect) {
-        reflectVelocityIfNeeded(for: &object, axis: .horizontal, within: bounds)
-        reflectVelocityIfNeeded(for: &object, axis: .vertical, within: bounds)
-        applyPositionalCorrectionWithBounds(toObject: &object, within: bounds)
-    }
-
     static func isColliding<T: RoundPhysicsObject, U: RoundPhysicsObject>(object1: T, object2: U) -> Bool {
         let distance = (object1.center - object2.center).magnitude
         return distance <= (object1.radius + object2.radius)
@@ -67,21 +61,6 @@ extension CollisionPhysics {
 
         return normal * impulseMagnitude
     }
-    
-    private static func reflectVelocityIfNeeded<T: RectangularPhysicsObject>(for object: inout T,
-                                                                       axis: Axis,
-                                                                       within bounds: CGRect) {
-        switch axis {
-        case .horizontal:
-            if object.center.x - object.width < bounds.minX || object.center.x + object.width > bounds.maxX {
-                object.velocity.dx = -object.velocity.dx
-            }
-        case .vertical:
-            if object.center.y - object.height < bounds.minY || object.center.y + object.height > bounds.maxY {
-                object.velocity.dy = -object.velocity.dy
-            }
-        }
-    }
 
     private static func applyPositionalCorrection
     <T: RoundPhysicsObject, U: RoundPhysicsObject>(toObject object1: inout T,
@@ -93,35 +72,6 @@ extension CollisionPhysics {
         let correctionVector = (object1.center - object2.center).normalized * penetrationDepth
 
         object1.center += correctionVector
-    }
-    
-    private static func applyPositionalCorrectionWithBounds<T: RectangularPhysicsObject>(toObject object: inout T,
-                                                                                   within bounds: CGRect) {
-        applyPositionalCorrectionForHorizontalBounds(object: &object, within: bounds)
-        applyPositionalCorrectionForVerticalBounds(object: &object, within: bounds)
-    }
-    
-    private static func applyPositionalCorrectionForHorizontalBounds<T: RectangularPhysicsObject>(object: inout T,
-                                                                                            within bounds: CGRect) {
-        let leftBound = bounds.minX + object.width
-        let rightBound = bounds.maxX - object.width
-
-        if object.center.x < leftBound {
-            object.center.x = leftBound
-        } else if object.center.x > rightBound {
-            object.center.x = rightBound
-        }
-    }
-    
-    private static func applyPositionalCorrectionForVerticalBounds<T: RectangularPhysicsObject>(object: inout T,
-                                                                                          within bounds: CGRect) {
-        let topBound = bounds.minY + object.height
-        let bottomBound = bounds.maxY - object.height
-        if object.center.y < topBound {
-            object.center.y = topBound
-        } else if object.center.y > bottomBound {
-            object.center.y = bottomBound
-        }
     }
 }
 
