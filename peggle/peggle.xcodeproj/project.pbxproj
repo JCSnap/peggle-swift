@@ -1,0 +1,878 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A15FD9A2B7FBBD000FB0704 /* PhysicsGameStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A15FD992B7FBBD000FB0704 /* PhysicsGameStateManager.swift */; };
+		0A394BD32B7CE815002E6F03 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A394BD22B7CE815002E6F03 /* GameView.swift */; };
+		0A394BD52B7CE8F0002E6F03 /* GameTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A394BD42B7CE8F0002E6F03 /* GameTopView.swift */; };
+		0A394BD72B7CE8F8002E6F03 /* GameBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A394BD62B7CE8F8002E6F03 /* GameBottomView.swift */; };
+		0A394BD92B7CE903002E6F03 /* GameBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A394BD82B7CE903002E6F03 /* GameBoardView.swift */; };
+		0A394BDB2B7CE9F2002E6F03 /* GameVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A394BDA2B7CE9F2002E6F03 /* GameVm.swift */; };
+		0A394BDD2B7CF087002E6F03 /* GameLoadLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A394BDC2B7CF087002E6F03 /* GameLoadLevelView.swift */; };
+		0A394BDF2B7DE7F6002E6F03 /* PhysicsPeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A394BDE2B7DE7F6002E6F03 /* PhysicsPeg.swift */; };
+		0A394BE12B7E0F56002E6F03 /* PhysicsBall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A394BE02B7E0F56002E6F03 /* PhysicsBall.swift */; };
+		0A394BE52B7E2449002E6F03 /* CannonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A394BE42B7E2449002E6F03 /* CannonView.swift */; };
+		0A39D0322B805C9400B4C07F /* PhysicsPegBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A39D0312B805C9400B4C07F /* PhysicsPegBehaviour.swift */; };
+		0A39D0342B80739700B4C07F /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A39D0332B80739700B4C07F /* TimerManager.swift */; };
+		0A39D0382B81A0DC00B4C07F /* PhysicsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A39D0372B81A0DC00B4C07F /* PhysicsObject.swift */; };
+		0A39D03A2B81A27E00B4C07F /* BallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A39D0392B81A27E00B4C07F /* BallView.swift */; };
+		0A3BE5C52B7121D600276847 /* app.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5C42B7121D600276847 /* app.swift */; };
+		0A3BE5C72B7121D600276847 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5C62B7121D600276847 /* ContentView.swift */; };
+		0A3BE5C92B7121D700276847 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A3BE5C82B7121D700276847 /* Assets.xcassets */; };
+		0A3BE5CD2B7121D700276847 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A3BE5CC2B7121D700276847 /* Preview Assets.xcassets */; };
+		0A3BE5E32B7121D700276847 /* physics_engineUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5E22B7121D700276847 /* physics_engineUITestsLaunchTests.swift */; };
+		0A3BE5F02B71DC5900276847 /* PhysicsEngineConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5EF2B71DC5900276847 /* PhysicsEngineConstants.swift */; };
+		0A3BE5F22B71DC9300276847 /* RoundPhysicsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5F12B71DC9300276847 /* RoundPhysicsObject.swift */; };
+		0A3BE5F62B71DE1400276847 /* WorldPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5F52B71DE1400276847 /* WorldPhysics.swift */; };
+		0A3BE5F82B71DF8900276847 /* CollisionPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5F72B71DF8900276847 /* CollisionPhysics.swift */; };
+		0A3BE5FA2B71E04B00276847 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5F92B71E04B00276847 /* CGExtensions.swift */; };
+		0A99EDEA2B7364BF0062758F /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A99EDE92B7364BF0062758F /* Ball.swift */; };
+		0A99EDF12B77BB100062758F /* WorldPhysicsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A99EDF02B77BB100062758F /* WorldPhysicsTests.swift */; };
+		0AA669832B7CD4A100916547 /* HomeVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669822B7CD4A100916547 /* HomeVm.swift */; };
+		0AA669852B7CD4AC00916547 /* LevelDesignerVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669842B7CD4AC00916547 /* LevelDesignerVm.swift */; };
+		0AA669892B7CD4E600916547 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669882B7CD4E600916547 /* HomeView.swift */; };
+		0AA6698C2B7CD50200916547 /* LevelDesignerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA6698B2B7CD50200916547 /* LevelDesignerView.swift */; };
+		0AA6698E2B7CD50F00916547 /* PaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA6698D2B7CD50F00916547 /* PaletteView.swift */; };
+		0AA669902B7CD51A00916547 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA6698F2B7CD51A00916547 /* BoardView.swift */; };
+		0AA669922B7CD52900916547 /* LoadLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669912B7CD52900916547 /* LoadLevelView.swift */; };
+		0AA669952B7CD55C00916547 /* DeleteButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669942B7CD55C00916547 /* DeleteButtonView.swift */; };
+		0AA669972B7CD56700916547 /* PegView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669962B7CD56700916547 /* PegView.swift */; };
+		0AA6699B2B7CD5BB00916547 /* LocalPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA6699A2B7CD5BB00916547 /* LocalPersistenceManager.swift */; };
+		0AA6699D2B7CD5C800916547 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA6699C2B7CD5C800916547 /* Constants.swift */; };
+		0AA6699F2B7CD5D200916547 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA6699E2B7CD5D200916547 /* Validator.swift */; };
+		0AA669A22B7CD5F600916547 /* LevelPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669A12B7CD5F600916547 /* LevelPersistence.swift */; };
+		0AA669AB2B7CD63E00916547 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669AA2B7CD63E00916547 /* Level.swift */; };
+		0AA669AD2B7CD64900916547 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669AC2B7CD64900916547 /* Board.swift */; };
+		0AA669AF2B7CD65500916547 /* Peg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669AE2B7CD65500916547 /* Peg.swift */; };
+		0ACD02DB2B7F391C0034459C /* UnclosableModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD02DA2B7F391C0034459C /* UnclosableModalView.swift */; };
+		0ADECD442B7EFA3200556A18 /* RootVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADECD432B7EFA3200556A18 /* RootVm.swift */; };
+		0ADECD462B7F0BC000556A18 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADECD452B7F0BC000556A18 /* GameOverView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0A3BE5D32B7121D700276847 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A3BE5B92B7121D600276847 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0A3BE5C02B7121D600276847;
+			remoteInfo = "physics-engine";
+		};
+		0A3BE5DD2B7121D700276847 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A3BE5B92B7121D600276847 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0A3BE5C02B7121D600276847;
+			remoteInfo = "physics-engine";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0A15FD992B7FBBD000FB0704 /* PhysicsGameStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsGameStateManager.swift; sourceTree = "<group>"; };
+		0A394BD22B7CE815002E6F03 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		0A394BD42B7CE8F0002E6F03 /* GameTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTopView.swift; sourceTree = "<group>"; };
+		0A394BD62B7CE8F8002E6F03 /* GameBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBottomView.swift; sourceTree = "<group>"; };
+		0A394BD82B7CE903002E6F03 /* GameBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardView.swift; sourceTree = "<group>"; };
+		0A394BDA2B7CE9F2002E6F03 /* GameVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameVm.swift; sourceTree = "<group>"; };
+		0A394BDC2B7CF087002E6F03 /* GameLoadLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLoadLevelView.swift; sourceTree = "<group>"; };
+		0A394BDE2B7DE7F6002E6F03 /* PhysicsPeg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsPeg.swift; sourceTree = "<group>"; };
+		0A394BE02B7E0F56002E6F03 /* PhysicsBall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsBall.swift; sourceTree = "<group>"; };
+		0A394BE42B7E2449002E6F03 /* CannonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannonView.swift; sourceTree = "<group>"; };
+		0A39D0312B805C9400B4C07F /* PhysicsPegBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsPegBehaviour.swift; sourceTree = "<group>"; };
+		0A39D0332B80739700B4C07F /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
+		0A39D0372B81A0DC00B4C07F /* PhysicsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsObject.swift; sourceTree = "<group>"; };
+		0A39D0392B81A27E00B4C07F /* BallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallView.swift; sourceTree = "<group>"; };
+		0A3BE5C12B7121D600276847 /* peggle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = peggle.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A3BE5C42B7121D600276847 /* app.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = app.swift; sourceTree = "<group>"; };
+		0A3BE5C62B7121D600276847 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0A3BE5C82B7121D700276847 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0A3BE5CA2B7121D700276847 /* peggle.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = peggle.entitlements; sourceTree = "<group>"; };
+		0A3BE5CC2B7121D700276847 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0A3BE5D22B7121D700276847 /* peggleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = peggleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A3BE5DC2B7121D700276847 /* peggleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = peggleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A3BE5E22B7121D700276847 /* physics_engineUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = physics_engineUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0A3BE5EF2B71DC5900276847 /* PhysicsEngineConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsEngineConstants.swift; sourceTree = "<group>"; };
+		0A3BE5F12B71DC9300276847 /* RoundPhysicsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundPhysicsObject.swift; sourceTree = "<group>"; };
+		0A3BE5F52B71DE1400276847 /* WorldPhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPhysics.swift; sourceTree = "<group>"; };
+		0A3BE5F72B71DF8900276847 /* CollisionPhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionPhysics.swift; sourceTree = "<group>"; };
+		0A3BE5F92B71E04B00276847 /* CGExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGExtensions.swift; sourceTree = "<group>"; };
+		0A99EDE92B7364BF0062758F /* Ball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
+		0A99EDF02B77BB100062758F /* WorldPhysicsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPhysicsTests.swift; sourceTree = "<group>"; };
+		0AA669822B7CD4A100916547 /* HomeVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVm.swift; sourceTree = "<group>"; };
+		0AA669842B7CD4AC00916547 /* LevelDesignerVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelDesignerVm.swift; sourceTree = "<group>"; };
+		0AA669882B7CD4E600916547 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		0AA6698B2B7CD50200916547 /* LevelDesignerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelDesignerView.swift; sourceTree = "<group>"; };
+		0AA6698D2B7CD50F00916547 /* PaletteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteView.swift; sourceTree = "<group>"; };
+		0AA6698F2B7CD51A00916547 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		0AA669912B7CD52900916547 /* LoadLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadLevelView.swift; sourceTree = "<group>"; };
+		0AA669942B7CD55C00916547 /* DeleteButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButtonView.swift; sourceTree = "<group>"; };
+		0AA669962B7CD56700916547 /* PegView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PegView.swift; sourceTree = "<group>"; };
+		0AA6699A2B7CD5BB00916547 /* LocalPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPersistenceManager.swift; sourceTree = "<group>"; };
+		0AA6699C2B7CD5C800916547 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0AA6699E2B7CD5D200916547 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		0AA669A12B7CD5F600916547 /* LevelPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelPersistence.swift; sourceTree = "<group>"; };
+		0AA669AA2B7CD63E00916547 /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
+		0AA669AC2B7CD64900916547 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		0AA669AE2B7CD65500916547 /* Peg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peg.swift; sourceTree = "<group>"; };
+		0ACD02DA2B7F391C0034459C /* UnclosableModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnclosableModalView.swift; sourceTree = "<group>"; };
+		0ADECD432B7EFA3200556A18 /* RootVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootVm.swift; sourceTree = "<group>"; };
+		0ADECD452B7F0BC000556A18 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0A3BE5BE2B7121D600276847 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A3BE5CF2B7121D700276847 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A3BE5D92B7121D700276847 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0A394BC82B7CDC7B002E6F03 /* PhysicsEngineTests */ = {
+			isa = PBXGroup;
+			children = (
+				0A99EDF02B77BB100062758F /* WorldPhysicsTests.swift */,
+			);
+			path = PhysicsEngineTests;
+			sourceTree = "<group>";
+		};
+		0A394BD02B7CE7EA002E6F03 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				0A394BD22B7CE815002E6F03 /* GameView.swift */,
+				0A394BD42B7CE8F0002E6F03 /* GameTopView.swift */,
+				0A394BDC2B7CF087002E6F03 /* GameLoadLevelView.swift */,
+				0A394BD62B7CE8F8002E6F03 /* GameBottomView.swift */,
+				0A394BD82B7CE903002E6F03 /* GameBoardView.swift */,
+				0ADECD452B7F0BC000556A18 /* GameOverView.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		0A3BE5B82B7121D600276847 = {
+			isa = PBXGroup;
+			children = (
+				0A3BE5C32B7121D600276847 /* peggle */,
+				0A3BE5D52B7121D700276847 /* peggleTests */,
+				0A3BE5DF2B7121D700276847 /* peggleUITests */,
+				0A3BE5C22B7121D600276847 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0A3BE5C22B7121D600276847 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0A3BE5C12B7121D600276847 /* peggle.app */,
+				0A3BE5D22B7121D700276847 /* peggleTests.xctest */,
+				0A3BE5DC2B7121D700276847 /* peggleUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0A3BE5C32B7121D600276847 /* peggle */ = {
+			isa = PBXGroup;
+			children = (
+				0A3BE5C42B7121D600276847 /* app.swift */,
+				0A3BE5C82B7121D700276847 /* Assets.xcassets */,
+				0A3BE5CA2B7121D700276847 /* peggle.entitlements */,
+				0AA669802B7CD44B00916547 /* Game */,
+				0AA6699C2B7CD5C800916547 /* Constants.swift */,
+				0AA669B02B7CD79C00916547 /* PhysicsEngine */,
+				0A3BE5CB2B7121D700276847 /* Preview Content */,
+			);
+			path = peggle;
+			sourceTree = "<group>";
+		};
+		0A3BE5CB2B7121D700276847 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				0A3BE5CC2B7121D700276847 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0A3BE5D52B7121D700276847 /* peggleTests */ = {
+			isa = PBXGroup;
+			children = (
+				0A394BC82B7CDC7B002E6F03 /* PhysicsEngineTests */,
+			);
+			path = peggleTests;
+			sourceTree = "<group>";
+		};
+		0A3BE5DF2B7121D700276847 /* peggleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0A3BE5E22B7121D700276847 /* physics_engineUITestsLaunchTests.swift */,
+			);
+			path = peggleUITests;
+			sourceTree = "<group>";
+		};
+		0AA669802B7CD44B00916547 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				0AA669982B7CD59E00916547 /* Models */,
+				0AA669862B7CD4C700916547 /* Views */,
+				0A3BE5C62B7121D600276847 /* ContentView.swift */,
+				0AA669812B7CD48F00916547 /* ViewModels */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		0AA669812B7CD48F00916547 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				0AA669822B7CD4A100916547 /* HomeVm.swift */,
+				0ADECD432B7EFA3200556A18 /* RootVm.swift */,
+				0AA669842B7CD4AC00916547 /* LevelDesignerVm.swift */,
+				0A394BDA2B7CE9F2002E6F03 /* GameVm.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		0AA669862B7CD4C700916547 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0A394BD02B7CE7EA002E6F03 /* Game */,
+				0AA669932B7CD53700916547 /* ReusableComponents */,
+				0AA6698A2B7CD4EF00916547 /* LevelDesigner */,
+				0AA669872B7CD4DE00916547 /* Home */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0AA669872B7CD4DE00916547 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				0AA669882B7CD4E600916547 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		0AA6698A2B7CD4EF00916547 /* LevelDesigner */ = {
+			isa = PBXGroup;
+			children = (
+				0AA6698B2B7CD50200916547 /* LevelDesignerView.swift */,
+				0AA6698D2B7CD50F00916547 /* PaletteView.swift */,
+				0AA6698F2B7CD51A00916547 /* BoardView.swift */,
+				0AA669912B7CD52900916547 /* LoadLevelView.swift */,
+			);
+			path = LevelDesigner;
+			sourceTree = "<group>";
+		};
+		0AA669932B7CD53700916547 /* ReusableComponents */ = {
+			isa = PBXGroup;
+			children = (
+				0A394BE42B7E2449002E6F03 /* CannonView.swift */,
+				0AA669942B7CD55C00916547 /* DeleteButtonView.swift */,
+				0A39D0392B81A27E00B4C07F /* BallView.swift */,
+				0AA669962B7CD56700916547 /* PegView.swift */,
+				0ACD02DA2B7F391C0034459C /* UnclosableModalView.swift */,
+			);
+			path = ReusableComponents;
+			sourceTree = "<group>";
+		};
+		0AA669982B7CD59E00916547 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0AA669A92B7CD63600916547 /* DataModels */,
+				0AA669A02B7CD5E600916547 /* Protocols */,
+				0AA669992B7CD5A900916547 /* Utilities */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0AA669992B7CD5A900916547 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				0A15FD992B7FBBD000FB0704 /* PhysicsGameStateManager.swift */,
+				0A39D0332B80739700B4C07F /* TimerManager.swift */,
+				0AA6699A2B7CD5BB00916547 /* LocalPersistenceManager.swift */,
+				0AA6699E2B7CD5D200916547 /* Validator.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		0AA669A02B7CD5E600916547 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				0AA669A12B7CD5F600916547 /* LevelPersistence.swift */,
+				0A39D0312B805C9400B4C07F /* PhysicsPegBehaviour.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		0AA669A92B7CD63600916547 /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+				0AA669AA2B7CD63E00916547 /* Level.swift */,
+				0AA669AC2B7CD64900916547 /* Board.swift */,
+				0AA669AE2B7CD65500916547 /* Peg.swift */,
+				0A394BDE2B7DE7F6002E6F03 /* PhysicsPeg.swift */,
+				0A99EDE92B7364BF0062758F /* Ball.swift */,
+				0A394BE02B7E0F56002E6F03 /* PhysicsBall.swift */,
+			);
+			path = DataModels;
+			sourceTree = "<group>";
+		};
+		0AA669B02B7CD79C00916547 /* PhysicsEngine */ = {
+			isa = PBXGroup;
+			children = (
+				0A3BE5EF2B71DC5900276847 /* PhysicsEngineConstants.swift */,
+				0A3BE5F92B71E04B00276847 /* CGExtensions.swift */,
+				0A3BE5F12B71DC9300276847 /* RoundPhysicsObject.swift */,
+				0A39D0372B81A0DC00B4C07F /* PhysicsObject.swift */,
+				0A3BE5F52B71DE1400276847 /* WorldPhysics.swift */,
+				0A3BE5F72B71DF8900276847 /* CollisionPhysics.swift */,
+			);
+			path = PhysicsEngine;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0A3BE5C02B7121D600276847 /* peggle */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0A3BE5E62B7121D700276847 /* Build configuration list for PBXNativeTarget "peggle" */;
+			buildPhases = (
+				0A3BE5BD2B7121D600276847 /* Sources */,
+				0A3BE5BE2B7121D600276847 /* Frameworks */,
+				0A3BE5BF2B7121D600276847 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = peggle;
+			productName = "physics-engine";
+			productReference = 0A3BE5C12B7121D600276847 /* peggle.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0A3BE5D12B7121D700276847 /* peggleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0A3BE5E92B7121D700276847 /* Build configuration list for PBXNativeTarget "peggleTests" */;
+			buildPhases = (
+				0A3BE5CE2B7121D700276847 /* Sources */,
+				0A3BE5CF2B7121D700276847 /* Frameworks */,
+				0A3BE5D02B7121D700276847 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0A3BE5D42B7121D700276847 /* PBXTargetDependency */,
+			);
+			name = peggleTests;
+			productName = "physics-engineTests";
+			productReference = 0A3BE5D22B7121D700276847 /* peggleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0A3BE5DB2B7121D700276847 /* peggleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0A3BE5EC2B7121D700276847 /* Build configuration list for PBXNativeTarget "peggleUITests" */;
+			buildPhases = (
+				0A3BE5D82B7121D700276847 /* Sources */,
+				0A3BE5D92B7121D700276847 /* Frameworks */,
+				0A3BE5DA2B7121D700276847 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0A3BE5DE2B7121D700276847 /* PBXTargetDependency */,
+			);
+			name = peggleUITests;
+			productName = "physics-engineUITests";
+			productReference = 0A3BE5DC2B7121D700276847 /* peggleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0A3BE5B92B7121D600276847 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1510;
+				LastUpgradeCheck = 1510;
+				TargetAttributes = {
+					0A3BE5C02B7121D600276847 = {
+						CreatedOnToolsVersion = 15.1;
+					};
+					0A3BE5D12B7121D700276847 = {
+						CreatedOnToolsVersion = 15.1;
+						TestTargetID = 0A3BE5C02B7121D600276847;
+					};
+					0A3BE5DB2B7121D700276847 = {
+						CreatedOnToolsVersion = 15.1;
+						TestTargetID = 0A3BE5C02B7121D600276847;
+					};
+				};
+			};
+			buildConfigurationList = 0A3BE5BC2B7121D600276847 /* Build configuration list for PBXProject "peggle" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0A3BE5B82B7121D600276847;
+			productRefGroup = 0A3BE5C22B7121D600276847 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0A3BE5C02B7121D600276847 /* peggle */,
+				0A3BE5D12B7121D700276847 /* peggleTests */,
+				0A3BE5DB2B7121D700276847 /* peggleUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0A3BE5BF2B7121D600276847 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A3BE5CD2B7121D700276847 /* Preview Assets.xcassets in Resources */,
+				0A3BE5C92B7121D700276847 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A3BE5D02B7121D700276847 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A3BE5DA2B7121D700276847 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0A3BE5BD2B7121D600276847 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A3BE5F62B71DE1400276847 /* WorldPhysics.swift in Sources */,
+				0A39D0342B80739700B4C07F /* TimerManager.swift in Sources */,
+				0A3BE5F22B71DC9300276847 /* RoundPhysicsObject.swift in Sources */,
+				0AA669892B7CD4E600916547 /* HomeView.swift in Sources */,
+				0AA669AB2B7CD63E00916547 /* Level.swift in Sources */,
+				0A394BD32B7CE815002E6F03 /* GameView.swift in Sources */,
+				0A39D0322B805C9400B4C07F /* PhysicsPegBehaviour.swift in Sources */,
+				0A99EDEA2B7364BF0062758F /* Ball.swift in Sources */,
+				0AA669AF2B7CD65500916547 /* Peg.swift in Sources */,
+				0A3BE5C72B7121D600276847 /* ContentView.swift in Sources */,
+				0AA669922B7CD52900916547 /* LoadLevelView.swift in Sources */,
+				0AA669832B7CD4A100916547 /* HomeVm.swift in Sources */,
+				0A394BDF2B7DE7F6002E6F03 /* PhysicsPeg.swift in Sources */,
+				0A394BE52B7E2449002E6F03 /* CannonView.swift in Sources */,
+				0A15FD9A2B7FBBD000FB0704 /* PhysicsGameStateManager.swift in Sources */,
+				0A3BE5FA2B71E04B00276847 /* CGExtensions.swift in Sources */,
+				0AA6698C2B7CD50200916547 /* LevelDesignerView.swift in Sources */,
+				0AA669A22B7CD5F600916547 /* LevelPersistence.swift in Sources */,
+				0A394BD92B7CE903002E6F03 /* GameBoardView.swift in Sources */,
+				0A3BE5F82B71DF8900276847 /* CollisionPhysics.swift in Sources */,
+				0AA6699D2B7CD5C800916547 /* Constants.swift in Sources */,
+				0A394BD52B7CE8F0002E6F03 /* GameTopView.swift in Sources */,
+				0AA669952B7CD55C00916547 /* DeleteButtonView.swift in Sources */,
+				0AA669852B7CD4AC00916547 /* LevelDesignerVm.swift in Sources */,
+				0A3BE5C52B7121D600276847 /* app.swift in Sources */,
+				0A394BE12B7E0F56002E6F03 /* PhysicsBall.swift in Sources */,
+				0A394BDB2B7CE9F2002E6F03 /* GameVm.swift in Sources */,
+				0AA669AD2B7CD64900916547 /* Board.swift in Sources */,
+				0A3BE5F02B71DC5900276847 /* PhysicsEngineConstants.swift in Sources */,
+				0AA6699F2B7CD5D200916547 /* Validator.swift in Sources */,
+				0ADECD442B7EFA3200556A18 /* RootVm.swift in Sources */,
+				0A394BD72B7CE8F8002E6F03 /* GameBottomView.swift in Sources */,
+				0A39D03A2B81A27E00B4C07F /* BallView.swift in Sources */,
+				0A39D0382B81A0DC00B4C07F /* PhysicsObject.swift in Sources */,
+				0AA6699B2B7CD5BB00916547 /* LocalPersistenceManager.swift in Sources */,
+				0AA669902B7CD51A00916547 /* BoardView.swift in Sources */,
+				0ACD02DB2B7F391C0034459C /* UnclosableModalView.swift in Sources */,
+				0AA6698E2B7CD50F00916547 /* PaletteView.swift in Sources */,
+				0A394BDD2B7CF087002E6F03 /* GameLoadLevelView.swift in Sources */,
+				0ADECD462B7F0BC000556A18 /* GameOverView.swift in Sources */,
+				0AA669972B7CD56700916547 /* PegView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A3BE5CE2B7121D700276847 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A99EDF12B77BB100062758F /* WorldPhysicsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A3BE5D82B7121D700276847 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A3BE5E32B7121D700276847 /* physics_engineUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0A3BE5D42B7121D700276847 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0A3BE5C02B7121D600276847 /* peggle */;
+			targetProxy = 0A3BE5D32B7121D700276847 /* PBXContainerItemProxy */;
+		};
+		0A3BE5DE2B7121D700276847 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0A3BE5C02B7121D600276847 /* peggle */;
+			targetProxy = 0A3BE5DD2B7121D700276847 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0A3BE5E42B7121D700276847 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		0A3BE5E52B7121D700276847 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		0A3BE5E72B7121D700276847 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = peggle/peggle.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"peggle/Preview Content\"";
+				DEVELOPMENT_TEAM = AU29Q33B32;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justincheah.peggle;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0A3BE5E82B7121D700276847 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = peggle/peggle.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"peggle/Preview Content\"";
+				DEVELOPMENT_TEAM = AU29Q33B32;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justincheah.peggle;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0A3BE5EA2B7121D700276847 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AU29Q33B32;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.justincheah.physics-engineTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/peggle.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/peggle";
+			};
+			name = Debug;
+		};
+		0A3BE5EB2B7121D700276847 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AU29Q33B32;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.justincheah.physics-engineTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/peggle.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/peggle";
+			};
+			name = Release;
+		};
+		0A3BE5ED2B7121D700276847 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AU29Q33B32;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.justincheah.physics-engineUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "physics-engine";
+			};
+			name = Debug;
+		};
+		0A3BE5EE2B7121D700276847 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AU29Q33B32;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.justincheah.physics-engineUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "physics-engine";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0A3BE5BC2B7121D600276847 /* Build configuration list for PBXProject "peggle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A3BE5E42B7121D700276847 /* Debug */,
+				0A3BE5E52B7121D700276847 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0A3BE5E62B7121D700276847 /* Build configuration list for PBXNativeTarget "peggle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A3BE5E72B7121D700276847 /* Debug */,
+				0A3BE5E82B7121D700276847 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0A3BE5E92B7121D700276847 /* Build configuration list for PBXNativeTarget "peggleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A3BE5EA2B7121D700276847 /* Debug */,
+				0A3BE5EB2B7121D700276847 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0A3BE5EC2B7121D700276847 /* Build configuration list for PBXNativeTarget "peggleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A3BE5ED2B7121D700276847 /* Debug */,
+				0A3BE5EE2B7121D700276847 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0A3BE5B92B7121D600276847 /* Project object */;
+}
