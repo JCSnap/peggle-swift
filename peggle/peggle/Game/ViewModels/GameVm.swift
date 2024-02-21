@@ -108,6 +108,7 @@ class GameVm:
         bucket.handleBoundaryCollision(within: screenBounds)
         checkAndHandleBallStuck()
         checkAndHandleBallExit()
+        ball.handleCollision(with: &bucket)
         for i in 0..<pegs.count {
             if ball.isColliding(with: pegs[i]) {
                 pegs[i].effectWhenHit(gameStateManager: &gameStateManager)
