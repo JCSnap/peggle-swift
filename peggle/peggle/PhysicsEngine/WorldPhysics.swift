@@ -36,6 +36,12 @@ struct WorldPhysics {
             object.velocity.dy = 0
         }
     }
+    
+    static func updateObjectPosition<T: PhysicsObject>(object: inout T, timeInterval: TimeInterval) {
+        let newCenter = CGPoint(x: object.center.x + object.velocity.dx * CGFloat(timeInterval),
+                                y: object.center.y + object.velocity.dy * CGFloat(timeInterval))
+        object.center = newCenter
+    }
 
     static func applyForceInDirectionOfMotion<T: PhysicsObject>(to object: inout T,
                                                                 deltaTime: TimeInterval,
