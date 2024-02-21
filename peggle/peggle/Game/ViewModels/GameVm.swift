@@ -104,7 +104,7 @@ class GameVm:
     private func updateGameState() {
         gameStateManager.updateObjects(for: timerManager.timeInterval)
         WorldPhysics.applyGravity(to: &ball, deltaTime: timerManager.timeInterval)
-        CollisionPhysics.handleBoundaryCollision(for: &ball, within: screenBounds)
+        ball.handleBoundaryCollision(within: screenBounds)
         CollisionPhysics.handleBoundaryCollision(for: &bucket, within: screenBounds)
         checkAndHandleBallStuck()
         checkAndHandleBallExit()
