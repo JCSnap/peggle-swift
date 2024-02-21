@@ -13,6 +13,7 @@ protocol RectangularPhysicsObject: PhysicsObject & CollisionPhysicsBehaviour {
     var mass: CGFloat { get }
     var width: CGFloat { get }
     var height: CGFloat { get }
+    var isStatic: Bool { get }
 }
 
 extension RectangularPhysicsObject {

@@ -112,7 +112,7 @@ class GameVm:
             if ball.isColliding(with: pegs[i]) {
                 pegs[i].effectWhenHit(gameStateManager: &gameStateManager)
             }
-            ball.handleCollisionWithImmovableObject(object: &pegs[i])
+            ball.handleCollision(with: &pegs[i])
         }
     }
 

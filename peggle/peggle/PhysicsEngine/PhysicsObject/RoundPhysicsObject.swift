@@ -12,6 +12,7 @@ protocol RoundPhysicsObject: PhysicsObject & CollisionPhysicsBehaviour {
     var velocity: CGVector { get set }
     var radius: CGFloat { get }
     var mass: CGFloat { get }
+    var isStatic: Bool { get }
 }
 
 extension RoundPhysicsObject {
@@ -21,19 +22,25 @@ extension RoundPhysicsObject {
         self.applyPositionalCorrectionWithBounds(within: bounds)
     }
     
-    mutating func handleCollisionWithImmovableObject<T: RoundPhysicsObject>(object: inout T) {
-        if self.isColliding(with: object) {
+    mutating func handleCollision<T: RoundPhysicsObject>(with object: inout T) {
+        if self.isColliding(with: object) || self.isStatic {
             return
         }
-
         self.applyPositionalCorrection(asItCollidesWith: &object)
         let impulse = getImpulse(object1: object, object2: object)
         self.velocity += impulse
+        if !object.isStatic {
+            object.velocity -= impulse
+        }
     }
     
     func isColliding<T: RoundPhysicsObject>(with object: T) -> Bool {
         let distance = (self.center - object.center).magnitude
         return distance <= (self.radius + object.radius)
+    }
+    
+    func isColliding<T: RectangularPhysicsObject>(with object: T) -> Bool {
+        object.isColliding(with: self)
     }
     
     private mutating func reflectVelocityIfNeeded(axis: Axis, within bounds: CGRect) {
