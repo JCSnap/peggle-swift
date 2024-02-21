@@ -32,6 +32,7 @@ class GameVm:
     }
     var bucket: PhysicsBucket {
         get { gameStateManager.bucket }
+        set { gameStateManager.bucket = newValue }
     }
     var cannonAngle: CGFloat {
         get { gameStateManager.cannonAngle }
@@ -101,9 +102,10 @@ class GameVm:
     }
 
     private func updateGameState() {
-        gameStateManager.updateBall(for: timerManager.timeInterval)
+        gameStateManager.updateObjects(for: timerManager.timeInterval)
         WorldPhysics.applyGravity(to: &ball, deltaTime: timerManager.timeInterval)
         CollisionPhysics.handleBoundaryCollision(for: &ball, within: screenBounds)
+        CollisionPhysics.handleBoundaryCollision(for: &bucket, within: screenBounds)
         checkAndHandleBallStuck()
         checkAndHandleBallExit()
         for i in 0..<pegs.count {

@@ -47,10 +47,9 @@ class PhysicsGameStateManager {
         self.maxScore = pegs.filter { $0.type == .orange }.count
     }
 
-    func updateBall(for timeInterval: TimeInterval) {
-        let newCenter = CGPoint(x: ball.center.x + ball.velocity.dx * CGFloat(timeInterval),
-                                y: ball.center.y + ball.velocity.dy * CGFloat(timeInterval))
-        ball.center = newCenter
+    func updateObjects(for timeInterval: TimeInterval) {
+        WorldPhysics.updateObjectPosition(object: &ball, timeInterval: timeInterval)
+        WorldPhysics.updateObjectPosition(object: &bucket, timeInterval: timeInterval)
     }
 
     func setGameOver() {

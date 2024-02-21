@@ -24,6 +24,7 @@ struct Constants {
     
     static let defaultBucketSize = CGSize(width: 100, height: 100)
     static let defaultBucketMass = 20.0
+    static let defaultBucketVelocity = CGVector(dx: 400.0, dy: 0)
 
     static let defaultPegMass = 1_000_000.0
     static let defaultPegVelocity = CGVector(dx: 0, dy: 0)
