@@ -21,6 +21,8 @@ struct Constants {
 
     static let defaultCannonForce = 8_000.0
     static let defaultCannonTimeInterval = 1.0
+    
+    static let defaultBucketSize = CGSize(width: 100, height: 100)
 
     static let defaultPegMass = 1_000_000.0
     static let defaultPegVelocity = CGVector(dx: 0, dy: 0)
