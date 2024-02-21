@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CannonView: View {
     var body: some View {
-        Image("cannon")
+        Image("cannon1")
             .resizable()
             .scaledToFit()
             .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: 100)
