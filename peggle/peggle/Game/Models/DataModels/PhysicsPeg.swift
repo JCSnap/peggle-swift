@@ -11,6 +11,7 @@ class PhysicsPeg: RoundPhysicsObject & PhysicsPegBehaviour {
     private var peg: Peg
     var velocity: CGVector
     var mass: CGFloat
+    var isStatic: Bool
     var collisionCount: Int = 0
     var isGlowing: Bool {
         peg.isGlowing
@@ -42,6 +43,7 @@ class PhysicsPeg: RoundPhysicsObject & PhysicsPegBehaviour {
     init(peg: Peg, velocity: CGVector, mass: CGFloat) {
         self.peg = peg
         self.velocity = velocity
+        self.isStatic = true
         if mass <= 0 {
             self.mass = Constants.defaultPegMass
         } else {

@@ -11,6 +11,7 @@ struct PhysicsBucket: RectangularPhysicsObject {
     var bucket: Bucket
     var velocity: CGVector
     var mass: CGFloat
+    var isStatic: Bool
     var center: CGPoint {
         get { bucket.center }
         set { bucket.center = newValue }
@@ -28,5 +29,6 @@ struct PhysicsBucket: RectangularPhysicsObject {
         self.bucket = bucket
         self.velocity = velocity
         self.mass = mass
+        self.isStatic = true
     }
 }

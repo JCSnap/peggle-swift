@@ -11,6 +11,7 @@ struct PhysicsBall: RoundPhysicsObject {
     var ball: Ball
     var velocity: CGVector
     var mass: CGFloat
+    var isStatic: Bool
     var center: CGPoint {
         get { ball.center }
         set { ball.center = newValue }
@@ -22,6 +23,7 @@ struct PhysicsBall: RoundPhysicsObject {
     init(ball: Ball, velocity: CGVector = Constants.defaultBallVelocity, mass: CGFloat = Constants.defaultBallMass) {
         self.ball = ball
         self.velocity = velocity
+        self.isStatic = false
         if mass <= 0 {
             self.mass = Constants.defaultBallMass
         } else {

@@ -11,4 +11,5 @@ protocol PhysicsObject {
     var center: CGPoint { get set }
     var velocity: CGVector { get set }
     var mass: CGFloat { get }
+    var isStatic: Bool { get }
 }
