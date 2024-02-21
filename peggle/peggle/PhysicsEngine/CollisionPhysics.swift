@@ -34,4 +34,5 @@ enum BoundsSide {
 
 protocol CollisionPhysicsBehaviour {
     mutating func handleBoundaryCollision(within bounds: CGRect)
+    func isColliding<T: RoundPhysicsObject>(with object: T) -> Bool
 }

@@ -22,6 +22,18 @@ extension RectangularPhysicsObject {
         self.applyPositionalCorrectionWithBounds(within: bounds)
     }
     
+    func isColliding<T: RoundPhysicsObject>(with object: T) -> Bool {
+        let closestPoint = CGPoint(
+            x: max(self.center.x - self.width / 2, min(object.center.x, self.center.x + self.width / 2)),
+            y: max(self.center.y - self.height / 2, min(object.center.y, self.center.y + self.height / 2))
+        )
+        
+        let distanceX = object.center.x - closestPoint.x
+        let distanceY = object.center.y - closestPoint.y
+        
+        return sqrt(distanceX * distanceX + distanceY * distanceY) < object.radius
+    }
+    
     private mutating func reflectVelocityIfNeeded(axis: Axis, within bounds: CGRect) {
         switch axis {
         case .horizontal:
