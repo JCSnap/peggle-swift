@@ -31,7 +31,6 @@ class PhysicsGameStateManager {
     func initialiseStartStates() {
         ball.isStatic = false
         ball.velocity = .zero
-        bucket.center = ScreenPosition.bottomCenter.point(for: screenBounds)
         WorldPhysics.applyForceWithAngle(to: &ball,
                                          deltaTime: Constants.defaultCannonTimeInterval,
                                          radian: cannonAngle,
@@ -41,10 +40,11 @@ class PhysicsGameStateManager {
     func initialiseLevelProperties(level: Level) {
         self.level = level
         self.screenBounds = CGRect(origin: .zero, size: level.board.boardSize)
-        self.ball = PhysicsBall(ball: Ball(center: ScreenPosition.topCenter.point(for: screenBounds)))
         self.pegs = level.board.pegs.map {peg -> PhysicsPeg in
             PhysicsPeg.createPhysicsPeg(from: peg)
         }
+        self.ball.center = ScreenPosition.topCenter.point(for: screenBounds)
+        self.bucket.center = ScreenPosition.bottomCenter.point(for: screenBounds)
         self.maxScore = pegs.filter { $0.type == .orange }.count
     }
 
