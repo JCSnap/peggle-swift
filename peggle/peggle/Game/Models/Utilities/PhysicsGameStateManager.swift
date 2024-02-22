@@ -29,6 +29,7 @@ class PhysicsGameStateManager {
     }
 
     func initialiseStartStates() {
+        ball.isStatic = false
         ball.velocity = .zero
         bucket.center = ScreenPosition.bottomCenter.point(for: screenBounds)
         WorldPhysics.applyForceWithAngle(to: &ball,
@@ -63,7 +64,7 @@ class PhysicsGameStateManager {
             resetBallAtStartingPosition()
             ballCountRemaining -= 1
         }
-        hideBucketFromScreen()
+        ball.isStatic = true
         resetAllCollisionCounts()
     }
     
@@ -110,13 +111,10 @@ class PhysicsGameStateManager {
         ball.velocity = .zero
     }
     
-    private func hideBucketFromScreen() {
-    bucket = PhysicsBucket(bucket: Bucket(center: CGPoint(x: -100, y: -100)))
-    }
-
     private func resetBallAtStartingPosition() {
         self.ball = PhysicsBall(ball: Ball(center: ScreenPosition.topCenter.point(for: screenBounds)),
                                 velocity: Constants.defaultBallVelocity)
+        self.ball.velocity = .zero
     }
 }
 

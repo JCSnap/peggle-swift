@@ -135,13 +135,13 @@ class GameVm:
         }
         gameStateManager.handleBallExitScreen()
         gameStateManager.markGlowingPegsForRemoval()
-        timerManager.invalidateTimer()
+        //timerManager.invalidateTimer()
         removePegAndTransitionToNextStage()
     }
     
     private func removePegAndTransitionToNextStage() {
         gameStateManager.markGlowingPegsForRemoval()
-        timerManager.invalidateTimer()
+        //timerManager.invalidateTimer()
         // wait for animation to complete
         let workItem = DispatchWorkItem {
             self.isAiming = true

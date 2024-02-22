@@ -11,6 +11,9 @@ struct WorldPhysics {
     static func applyGravity<T: PhysicsObject>(to object: inout T,
                                                deltaTime: TimeInterval,
                                                gravity: CGFloat = PhysicsEngineConstants.earthGravity) {
+        if object.isStatic {
+            return
+        }
         object.velocity.dy -= gravity * CGFloat(deltaTime)
     }
 
