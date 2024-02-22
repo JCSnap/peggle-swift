@@ -1,9 +1,9 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/BAJPqr99)
 # CS3217 Problem Set 4
 
-**Name:** Your name
+**Name:** Justin Cheah Yun Fei
 
-**Matric No:** Your matric no
+**Matric No:** A0259195N
 
 ## Tips
 1. CS3217's docs is at https://cs3217.github.io/cs3217-docs. Do visit the docs often, as
@@ -23,6 +23,16 @@ You may put your dev guide either in this section, or in a new file entirely.
 You are encouraged to include diagrams where appropriate in order to enhance
 your guide.
 
+## TODO
+- fix pegs can be added to bucket level
+- refactor pegs to use OOP
+- Make it such that physics object that takes in game state can only call functions allowed (delegate pattern)
+- Bucket should continue to move even when the game is at aiming state
+
+## Enhancements
+- Assign score to pegs, and score should animate when peg is hit
+- Animate when bucket captures peg
+- Animate cannon
 ## Rules of the Game
 Please write the rules of your game here. This section should include the
 following sub-sections. You can keep the heading format here, and you can add
