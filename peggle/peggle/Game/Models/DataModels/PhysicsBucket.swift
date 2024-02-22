@@ -32,6 +32,7 @@ struct PhysicsBucket: RectangularPhysicsObject & HittableObject {
         self.isStatic = true
     }
     
+    // TODO: handle differently if collide is with side vs top (enter)
     func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
         gameStateManager.handleBallEntersBucket()
     }
