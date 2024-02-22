@@ -108,7 +108,10 @@ class GameVm:
         bucket.handleBoundaryCollision(within: screenBounds)
         checkAndHandleBallStuck()
         checkAndHandleBallExit()
-        ball.handleCollision(with: &bucket)
+        if ball.isColliding(with: bucket) {
+            bucket.effectWhenHit(gameStateManager: &gameStateManager)
+            removePegAndTransitionToAimingStage()
+        }
         for i in 0..<pegs.count {
             if ball.isColliding(with: pegs[i]) {
                 pegs[i].effectWhenHit(gameStateManager: &gameStateManager)
@@ -131,6 +134,12 @@ class GameVm:
             return
         }
         gameStateManager.handleBallExitScreen()
+        gameStateManager.markGlowingPegsForRemoval()
+        timerManager.invalidateTimer()
+        removePegAndTransitionToAimingStage()
+    }
+    
+    private func removePegAndTransitionToAimingStage() {
         gameStateManager.markGlowingPegsForRemoval()
         timerManager.invalidateTimer()
         // wait for animation to complete

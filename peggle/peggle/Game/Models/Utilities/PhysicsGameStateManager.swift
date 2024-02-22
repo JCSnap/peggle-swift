@@ -65,6 +65,11 @@ class PhysicsGameStateManager {
         }
         resetAllCollisionCounts()
     }
+    
+    func handleBallEntersBucket() {
+        ballCountRemaining += 2
+        handleBallExitScreen()
+    }
 
     func removeInvisiblePegs() {
         pegs.removeAll { !$0.isVisible }

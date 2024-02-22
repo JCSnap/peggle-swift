@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PhysicsBucket: RectangularPhysicsObject {
+struct PhysicsBucket: RectangularPhysicsObject & HittableObject {
     var bucket: Bucket
     var velocity: CGVector
     var mass: CGFloat
@@ -30,5 +30,9 @@ struct PhysicsBucket: RectangularPhysicsObject {
         self.velocity = velocity
         self.mass = mass
         self.isStatic = true
+    }
+    
+    func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
+        gameStateManager.handleBallEntersBucket()
     }
 }
