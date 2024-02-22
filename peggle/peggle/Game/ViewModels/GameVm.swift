@@ -52,7 +52,7 @@ class GameVm:
         set { gameStateManager.finalScore = newValue }
     }
     var isAiming = true
-    var isGameOver: Bool {
+    var isGameOver: GameStage {
         gameStateManager.isGameOver
     }
     var screenBounds: CGRect {
@@ -146,18 +146,20 @@ class GameVm:
         let workItem = DispatchWorkItem {
             self.isAiming = true
             self.gameStateManager.removeInvisiblePegs()
-            if self.gameStateManager.ballCountRemaining == 0 || self.gameStateManager.hasReachedObjective() {
-                self.endGame()
+            if self.gameStateManager.hasReachedObjective() {
+                self.endGame(with: .win)
+            } else if self.gameStateManager.ballCountRemaining == 0 {
+                self.endGame(with: .lose)
             }
         }
         cleanupWorkItem = workItem
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.defaultAnimationDuration, execute: workItem)
     }
 
-    private func endGame() {
+    private func endGame(with result: GameStage) {
         finalScore = score
         timerManager.invalidateTimer()
-        gameStateManager.setGameOver()
+        gameStateManager.setGameOver(with: result)
     }
 
     func goToHomeView() {

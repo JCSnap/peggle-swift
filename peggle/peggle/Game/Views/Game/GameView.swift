@@ -21,8 +21,10 @@ struct GameView: View {
             } else {
                 GameLoadLevelView(viewModel: gameVm)
             }
-            if gameVm.isGameOver {
-                GameOverView(viewModel: gameVm)
+            if gameVm.isGameOver == .lose {
+                GameOverView(viewModel: gameVm, condition: .lose)
+            } else if gameVm.isGameOver == .win {
+                GameOverView(viewModel: gameVm, condition: .win)
             }
         }
         .onAppear {

@@ -17,7 +17,7 @@ class PhysicsGameStateManager {
     var cannonAngle: CGFloat = .zero
     var score: Int = 0
     var finalScore: Int?
-    var isGameOver = false
+    var isGameOver: GameStage = .playing
     var screenBounds = CGRect(origin: .zero, size: .zero)
     var hasLevel: Bool {
         level != nil
@@ -52,8 +52,8 @@ class PhysicsGameStateManager {
         WorldPhysics.updateObjectPosition(object: &bucket, timeInterval: timeInterval)
     }
 
-    func setGameOver() {
-        isGameOver = true
+    func setGameOver(with result: GameStage) {
+        isGameOver = result
     }
 
     func handleBallExitScreen() {
@@ -101,7 +101,7 @@ class PhysicsGameStateManager {
         ballCountRemaining = Constants.defaultBallCount
         score = 0
         finalScore = nil
-        isGameOver = false
+        isGameOver = .playing
     }
 
     private func hideBallFromScreen() {
@@ -113,4 +113,8 @@ class PhysicsGameStateManager {
         self.ball = PhysicsBall(ball: Ball(center: ScreenPosition.topCenter.point(for: screenBounds)),
                                 velocity: Constants.defaultBallVelocity)
     }
+}
+
+enum GameStage {
+    case playing, win, lose
 }

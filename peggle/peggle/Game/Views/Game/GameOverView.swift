@@ -9,18 +9,22 @@ import SwiftUI
 
 struct GameOverView: View {
     var viewModel: GameOverViewDelegate
+    var condition: GameStage
 
     var body: some View {
-        UnclosableModalView(content: GameOverModalContent(viewModel: viewModel))
+        UnclosableModalView(content: GameOverModalContent(viewModel: viewModel, condition: condition))
     }
 }
 
 struct GameOverModalContent: View {
     var viewModel: GameOverViewDelegate
+    let condition: GameStage
+    
 
     var body: some View {
+        let text = condition == .lose ? "You lost" : "You won!"
         VStack {
-            Text("Game Over")
+            Text("\(text)")
                 .font(.largeTitle)
                 .foregroundStyle(.black)
             Text("Score: \(viewModel.score)")
