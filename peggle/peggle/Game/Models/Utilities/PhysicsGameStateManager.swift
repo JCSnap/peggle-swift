@@ -63,6 +63,7 @@ class PhysicsGameStateManager {
             resetBallAtStartingPosition()
             ballCountRemaining -= 1
         }
+        hideBucketFromScreen()
         resetAllCollisionCounts()
     }
     
@@ -107,6 +108,10 @@ class PhysicsGameStateManager {
     private func hideBallFromScreen() {
         ball.center = CGPoint(x: -100, y: -100)
         ball.velocity = .zero
+    }
+    
+    private func hideBucketFromScreen() {
+    bucket = PhysicsBucket(bucket: Bucket(center: CGPoint(x: -100, y: -100)))
     }
 
     private func resetBallAtStartingPosition() {
