@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PhysicsPeg: RoundPhysicsObject & PhysicsPegBehaviour {
+class PhysicsPeg: RoundPhysicsObject & HittableObject {
     private var peg: Peg
     var velocity: CGVector
     var mass: CGFloat

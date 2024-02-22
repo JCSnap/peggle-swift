@@ -7,8 +7,6 @@
 
 import Foundation
 
-protocol PhysicsPegBehaviour {
+protocol HittableObject {
     func effectWhenHit(gameStateManager: inout PhysicsGameStateManager)
-
-    func glowUp()
 }
