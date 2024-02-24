@@ -11,6 +11,7 @@ import Foundation
 class RootVm: HomeRootDelegate, LevelDesignerRootDelegate, GameRootDelegate {
     var selectedTab: Int
     var selectedBoard: Board?
+    var selectedPowerType: PowerType = Constants.defaultPowerType
 
     init() {
         self.selectedTab = 0
@@ -48,6 +49,7 @@ protocol LevelDesignerRootDelegate: AnyObject {
 
 protocol GameRootDelegate: AnyObject {
     var selectedBoard: Board? { get }
+    var selectedPowerType: PowerType { get set }
 
     func goToHomeView()
     func goToLevelDesignerView()

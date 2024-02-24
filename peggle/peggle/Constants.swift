@@ -19,7 +19,7 @@ struct Constants {
 
     static let collisionThresholdToBeConsideredStuck = 30
     
-    static let defaultPower = SpookyBallPower()
+    static let defaultPowerType: PowerType = .spookyBall
     
     static let defaultBlastRadius = 100.0
     static let defaultBlastDelay = 0.2

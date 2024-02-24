@@ -10,3 +10,7 @@ import Foundation
 protocol Power {
     func effectWhenActivated(gameStateManager: inout PhysicsGameStateManager)
 }
+
+enum PowerType {
+    case exploding, spookyBall
+}
