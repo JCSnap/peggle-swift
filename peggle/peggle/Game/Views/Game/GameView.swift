@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GameView: View {
     @State var gameVm: GameVm
+    @State var isPowerSelected: Bool = false
 
     var body: some View {
         ZStack {
@@ -21,6 +22,9 @@ struct GameView: View {
             } else {
                 GameLoadLevelView(viewModel: gameVm)
             }
+            if !isPowerSelected {
+                UnclosableModalView(content: SelectPowerView(isPowerSelected: $isPowerSelected, gameVm: gameVm))
+            }
             if gameVm.isGameOver == .lose {
                 GameOverView(viewModel: gameVm, condition: .lose)
             } else if gameVm.isGameOver == .win {
@@ -32,6 +36,33 @@ struct GameView: View {
         }
         .onDisappear {
             gameVm.cleanUp()
+        }
+    }
+}
+
+struct SelectPowerView: View {
+    @Binding var isPowerSelected: Bool
+    var gameVm: GameVm
+    
+    var body: some View {
+        VStack {
+            Text("Select your power")
+                .font(.largeTitle)
+                .foregroundStyle(.black)
+            HStack {
+                Button(action: {
+                    isPowerSelected = true
+                    gameVm.selectPowerType(.exploding)
+                }) {
+                    Text("EXPLODING")
+                }
+                Button(action: {
+                    isPowerSelected = true
+                    gameVm.selectPowerType(.spookyBall)
+                }) {
+                    Text("SPOOKYBALL")
+                }
+            }
         }
     }
 }

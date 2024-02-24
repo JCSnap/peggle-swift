@@ -76,8 +76,6 @@ class GameVm:
     init(rootVm: GameRootDelegate) {
         self.rootVm = rootVm
         let selectedPowerType = rootVm.selectedPowerType
-        
-        self.power = powerConstructors[selectedPowerType]?() ?? ExplodingPower()
     }
     
     func getNamesOfAvailableLevels() -> [String] {
@@ -112,6 +110,12 @@ class GameVm:
         isAiming = false
         gameStateManager.initialiseStartStates()
         timerManager.startTimer(update: self.updateGameState)
+    }
+    
+    func selectPowerType(_ type: PowerType) {
+        rootVm.selectedPowerType = type
+        self.power = powerConstructors[type]?() ?? ExplodingPower()
+
     }
     
     func activatePower() {
