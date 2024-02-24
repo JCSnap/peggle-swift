@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PhysicsPeg: RoundPhysicsObject & HittableObject {
+class GamePeg: RoundPhysicsObject & HittableObject {
     private var peg: Peg
     var velocity: CGVector
     var mass: CGFloat
@@ -31,7 +31,7 @@ class PhysicsPeg: RoundPhysicsObject & HittableObject {
     // factory
     static func createPhysicsPeg(from peg: Peg,
                                  velocity: CGVector = Constants.defaultPegVelocity,
-                                 mass: CGFloat = Constants.defaultPegMass) -> PhysicsPeg {
+                                 mass: CGFloat = Constants.defaultPegMass) -> GamePeg {
         switch peg.type {
         case .normal:
             return BluePhysicsPeg(peg: peg, velocity: velocity, mass: mass)
@@ -68,7 +68,7 @@ class PhysicsPeg: RoundPhysicsObject & HittableObject {
     }
 }
 
-class BluePhysicsPeg: PhysicsPeg {
+class BluePhysicsPeg: GamePeg {
     override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
         super.effectWhenHit(gameStateManager: &gameStateManager)
         if !self.isGlowing {
@@ -77,7 +77,7 @@ class BluePhysicsPeg: PhysicsPeg {
     }
 }
 
-class OrangePhysicsPeg: PhysicsPeg {
+class OrangePhysicsPeg: GamePeg {
     override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
         super.effectWhenHit(gameStateManager: &gameStateManager)
         if !self.isGlowing {

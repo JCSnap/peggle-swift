@@ -10,10 +10,10 @@ import Foundation
 @Observable
 class PhysicsGameStateManager {
     var level: Level?
-    var ball = PhysicsBall(ball: Ball(center: .zero))
+    var ball = GameBall(ball: Ball(center: .zero))
     var ballCountRemaining: Int = Constants.defaultBallCount
-    var pegs: [PhysicsPeg] = []
-    var bucket: PhysicsBucket = PhysicsBucket(bucket: Bucket(center: CGPoint(x: -100, y: -100)))
+    var pegs: [GamePeg] = []
+    var bucket: GameBucket = GameBucket(bucket: Bucket(center: CGPoint(x: -100, y: -100)))
     var cannonAngle: CGFloat = .zero
     var score: Int = 0
     var finalScore: Int?
@@ -44,7 +44,7 @@ class PhysicsGameStateManager {
             guard let peg = object as? Peg else {
                 return nil
             }
-            return PhysicsPeg.createPhysicsPeg(from: peg)
+            return GamePeg.createPhysicsPeg(from: peg)
         }
         self.ball.center = ScreenPosition.topCenter.point(for: screenBounds)
         self.bucket.center = ScreenPosition.bottomCenter.point(for: screenBounds)
@@ -115,7 +115,7 @@ class PhysicsGameStateManager {
     }
     
     private func resetBallAtStartingPosition() {
-        self.ball = PhysicsBall(ball: Ball(center: ScreenPosition.topCenter.point(for: screenBounds)),
+        self.ball = GameBall(ball: Ball(center: ScreenPosition.topCenter.point(for: screenBounds)),
                                 velocity: Constants.defaultBallVelocity)
         self.ball.velocity = .zero
     }

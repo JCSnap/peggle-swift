@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PhysicsBall: RoundPhysicsObject {
+struct GameBall: RoundPhysicsObject {
     var ball: Ball
     var velocity: CGVector
     var mass: CGFloat

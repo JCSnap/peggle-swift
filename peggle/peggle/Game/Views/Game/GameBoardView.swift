@@ -103,10 +103,10 @@ struct DottedLineShape: Shape {
 }
 
 protocol GameBoardViewDelegate: AnyObject {
-    var pegs: [PhysicsPeg] { get }
+    var pegs: [GamePeg] { get }
     var cannonAngle: CGFloat { get }
-    var ball: PhysicsBall { get }
-    var bucket: PhysicsBucket { get }
+    var ball: GameBall { get }
+    var bucket: GameBucket { get }
     var screenBounds: CGRect { get }
     var isAiming: Bool { get }
 

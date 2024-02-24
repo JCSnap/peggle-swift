@@ -22,15 +22,15 @@ class GameVm:
     var level: Level? {
         gameStateManager.level
     }
-    var ball: PhysicsBall {
+    var ball: GameBall {
         get { gameStateManager.ball }
         set { gameStateManager.ball = newValue }
     }
-    var pegs: [PhysicsPeg] {
+    var pegs: [GamePeg] {
         get { gameStateManager.pegs }
         set { gameStateManager.pegs = newValue }
     }
-    var bucket: PhysicsBucket {
+    var bucket: GameBucket {
         get { gameStateManager.bucket }
         set { gameStateManager.bucket = newValue }
     }
