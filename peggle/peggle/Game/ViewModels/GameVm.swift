@@ -18,7 +18,11 @@ class GameVm:
     private var gameStateManager = PhysicsGameStateManager()
     private var persistenceManager: LevelPersistence.Type = Constants.defaultPersistenceManager
     private var timerManager = TimerManager(timeInterval: Constants.timeInterval)
-    private var power: Power = Constants.defaultPower
+    private var power: Power = ExplodingPower()
+    private let powerConstructors: [PowerType: () -> Power] = [
+        .exploding: { ExplodingPower() },
+        .spookyBall: { SpookyBallPower() }
+    ]
     
     var level: Level? {
         gameStateManager.level
@@ -71,6 +75,9 @@ class GameVm:
     
     init(rootVm: GameRootDelegate) {
         self.rootVm = rootVm
+        let selectedPowerType = rootVm.selectedPowerType
+        
+        self.power = powerConstructors[selectedPowerType]?() ?? ExplodingPower()
     }
     
     func getNamesOfAvailableLevels() -> [String] {
