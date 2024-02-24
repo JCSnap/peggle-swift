@@ -19,6 +19,8 @@ struct Constants {
 
     static let collisionThresholdToBeConsideredStuck = 30
     
+    static let defaultPower = ExplodingPower()
+    
     static let defaultBlastRadius = 100.0
     static let defaultBlastDelay = 0.2
 

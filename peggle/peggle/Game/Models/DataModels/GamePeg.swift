@@ -91,7 +91,6 @@ class ExplodingGamePeg: GamePeg {
         super.effectWhenHit(gameStateManager: &gameStateManager)
         if !self.isGlowing {
             self.glowUp()
-            gameStateManager.explodeExplodingPegs()
         }
     }
 }

@@ -18,6 +18,7 @@ class GameVm:
     private var gameStateManager = PhysicsGameStateManager()
     private var persistenceManager: LevelPersistence.Type = Constants.defaultPersistenceManager
     private var timerManager = TimerManager(timeInterval: Constants.timeInterval)
+    private var power: Power = Constants.defaultPower
 
     var level: Level? {
         gameStateManager.level
@@ -104,6 +105,10 @@ class GameVm:
         isAiming = false
         gameStateManager.initialiseStartStates()
         timerManager.startTimer(update: self.updateGameState)
+    }
+    
+    func activatePower() {
+        power.effectWhenActivated(gameStateManager: &gameStateManager)
     }
 
     private func updateGameState() {

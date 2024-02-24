@@ -110,7 +110,7 @@ class PhysicsGameStateManager {
             }
         }
     }
-
+ 
     func explodeExplodingPegs(withRadius: CGFloat = Constants.defaultBlastRadius) {
         print("Exploding")
         let explodingPegs = objects.compactMap { $0 as? GamePeg }.filter { $0.type == .exploding }
