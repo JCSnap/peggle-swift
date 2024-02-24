@@ -12,7 +12,7 @@ class PhysicsGameStateManager {
     var level: Level?
     var ball = GameBall(ball: Ball(center: .zero))
     var ballCountRemaining: Int = Constants.defaultBallCount
-    var pegs: [GamePeg] = []
+    var objects: [GameObject] = []
     var bucket: GameBucket = GameBucket(bucket: Bucket(center: CGPoint(x: -100, y: -100)))
     var cannonAngle: CGFloat = .zero
     var score: Int = 0
@@ -25,7 +25,8 @@ class PhysicsGameStateManager {
     var maxScore: Int = 0
 
     func hasReachedObjective() -> Bool {
-        !pegs.contains(where: { $0.type == .scoring && !$0.isGlowing })
+        let gamePegs = objects.compactMap { $0 as? GamePeg }
+        return !gamePegs.contains(where: { $0.type == .scoring && !$0.isGlowing })
     }
 
     func initialiseStartStates() {
@@ -40,7 +41,7 @@ class PhysicsGameStateManager {
     func initialiseLevelProperties(level: Level) {
         self.level = level
         self.screenBounds = CGRect(origin: .zero, size: level.board.boardSize)
-        self.pegs = level.board.objects.compactMap { object in
+        self.objects = level.board.objects.compactMap { object in
             guard let peg = object as? Peg else {
                 return nil
             }
@@ -48,7 +49,7 @@ class PhysicsGameStateManager {
         }
         self.ball.center = ScreenPosition.topCenter.point(for: screenBounds)
         self.bucket.center = ScreenPosition.bottomCenter.point(for: screenBounds)
-        self.maxScore = pegs.filter { $0.type == .scoring }.count
+        self.maxScore = objects.compactMap { $0 as? GamePeg }.filter { $0.type == .scoring }.count
     }
 
     func updateObjects(for timeInterval: TimeInterval) {
@@ -77,12 +78,19 @@ class PhysicsGameStateManager {
     }
 
     func removeInvisiblePegs() {
-        pegs.removeAll { !$0.isVisible }
+        objects.removeAll {
+            if let gamePeg = $0 as? GamePeg {
+                return !gamePeg.isVisible
+            }
+            return false
+        }
     }
 
     func removePegsPrematurelyWith(collisionsMoreThan threshold: Int) {
-        for i in 0..<pegs.count where pegs[i].collisionCount > threshold {
-            pegs[i].isVisible = false
+        objects.forEach { object in
+            if let gamePeg = object as? GamePeg, gamePeg.collisionCount > threshold {
+                gamePeg.isVisible = false
+            }
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.defaultAnimationDuration) {
             self.removeInvisiblePegs()
@@ -90,19 +98,23 @@ class PhysicsGameStateManager {
     }
 
     func resetAllCollisionCounts() {
-        pegs.forEach { $0.resetCollisionCount() }
+        objects.forEach { object in
+            (object as? GamePeg)?.resetCollisionCount()
+        }
     }
 
     func markGlowingPegsForRemoval() {
-        for i in 0..<pegs.count where pegs[i].isGlowing {
-            pegs[i].isVisible = false
+        objects.forEach { object in
+            if let gamePeg = object as? GamePeg, gamePeg.isGlowing {
+                gamePeg.isVisible = false
+            }
         }
     }
 
     func cleanUp() {
         cannonAngle = .zero
         level = nil
-        pegs = []
+        objects = []
         ballCountRemaining = Constants.defaultBallCount
         score = 0
         finalScore = nil

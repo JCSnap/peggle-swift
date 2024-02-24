@@ -27,8 +27,13 @@ class GameVm:
         set { gameStateManager.ball = newValue }
     }
     var pegs: [GamePeg] {
-        get { gameStateManager.pegs }
-        set { gameStateManager.pegs = newValue }
+        get {
+            gameStateManager.objects.compactMap { $0 as? GamePeg }
+        }
+        set(newPegs) {
+            gameStateManager.objects = gameStateManager.objects.filter { !($0 is GamePeg) }
+            gameStateManager.objects.append(contentsOf: newPegs)
+        }
     }
     var bucket: GameBucket {
         get { gameStateManager.bucket }

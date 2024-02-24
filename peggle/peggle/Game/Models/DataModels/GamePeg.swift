@@ -7,11 +7,8 @@
 
 import Foundation
 
-class GamePeg: RoundPhysicsObject & HittableObject {
+class GamePeg: GameObject, RoundPhysicsObject {
     private var peg: Peg
-    var velocity: CGVector
-    var mass: CGFloat
-    var isStatic: Bool
     var collisionCount: Int = 0
     var isGlowing: Bool {
         peg.isGlowing
@@ -42,13 +39,13 @@ class GamePeg: RoundPhysicsObject & HittableObject {
 
     init(peg: Peg, velocity: CGVector, mass: CGFloat) {
         self.peg = peg
-        self.velocity = velocity
-        self.isStatic = true
+        let massToInit: CGFloat
         if mass <= 0 {
-            self.mass = Constants.defaultPegMass
+            massToInit = Constants.defaultPegMass
         } else {
-            self.mass = mass
+            massToInit = mass
         }
+        super.init(velocity: velocity, mass: massToInit, isStatic: true)
     }
 
     func incrementCollisionCount() {
@@ -63,7 +60,7 @@ class GamePeg: RoundPhysicsObject & HittableObject {
         peg.glowUp()
     }
 
-    func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
+    override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
         collisionCount += 1
     }
 }
