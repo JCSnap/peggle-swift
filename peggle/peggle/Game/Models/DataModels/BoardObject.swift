@@ -32,4 +32,8 @@ class BoardObject: Hashable {
     static func ==(lhs: BoardObject, rhs: BoardObject) -> Bool {
         return lhs.center == rhs.center
     }
+    
+    func addToBoard(board: inout Board) {
+        fatalError("Subclasses need to implement this method")
+    }
 }

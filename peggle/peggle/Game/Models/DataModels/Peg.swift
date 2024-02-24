@@ -56,11 +56,8 @@ class Peg: BoardObject {
         center.y + self.radius <= size.height    // Top
     }
     
-    override func isEqual<T: BoardObject>(to other: T) -> Bool {
-        guard Swift.type(of: self) == Swift.type(of: other) else {
-            return false
-        }
-        return self.center == other.center
+    override func addToBoard(board: inout Board) {
+        board.addObject(self)
     }
     
     override func hash(into hasher: inout Hasher) {
