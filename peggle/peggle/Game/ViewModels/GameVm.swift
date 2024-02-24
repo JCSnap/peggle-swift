@@ -19,7 +19,7 @@ class GameVm:
     private var persistenceManager: LevelPersistence.Type = Constants.defaultPersistenceManager
     private var timerManager = TimerManager(timeInterval: Constants.timeInterval)
     private var power: Power = Constants.defaultPower
-
+    
     var level: Level? {
         gameStateManager.level
     }
@@ -68,15 +68,15 @@ class GameVm:
         gameStateManager.hasLevel
     }
     private var cleanupWorkItem: DispatchWorkItem?
-
+    
     init(rootVm: GameRootDelegate) {
         self.rootVm = rootVm
     }
-
+    
     func getNamesOfAvailableLevels() -> [String] {
         persistenceManager.displayAllLevels()
     }
-
+    
     func checkForBoardToLoad() {
         guard let board = rootVm.selectedBoard else {
             return
@@ -85,22 +85,22 @@ class GameVm:
         gameStateManager.initialiseLevelProperties(level: level)
         rootVm.clearBoardCache()
     }
-
+    
     func setLevelFromPersistenceAndRenderGame(levelName: String) {
         guard let level = persistenceManager.loadLevel(with: levelName) else {
             return
         }
         gameStateManager.initialiseLevelProperties(level: level)
     }
-
+    
     func setCannonAngle(fromPoint dragStart: CGPoint, toPoint dragPoint: CGPoint) {
         let diff = CGPoint(x: dragPoint.x - dragStart.x, y: dragPoint.y - dragStart.y)
         let angle = atan2(diff.y, diff.x) - .pi / 2
         let clampedAngle = max(min(angle, .pi / 2), -.pi / 2)
-
+        
         gameStateManager.cannonAngle = clampedAngle
     }
-
+    
     func startGame() {
         isAiming = false
         gameStateManager.initialiseStartStates()
@@ -110,7 +110,7 @@ class GameVm:
     func activatePower() {
         power.effectWhenActivated(gameStateManager: &gameStateManager)
     }
-
+    
     private func updateGameState() {
         WorldPhysics.applyGravity(to: &ball, deltaTime: timerManager.timeInterval)
         ball.handleBoundaryCollision(within: screenBounds)
@@ -124,7 +124,7 @@ class GameVm:
         handleCollisionsInAnotherThread()
         gameStateManager.updateObjects(for: timerManager.timeInterval)
     }
-
+    
     // a peg is to "stuck-causing" if its collision count is greater than an arbitrary threshold
     private func checkAndHandleBallStuck() {
         let isBallStuck = self.pegs.contains(where: { $0.collisionCount > Constants.collisionThresholdToBeConsideredStuck })
@@ -133,14 +133,16 @@ class GameVm:
             self.gameStateManager.removePegsPrematurelyWith(collisionsMoreThan: Constants.collisionThresholdToBeConsideredStuck)
         }
     }
-
+    
     private func checkAndHandleBallExit() {
-        let isCollidingWithBottomBoundary = CollisionPhysics.isObjectCollidingWithBoundarySide(object: self.ball, bounds: self.screenBounds, side: .bottom)
+        let isBallExitingScreen = CollisionPhysics.isObjectCollidingWithBoundarySide(object: self.ball, bounds: self.screenBounds, side: .bottom)
         
-        if isCollidingWithBottomBoundary {
+        if isBallExitingScreen {
             self.gameStateManager.handleBallExitScreen()
-            self.gameStateManager.markGlowingPegsForRemoval()
-            self.removePegAndTransitionToNextStage()
+            if gameStateManager.allowBallExitToInterruptPlayAndRemovePegs {
+                self.gameStateManager.markGlowingPegsForRemoval()
+                self.removePegAndTransitionToNextStage()
+            }
         }
     }
     
@@ -163,8 +165,9 @@ class GameVm:
     private func handleCollisionsInAnotherThread() {
         DispatchQueue.global(qos: .userInitiated).async {
             var hitPegsIndices: [Int] = []
+            var pegs = self.pegs
             
-            for (index, peg) in self.pegs.enumerated() {
+            for (index, peg) in pegs.enumerated() {
                 if self.ball.isColliding(with: peg) {
                     hitPegsIndices.append(index)
                 }
@@ -172,29 +175,30 @@ class GameVm:
             
             DispatchQueue.main.async {
                 for index in hitPegsIndices {
-                    var peg = self.pegs[index]
+                    var peg = pegs[index]
                     peg.effectWhenHit(gameStateManager: &self.gameStateManager)
                     self.ball.handleCollision(with: &peg)
-                    self.pegs[index] = peg
+                    pegs[index] = peg
                 }
+                self.pegs = pegs
             }
         }
     }
-
+    
     private func endGame(with result: GameStage) {
         finalScore = score
         timerManager.invalidateTimer()
         gameStateManager.setGameOver(with: result)
     }
-
+    
     func goToHomeView() {
         rootVm.goToHomeView()
     }
-
+    
     func goToLevelDesignerView() {
         rootVm.goToLevelDesignerView()
     }
-
+    
     func cleanUp() {
         gameStateManager.cleanUp()
         timerManager.invalidateTimer()
@@ -202,7 +206,7 @@ class GameVm:
         cleanupWorkItem?.cancel()
         cleanupWorkItem = nil
     }
-
+    
     deinit {
         timerManager.invalidateTimer()
     }
@@ -215,7 +219,7 @@ enum ScreenPosition {
     case bottomLeft
     case bottomCenter
     case bottomRight
-
+    
     func point(for screenBounds: CGRect) -> CGPoint {
         switch self {
         case .topLeft:

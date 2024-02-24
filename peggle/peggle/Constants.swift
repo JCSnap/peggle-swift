@@ -13,13 +13,13 @@ struct Constants {
 
     static let defaultPersistenceManager = LocalPersistenceManager.self
 
-    static let timeInterval = 1.0 / 60.0 // 60 FPS
+    static let timeInterval = 1.0 / 40.0 // 60 FPS
 
     static let defaultAnimationDuration = 2.0
 
     static let collisionThresholdToBeConsideredStuck = 30
     
-    static let defaultPower = ExplodingPower()
+    static let defaultPower = SpookyBallPower()
     
     static let defaultBlastRadius = 100.0
     static let defaultBlastDelay = 0.2

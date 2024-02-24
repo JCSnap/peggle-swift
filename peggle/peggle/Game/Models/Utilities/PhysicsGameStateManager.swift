@@ -23,6 +23,7 @@ class PhysicsGameStateManager {
         level != nil
     }
     var maxScore: Int = 0
+    var allowBallExitToInterruptPlayAndRemovePegs: Bool = true
 
     func hasReachedObjective() -> Bool {
         let gamePegs = objects.compactMap { $0 as? GamePeg }
@@ -62,13 +63,11 @@ class PhysicsGameStateManager {
     }
 
     func handleBallExitScreen() {
-        if ballCountRemaining == 0 {
-            hideBallFromScreen()
+        if !allowBallExitToInterruptPlayAndRemovePegs {
+            makeBallReappearAtTopAtTheSameXPosition()
         } else {
-            resetBallAtStartingPosition()
-            ballCountRemaining -= 1
+            stopBallAndRepositionBallConditionallyBasedOnBallCount()
         }
-        ball.isStatic = true
         resetAllCollisionCounts()
     }
     
@@ -112,7 +111,6 @@ class PhysicsGameStateManager {
     }
  
     func explodeExplodingPegs(withRadius: CGFloat = Constants.defaultBlastRadius) {
-        print("Exploding")
         let explodingPegs = objects.compactMap { $0 as? GamePeg }.filter { $0.type == .exploding }
             for peg in objects.compactMap({ $0 as? GamePeg }) {
                 for explodingPeg in explodingPegs {
@@ -125,6 +123,13 @@ class PhysicsGameStateManager {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.defaultBlastDelay) {
             self.removeInvisiblePegs()
+        }
+    }
+    
+    func createEffectWhereBallWillNotLeaveScreen() {
+        self.allowBallExitToInterruptPlayAndRemovePegs = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.allowBallExitToInterruptPlayAndRemovePegs = true
         }
     }
     
@@ -141,6 +146,23 @@ class PhysicsGameStateManager {
     private func hideBallFromScreen() {
         ball.center = CGPoint(x: -100, y: -100)
         ball.velocity = .zero
+    }
+    
+    private func makeBallReappearAtTopAtTheSameXPosition() {
+        let positionToReappear = CGPoint(x: ball.center.x, y: 10)
+        // to prevent ball from accelerating too much
+        let newVelocity = CGVector(dx: ball.velocity.dx / 2, dy: 0)
+        self.ball = GameBall(ball: Ball(center: positionToReappear), velocity: newVelocity)
+    }
+    
+    private func stopBallAndRepositionBallConditionallyBasedOnBallCount() {
+        if ballCountRemaining == 0 {
+            hideBallFromScreen()
+        } else {
+            resetBallAtStartingPosition()
+            ballCountRemaining -= 1
+        }
+        ball.isStatic = true
     }
     
     private func resetBallAtStartingPosition() {
