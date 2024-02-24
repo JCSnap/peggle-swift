@@ -56,16 +56,16 @@ struct PegSelectionView: View {
     var body: some View {
         HStack {
             Button(action: {
-                viewModel.selectPegType(type: .blue)
+                viewModel.selectPegType(type: .normal)
             }) {
-                PegView(pegType: .blue, isGlowing: false)
-                    .border(viewModel.selectedPegType == .blue ? Color.blue : Color.clear, width: 3)
+                PegView(pegType: .normal, isGlowing: false)
+                    .border(viewModel.selectedPegType == .normal ? Color.blue : Color.clear, width: 3)
             }
             Button(action: {
-                viewModel.selectPegType(type: .orange)
+                viewModel.selectPegType(type: .scoring)
             }) {
-                PegView(pegType: .orange, isGlowing: false)
-                    .border(viewModel.selectedPegType == .orange ? Color.orange : Color.clear, width: 3)
+                PegView(pegType: .scoring, isGlowing: false)
+                    .border(viewModel.selectedPegType == .scoring ? Color.orange : Color.clear, width: 3)
             }
             Spacer()
             Button(action: viewModel.toggleMode) {

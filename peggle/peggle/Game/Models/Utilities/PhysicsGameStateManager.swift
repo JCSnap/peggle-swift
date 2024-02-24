@@ -25,7 +25,7 @@ class PhysicsGameStateManager {
     var maxScore: Int = 0
 
     func hasReachedObjective() -> Bool {
-        !pegs.contains(where: { $0.type == .orange && !$0.isGlowing })
+        !pegs.contains(where: { $0.type == .scoring && !$0.isGlowing })
     }
 
     func initialiseStartStates() {
@@ -40,12 +40,15 @@ class PhysicsGameStateManager {
     func initialiseLevelProperties(level: Level) {
         self.level = level
         self.screenBounds = CGRect(origin: .zero, size: level.board.boardSize)
-        self.pegs = level.board.pegs.map {peg -> PhysicsPeg in
-            PhysicsPeg.createPhysicsPeg(from: peg)
+        self.pegs = level.board.objects.compactMap { object in
+            guard let peg = object as? Peg else {
+                return nil
+            }
+            return PhysicsPeg.createPhysicsPeg(from: peg)
         }
         self.ball.center = ScreenPosition.topCenter.point(for: screenBounds)
         self.bucket.center = ScreenPosition.bottomCenter.point(for: screenBounds)
-        self.maxScore = pegs.filter { $0.type == .orange }.count
+        self.maxScore = pegs.filter { $0.type == .scoring }.count
     }
 
     func updateObjects(for timeInterval: TimeInterval) {

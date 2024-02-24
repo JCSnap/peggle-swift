@@ -33,9 +33,9 @@ class PhysicsPeg: RoundPhysicsObject & HittableObject {
                                  velocity: CGVector = Constants.defaultPegVelocity,
                                  mass: CGFloat = Constants.defaultPegMass) -> PhysicsPeg {
         switch peg.type {
-        case .blue:
+        case .normal:
             return BluePhysicsPeg(peg: peg, velocity: velocity, mass: mass)
-        case .orange:
+        case .scoring:
             return OrangePhysicsPeg(peg: peg, velocity: velocity, mass: mass)
         }
     }
