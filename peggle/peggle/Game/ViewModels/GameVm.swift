@@ -75,7 +75,6 @@ class GameVm:
     
     init(rootVm: GameRootDelegate) {
         self.rootVm = rootVm
-        let selectedPowerType = rootVm.selectedPowerType
     }
     
     func getNamesOfAvailableLevels() -> [String] {

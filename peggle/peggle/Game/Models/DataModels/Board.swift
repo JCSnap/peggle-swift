@@ -15,12 +15,21 @@ struct Board {
         self.boardSize = boardSize
     }
     
+    mutating func addObject(_ object: BoardObject) {
+        objects.append(object)
+    }
+    
     mutating func addPeg(at point: CGPoint, withType type: PegType,
                          withSize size: CGFloat = Constants.defaultAssetRadius) {
         let newPeg = Peg(center: CGPoint(x: point.x, y: point.y), type: type, radius: size)
         if !isOverlapping(newPeg) && isWithinBoard(newPeg) {
             objects.append(newPeg)
         }
+    }
+    
+    mutating func replaceObject(at index: Int, with newObject: BoardObject) {
+        print("replacing object")
+        objects[index] = newObject
     }
     
     mutating func deleteBoardObject(_ object: BoardObject) {

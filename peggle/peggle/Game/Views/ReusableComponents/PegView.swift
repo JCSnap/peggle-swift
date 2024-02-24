@@ -11,8 +11,8 @@ struct PegView: View {
     let pegType: PegType
     let radius: CGFloat
     let isGlowing: Bool
-
-    init(pegType: PegType, isGlowing: Bool, radius: CGFloat = Constants.defaultAssetRadius) {
+    
+    init(pegType: PegType, radius: CGFloat = Constants.defaultAssetRadius, isGlowing: Bool) {
         self.pegType = pegType
         self.radius = radius
         self.isGlowing = isGlowing
@@ -35,8 +35,4 @@ struct PegView: View {
         ]
         return imageNames[pegType] ?? "default-peg-image"
     }
-}
-
-#Preview {
-    PegView(pegType: .normal, isGlowing: true)
 }

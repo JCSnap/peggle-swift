@@ -53,7 +53,7 @@ struct PegsView: View {
         
         ForEach(pegs.indices, id: \.self) { index in
             if pegs[index].isGlowing {
-                PegView(pegType: pegs[index].type, isGlowing: pegs[index].isGlowing)
+                PegView(pegType: pegs[index].type, radius: pegs[index].radius, isGlowing: pegs[index].isGlowing)
                     .position(pegs[index].center)
                     .opacity(pegs[index].isVisible ? 1 : 0)
                     .animation(

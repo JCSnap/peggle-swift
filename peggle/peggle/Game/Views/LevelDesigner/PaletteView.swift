@@ -26,6 +26,7 @@ struct PaletteView: View {
 
         VStack {
             PegSelectionView(viewModel: viewModel)
+            EditObjectView(viewModel: viewModel)
             ActionButtonsView(levelName: $levelName, showSaveAlert: $showSaveAlert,
                               showInvalidNameAlert: $showInvalidNameAlert,
                               showResetAlert: $showResetAlert, viewModel: viewModel)
@@ -83,6 +84,38 @@ struct PegSelectionView: View {
     }
 }
 
+struct EditObjectView: View {
+    var viewModel: LevelDesignerPaletteDelegate
+    @State private var sizeSliderValue: Double = 0.5
+    @State private var orientationSliderValue: Double = 0.5
+    
+    var body: some View {
+        HStack {
+            VStack {
+                Text("Edit size")
+                    .font(.headline)
+                
+                Slider(value: $sizeSliderValue, in: 10...50, onEditingChanged: { editing in
+                    viewModel.updateObjectSize(index: viewModel.selectedObjectIndex, newSize: sizeSliderValue)
+                })
+                    .padding()
+                
+                Text("Value: \(sizeSliderValue, specifier: "%.2f")")
+            }
+            VStack {
+                Text("Edit orientation")
+                    .font(.headline)
+                
+                Slider(value: $sizeSliderValue, in: 0...360)
+                    .padding()
+                
+                Text("Value: \(orientationSliderValue, specifier: "%.2f")")
+            }
+        }
+        .padding()
+    }
+}
+
 struct ActionButtonsView: View {
     @Binding var levelName: String
     @Binding var showSaveAlert: Bool
@@ -112,10 +145,14 @@ struct ActionButtonsView: View {
 protocol LevelDesignerPaletteDelegate: AnyObject {
     var selectedPegType: PegType { get }
     var isInsertMode: Bool { get }
+    var selectedObjectIndex: Int { get }
 
     // MARK: Peg management
     func selectPegType(type: PegType)
     func toggleMode()
+    
+    // MARK: Edit objects
+    func updateObjectSize(index: Int, newSize: CGFloat)
 
     // MARK: Actions
     func renderLoadLevelView()

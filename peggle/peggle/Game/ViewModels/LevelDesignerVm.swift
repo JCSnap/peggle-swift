@@ -25,6 +25,8 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
         self.persistenceManager = Constants.defaultPersistenceManager
         self.rootVm = rootVm
     }
+    
+    var selectedObjectIndex: Int = 0
 
     // MARK: LevelDesignerBoardDelegate
     var pegs: [Peg] {
@@ -46,6 +48,23 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
 
     func updatePegPosition(index: Int, newPoint: CGPoint) {
         board.updatePegPosition(index: index, newPoint: newPoint)
+    }
+    
+    func selectObjectIndex(_ index: Int) {
+        selectedObjectIndex = index
+        if let peg = board.objects[index] as? Peg {
+            print(peg.radius)
+        }
+    }
+    
+    func updateObjectSize(index: Int, newSize: CGFloat) {
+        let objectToEdit = board.objects[index]
+        
+        if let pegToEdit = objectToEdit as? Peg {
+            let newPeg = Peg(center: pegToEdit.center, type: pegToEdit.type, radius: newSize)
+            print("updating", pegToEdit.radius, " ", newPeg.radius)
+            board.replaceObject(at: index, with: newPeg)
+        }
     }
 
     func setBoardSize(_ size: CGSize) {

@@ -18,7 +18,7 @@ struct BoardView: View {
                     .zIndex(-3)
 
                 ForEach(viewModel.pegs.indices, id: \.self) { index in
-                    PegInteractiveView(peg: viewModel.pegs[index], index: index, viewModel: viewModel)
+                    PegInteractiveView(peg: viewModel.pegs[index], index: index, viewModel: viewModel, radius: viewModel.pegs[index].radius)
                 }
 
                 InvisibleLayerView(viewModel: viewModel)
@@ -36,10 +36,11 @@ struct PegInteractiveView: View {
     var peg: Peg
     var index: Int
     var viewModel: LevelDesignerBoardDelegate
+    var radius: CGFloat
     @State private var longPressTimer: Timer?
 
     var body: some View {
-        PegView(pegType: peg.type, isGlowing: peg.isGlowing)
+        PegView(pegType: peg.type, radius: radius, isGlowing: peg.isGlowing)
             .position(peg.center)
             .gesture(DragGesture()
                 .onChanged { value in
@@ -50,6 +51,8 @@ struct PegInteractiveView: View {
             .onTapGesture {
                 if !viewModel.isInsertMode {
                     viewModel.deletePeg(peg)
+                } else {
+                    viewModel.selectObjectIndex(index)
                 }
             }
             .simultaneousGesture(LongPressGesture(minimumDuration: 0.8).onEnded { _ in
@@ -105,6 +108,8 @@ protocol LevelDesignerBoardDelegate: AnyObject {
     func deletePeg(_ peg: Peg)
 
     func updatePegPosition(index: Int, newPoint: CGPoint)
+    
+    func selectObjectIndex(_ index: Int)
 
     func setBoardSize(_ size: CGSize)
 }
