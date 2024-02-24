@@ -112,7 +112,6 @@ class GameVm:
     }
 
     private func updateGameState() {
-        gameStateManager.updateObjects(for: timerManager.timeInterval)
         WorldPhysics.applyGravity(to: &ball, deltaTime: timerManager.timeInterval)
         ball.handleBoundaryCollision(within: screenBounds)
         bucket.handleBoundaryCollision(within: screenBounds)
@@ -122,36 +121,31 @@ class GameVm:
             bucket.effectWhenHit(gameStateManager: &gameStateManager)
             removePegAndTransitionToNextStage()
         }
-        for i in 0..<pegs.count {
-            if ball.isColliding(with: pegs[i]) {
-                pegs[i].effectWhenHit(gameStateManager: &gameStateManager)
-            }
-            ball.handleCollision(with: &pegs[i])
-        }
+        handleCollisionsInAnotherThread()
+        gameStateManager.updateObjects(for: timerManager.timeInterval)
     }
 
     // a peg is to "stuck-causing" if its collision count is greater than an arbitrary threshold
     private func checkAndHandleBallStuck() {
-        let isBallStuck = pegs.contains(where: { $0.collisionCount > Constants.collisionThresholdToBeConsideredStuck })
+        let isBallStuck = self.pegs.contains(where: { $0.collisionCount > Constants.collisionThresholdToBeConsideredStuck })
+        
         if isBallStuck {
-            gameStateManager.removePegsPrematurelyWith(collisionsMoreThan:
-                                                        Constants.collisionThresholdToBeConsideredStuck)
+            self.gameStateManager.removePegsPrematurelyWith(collisionsMoreThan: Constants.collisionThresholdToBeConsideredStuck)
         }
     }
 
     private func checkAndHandleBallExit() {
-        if !CollisionPhysics.isObjectCollidingWithBoundarySide(object: ball, bounds: screenBounds, side: .bottom) {
-            return
+        let isCollidingWithBottomBoundary = CollisionPhysics.isObjectCollidingWithBoundarySide(object: self.ball, bounds: self.screenBounds, side: .bottom)
+        
+        if isCollidingWithBottomBoundary {
+            self.gameStateManager.handleBallExitScreen()
+            self.gameStateManager.markGlowingPegsForRemoval()
+            self.removePegAndTransitionToNextStage()
         }
-        gameStateManager.handleBallExitScreen()
-        gameStateManager.markGlowingPegsForRemoval()
-        //timerManager.invalidateTimer()
-        removePegAndTransitionToNextStage()
     }
     
     private func removePegAndTransitionToNextStage() {
         gameStateManager.markGlowingPegsForRemoval()
-        //timerManager.invalidateTimer()
         // wait for animation to complete
         let workItem = DispatchWorkItem {
             self.isAiming = true
@@ -164,6 +158,27 @@ class GameVm:
         }
         cleanupWorkItem = workItem
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.defaultAnimationDuration, execute: workItem)
+    }
+    
+    private func handleCollisionsInAnotherThread() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            var hitPegsIndices: [Int] = []
+            
+            for (index, peg) in self.pegs.enumerated() {
+                if self.ball.isColliding(with: peg) {
+                    hitPegsIndices.append(index)
+                }
+            }
+            
+            DispatchQueue.main.async {
+                for index in hitPegsIndices {
+                    var peg = self.pegs[index]
+                    peg.effectWhenHit(gameStateManager: &self.gameStateManager)
+                    self.ball.handleCollision(with: &peg)
+                    self.pegs[index] = peg
+                }
+            }
+        }
     }
 
     private func endGame(with result: GameStage) {

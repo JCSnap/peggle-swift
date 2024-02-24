@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct ExplodingPower: Power {
+    func effectWhenActivated(gameStateManager: inout PhysicsGameStateManager) {
+        gameStateManager.explodeExplodingPegs()
+    }
+}
