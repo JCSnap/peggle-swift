@@ -9,10 +9,7 @@ import SwiftUI
 
 struct PowerOnView: View {
     var body: some View {
-        Image("green-star")
-            .resizable()
-            .scaledToFit()
-            .frame(width: Constants.defaultAssetRadius * 2, height: Constants.defaultAssetRadius * 2)
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 

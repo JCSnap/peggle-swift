@@ -6,7 +6,3 @@
 //
 
 import Foundation
-
-protocol Power {
-    func effectWhenActivated(gameStateManager: inout PhysicsGameStateManager)
-}
