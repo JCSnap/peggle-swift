@@ -19,7 +19,7 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
     var isLoadLevelViewPresented = false
 
     init(rootVm: LevelDesignerRootDelegate) {
-        self.selectedPegType = .blue
+        self.selectedPegType = .normal
         self.board = Board()
         self.isInsertMode = true
         self.persistenceManager = Constants.defaultPersistenceManager
@@ -28,7 +28,12 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
 
     // MARK: LevelDesignerBoardDelegate
     var pegs: [Peg] {
-        board.pegs
+        board.objects.compactMap { object in
+            guard let peg = object as? Peg else {
+                return nil
+            }
+            return peg
+        }
     }
 
     func addPeg(at point: CGPoint) {
@@ -36,7 +41,7 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
     }
 
     func deletePeg(_ peg: Peg) {
-        board.deletePeg(peg)
+        board.deleteBoardObject(peg)
     }
 
     func updatePegPosition(index: Int, newPoint: CGPoint) {

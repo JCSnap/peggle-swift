@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PhysicsBucket: RectangularPhysicsObject & HittableObject {
+struct GameBucket: RectangularPhysicsObject & HittableObject {
     var bucket: Bucket
     var velocity: CGVector
     var mass: CGFloat

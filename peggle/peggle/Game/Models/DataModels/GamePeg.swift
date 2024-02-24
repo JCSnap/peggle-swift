@@ -7,11 +7,8 @@
 
 import Foundation
 
-class PhysicsPeg: RoundPhysicsObject & HittableObject {
+class GamePeg: GameObject, RoundPhysicsObject {
     private var peg: Peg
-    var velocity: CGVector
-    var mass: CGFloat
-    var isStatic: Bool
     var collisionCount: Int = 0
     var isGlowing: Bool {
         peg.isGlowing
@@ -31,24 +28,24 @@ class PhysicsPeg: RoundPhysicsObject & HittableObject {
     // factory
     static func createPhysicsPeg(from peg: Peg,
                                  velocity: CGVector = Constants.defaultPegVelocity,
-                                 mass: CGFloat = Constants.defaultPegMass) -> PhysicsPeg {
+                                 mass: CGFloat = Constants.defaultPegMass) -> GamePeg {
         switch peg.type {
-        case .blue:
+        case .normal:
             return BluePhysicsPeg(peg: peg, velocity: velocity, mass: mass)
-        case .orange:
+        case .scoring:
             return OrangePhysicsPeg(peg: peg, velocity: velocity, mass: mass)
         }
     }
 
     init(peg: Peg, velocity: CGVector, mass: CGFloat) {
         self.peg = peg
-        self.velocity = velocity
-        self.isStatic = true
+        let massToInit: CGFloat
         if mass <= 0 {
-            self.mass = Constants.defaultPegMass
+            massToInit = Constants.defaultPegMass
         } else {
-            self.mass = mass
+            massToInit = mass
         }
+        super.init(velocity: velocity, mass: massToInit, isStatic: true)
     }
 
     func incrementCollisionCount() {
@@ -63,12 +60,12 @@ class PhysicsPeg: RoundPhysicsObject & HittableObject {
         peg.glowUp()
     }
 
-    func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
+    override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
         collisionCount += 1
     }
 }
 
-class BluePhysicsPeg: PhysicsPeg {
+class BluePhysicsPeg: GamePeg {
     override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
         super.effectWhenHit(gameStateManager: &gameStateManager)
         if !self.isGlowing {
@@ -77,7 +74,7 @@ class BluePhysicsPeg: PhysicsPeg {
     }
 }
 
-class OrangePhysicsPeg: PhysicsPeg {
+class OrangePhysicsPeg: GamePeg {
     override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
         super.effectWhenHit(gameStateManager: &gameStateManager)
         if !self.isGlowing {

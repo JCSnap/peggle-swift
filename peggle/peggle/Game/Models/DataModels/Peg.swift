@@ -8,47 +8,74 @@
 import Foundation
 
 enum PegType: Codable {
-    case blue, orange
-
-    var description: String {
-        switch self {
-        case .blue:
-            return "Blue Peg"
-        case .orange:
-            return "Orange Peg"
-        }
-    }
+    case normal, scoring
 }
 
-struct Peg: Hashable {
-    var center: CGPoint
-    let type: PegType
-    let radius: CGFloat
+class Peg: BoardObject {
+    var type: PegType
+    var radius: CGFloat
     var isGlowing = false
 
     init(center: CGPoint, type: PegType, radius: CGFloat = Constants.defaultAssetRadius) {
-        self.center = center
         self.type = type
         self.radius = radius
+        super.init(center: center)
     }
-
-    mutating func glowUp() {
+    
+    required convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let x = try container.decode(CGFloat.self, forKey: .centerX)
+        let y = try container.decode(CGFloat.self, forKey: .centerY)
+        let center = CGPoint(x: x, y: y)
+        let type = try container.decode(PegType.self, forKey: .type)
+        let radius = try container.decode(CGFloat.self, forKey: .radius)
+        self.init(center: center, type: type, radius: radius)
+    }
+    
+    
+    func glowUp() {
         isGlowing = true
     }
-}
-
-extension Peg: Equatable {
-    static func == (lhs: Peg, rhs: Peg) -> Bool {
-        lhs.center == rhs.center &&
-        lhs.type == rhs.type &&
-        lhs.radius == rhs.radius
+    
+    func isPointInPeg(point: CGPoint) -> Bool {
+        distance(from: point) <= radius
     }
 
-    func hash(into hasher: inout Hasher) {
+    override func overlaps<T: BoardObject>(with other: T) -> Bool {
+        if let peg = other as? Peg {
+            return distance(from: peg.center) <= self.radius + peg.radius
+        } else {
+            return false
+        }
+    }
+
+    override func isInBoundary(within size: CGSize) -> Bool {
+        center.x - radius >= 0 &&    // Left
+        center.x + self.radius <= size.width &&  // Right
+        center.y - self.radius >= 0 &&           // Bottom
+        center.y + self.radius <= size.height    // Top
+    }
+    
+    override func isEqual<T: BoardObject>(to other: T) -> Bool {
+        guard Swift.type(of: self) == Swift.type(of: other) else {
+            return false
+        }
+        return self.center == other.center
+    }
+    
+    override func hash(into hasher: inout Hasher) {
         hasher.combine(center.x)
         hasher.combine(center.y)
         hasher.combine(type)
         hasher.combine(radius)
+    }
+}
+
+extension Peg {
+    static func == (lhs: Peg, rhs: Peg) -> Bool {
+        lhs.center == rhs.center &&
+        lhs.type == rhs.type &&
+        lhs.radius == rhs.radius
     }
 }
 
@@ -68,33 +95,6 @@ extension Peg: Codable {
         try container.encode(type, forKey: .type)
         try container.encode(radius, forKey: .radius)
     }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let x = try container.decode(CGFloat.self, forKey: .centerX)
-        let y = try container.decode(CGFloat.self, forKey: .centerY)
-        center = CGPoint(x: x, y: y)
-        type = try container.decode(PegType.self, forKey: .type)
-        radius = try container.decode(CGFloat.self, forKey: .radius)
-    }
-}
-
-// MARK: Utils
-extension Peg {
-    func isPointInPeg(point: CGPoint) -> Bool {
-        distance(from: point) <= radius
-    }
-
-    func overlaps(with other: Peg) -> Bool {
-        distance(from: other.center) <= self.radius + other.radius
-    }
-
-    func isInBoundary(within size: CGSize) -> Bool {
-        center.x - radius >= 0 &&    // Left
-        center.x + self.radius <= size.width &&  // Right
-        center.y - self.radius >= 0 &&           // Bottom
-        center.y + self.radius <= size.height    // Top
-    }
 }
 
 // MARK: Helpers
@@ -105,3 +105,4 @@ extension Peg {
         return sqrt(dx * dx + dy * dy)
     }
 }
+
