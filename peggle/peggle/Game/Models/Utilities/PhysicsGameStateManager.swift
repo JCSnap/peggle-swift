@@ -96,7 +96,7 @@ class PhysicsGameStateManager {
             self.removeInvisiblePegs()
         }
     }
-
+    
     func resetAllCollisionCounts() {
         objects.forEach { object in
             (object as? GamePeg)?.resetCollisionCount()
@@ -113,6 +113,19 @@ class PhysicsGameStateManager {
 
     func explodeExplodingPegs(withRadius: CGFloat = Constants.defaultBlastRadius) {
         print("Exploding")
+        let explodingPegs = objects.compactMap { $0 as? GamePeg }.filter { $0.type == .exploding }
+            for peg in objects.compactMap({ $0 as? GamePeg }) {
+                for explodingPeg in explodingPegs {
+                    let distance = explodingPeg.peg.distance(from: peg.center)
+                    if distance <= withRadius {
+                        peg.isVisible = false
+                    }
+                }
+            }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.defaultBlastDelay) {
+            self.removeInvisiblePegs()
+        }
     }
     
     func cleanUp() {

@@ -97,9 +97,9 @@ extension Peg: Codable {
     }
 }
 
-// MARK: Helpers
+// MARK: Utils
 extension Peg {
-    private func distance(from point: CGPoint) -> CGFloat {
+    func distance(from point: CGPoint) -> CGFloat {
         let dx = point.x - center.x
         let dy = point.y - center.y
         return sqrt(dx * dx + dy * dy)
