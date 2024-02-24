@@ -49,17 +49,19 @@ struct PegsView: View {
     let viewModel: GameBoardViewDelegate
 
     var body: some View {
-        ForEach(viewModel.pegs.indices, id: \.self) { index in
-            if viewModel.pegs[index].isGlowing {
-                PegView(pegType: viewModel.pegs[index].type, isGlowing: viewModel.pegs[index].isGlowing)
-                    .position(viewModel.pegs[index].center)
-                    .opacity(viewModel.pegs[index].isVisible ? 1 : 0)
+        let pegs = viewModel.pegs
+        
+        ForEach(pegs.indices, id: \.self) { index in
+            if pegs[index].isGlowing {
+                PegView(pegType: pegs[index].type, isGlowing: pegs[index].isGlowing)
+                    .position(pegs[index].center)
+                    .opacity(pegs[index].isVisible ? 1 : 0)
                     .animation(
                         .easeOut(duration: Constants.defaultAnimationDuration),
-                        value: viewModel.pegs[index].isVisible)
+                        value: pegs[index].isVisible)
             } else {
-                PegView(pegType: viewModel.pegs[index].type, isGlowing: viewModel.pegs[index].isGlowing)
-                    .position(viewModel.pegs[index].center)
+                PegView(pegType: pegs[index].type, isGlowing: pegs[index].isGlowing)
+                    .position(pegs[index].center)
             }
         }
     }
