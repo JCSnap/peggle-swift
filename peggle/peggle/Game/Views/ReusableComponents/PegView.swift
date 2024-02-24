@@ -23,6 +23,8 @@ struct PegView: View {
             .resizable()
             .scaledToFit()
             .frame(width: radius * 2, height: radius * 2)
+            .clipShape(Circle())
+            .contentShape(Circle())
     }
 
     private var pegImage: String {
