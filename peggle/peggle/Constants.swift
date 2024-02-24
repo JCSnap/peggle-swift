@@ -18,6 +18,8 @@ struct Constants {
     static let defaultAnimationDuration = 2.0
 
     static let collisionThresholdToBeConsideredStuck = 30
+    
+    static let defaultBlastRadius = 100.0
 
     static let defaultCannonForce = 8_000.0
     static let defaultCannonTimeInterval = 1.0

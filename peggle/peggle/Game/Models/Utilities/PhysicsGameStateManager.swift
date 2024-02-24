@@ -111,6 +111,10 @@ class PhysicsGameStateManager {
         }
     }
 
+    func explodeExplodingPegs(withRadius: CGFloat = Constants.defaultBlastRadius) {
+        print("Exploding")
+    }
+    
     func cleanUp() {
         cannonAngle = .zero
         level = nil

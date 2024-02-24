@@ -31,9 +31,11 @@ class GamePeg: GameObject, RoundPhysicsObject {
                                  mass: CGFloat = Constants.defaultPegMass) -> GamePeg {
         switch peg.type {
         case .normal:
-            return BluePhysicsPeg(peg: peg, velocity: velocity, mass: mass)
+            return NormalGamePeg(peg: peg, velocity: velocity, mass: mass)
         case .scoring:
-            return OrangePhysicsPeg(peg: peg, velocity: velocity, mass: mass)
+            return ScoringGamePeg(peg: peg, velocity: velocity, mass: mass)
+        case .exploding:
+            return ExplodingGamePeg(peg: peg, velocity: velocity, mass: mass)
         }
     }
 
@@ -65,7 +67,7 @@ class GamePeg: GameObject, RoundPhysicsObject {
     }
 }
 
-class BluePhysicsPeg: GamePeg {
+class NormalGamePeg: GamePeg {
     override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
         super.effectWhenHit(gameStateManager: &gameStateManager)
         if !self.isGlowing {
@@ -74,12 +76,22 @@ class BluePhysicsPeg: GamePeg {
     }
 }
 
-class OrangePhysicsPeg: GamePeg {
+class ScoringGamePeg: GamePeg {
     override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
         super.effectWhenHit(gameStateManager: &gameStateManager)
         if !self.isGlowing {
             self.glowUp()
             gameStateManager.score += 1
+        }
+    }
+}
+
+class ExplodingGamePeg: GamePeg {
+    override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
+        super.effectWhenHit(gameStateManager: &gameStateManager)
+        if !self.isGlowing {
+            self.glowUp()
+            gameStateManager.explodeExplodingPegs()
         }
     }
 }

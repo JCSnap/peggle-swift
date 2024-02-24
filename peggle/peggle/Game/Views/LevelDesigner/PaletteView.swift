@@ -67,6 +67,12 @@ struct PegSelectionView: View {
                 PegView(pegType: .scoring, isGlowing: false)
                     .border(viewModel.selectedPegType == .scoring ? Color.orange : Color.clear, width: 3)
             }
+            Button(action: {
+                viewModel.selectPegType(type: .exploding)
+            }) {
+                PegView(pegType: .exploding, isGlowing: false)
+                    .border(viewModel.selectedPegType == .exploding ? Color.green : Color.clear, width: 3)
+            }
             Spacer()
             Button(action: viewModel.toggleMode) {
                 DeleteButtonView()

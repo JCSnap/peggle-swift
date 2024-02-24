@@ -8,7 +8,7 @@
 import Foundation
 
 enum PegType: Codable {
-    case normal, scoring
+    case normal, scoring, exploding
 }
 
 class Peg: BoardObject {
