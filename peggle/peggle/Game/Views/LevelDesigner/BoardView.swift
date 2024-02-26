@@ -18,7 +18,9 @@ struct BoardView: View {
                     .zIndex(-3)
 
                 ForEach(viewModel.pegs.indices, id: \.self) { index in
-                    PegInteractiveView(peg: viewModel.pegs[index], index: index, viewModel: viewModel, radius: viewModel.pegs[index].radius)
+                    let isSelected = index == viewModel.selectedObjectIndex
+                    PegInteractiveView(peg: viewModel.pegs[index], index: index, viewModel: viewModel,
+                                       radius: viewModel.pegs[index].radius, isSelected: isSelected)
                 }
 
                 InvisibleLayerView(viewModel: viewModel)
@@ -37,6 +39,7 @@ struct PegInteractiveView: View {
     var index: Int
     var viewModel: LevelDesignerBoardDelegate
     var radius: CGFloat
+    var isSelected: Bool
     @State private var longPressTimer: Timer?
 
     var body: some View {
@@ -52,7 +55,7 @@ struct PegInteractiveView: View {
                 if !viewModel.isInsertMode {
                     viewModel.deletePeg(peg)
                 } else {
-                    viewModel.selectObjectIndex(index)
+                    viewModel.selectedObjectIndex = index
                 }
             }
             .simultaneousGesture(LongPressGesture(minimumDuration: 0.8).onEnded { _ in
@@ -61,6 +64,14 @@ struct PegInteractiveView: View {
             .simultaneousGesture(LongPressGesture().onEnded { _ in
                 longPressTimer?.invalidate()
             })
+            .overlay(
+                isSelected ? Rectangle()
+                    .stroke(lineWidth: 2)
+                    .foregroundColor(.white)
+                    .frame(width: radius * 2, height: radius * 2)
+                    .position(peg.center)
+                : nil
+            )
     }
 }
 
@@ -76,6 +87,7 @@ struct InvisibleLayerView: View {
             .onTapGesture { location in
                 if viewModel.isInsertMode {
                     viewModel.addPeg(at: location)
+                    viewModel.setSelectedObjectToLastObject()
                 } else {
                     warningLocation = CGPoint(x: location.x, y: location.y - 50) // prevent blocking by finger
                     showWarning = true
@@ -102,14 +114,15 @@ struct InvisibleLayerView: View {
 protocol LevelDesignerBoardDelegate: AnyObject {
     var isInsertMode: Bool { get }
     var pegs: [Peg] { get }
+    var selectedObjectIndex: Int { get set }
 
     func addPeg(at point: CGPoint)
+    
+    func setSelectedObjectToLastObject()
 
     func deletePeg(_ peg: Peg)
 
     func updatePegPosition(index: Int, newPoint: CGPoint)
-    
-    func selectObjectIndex(_ index: Int)
 
     func setBoardSize(_ size: CGSize)
 }

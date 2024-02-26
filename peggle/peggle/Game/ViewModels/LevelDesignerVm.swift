@@ -50,11 +50,8 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
         board.updatePegPosition(index: index, newPoint: newPoint)
     }
     
-    func selectObjectIndex(_ index: Int) {
-        selectedObjectIndex = index
-        if let peg = board.objects[index] as? Peg {
-            print(peg.radius)
-        }
+    func setSelectedObjectToLastObject() {
+        selectedObjectIndex = board.objects.count - 1
     }
     
     func updateObjectSize(index: Int, newSize: CGFloat) {
