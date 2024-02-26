@@ -19,11 +19,11 @@ struct GameView: View {
                     GameBoardView(viewModel: gameVm)
                     GameBottomView(viewModel: gameVm)
                 }
+                if !isPowerSelected {
+                    UnclosableModalView(content: SelectPowerView(isPowerSelected: $isPowerSelected, gameVm: gameVm))
+                }
             } else {
                 GameLoadLevelView(viewModel: gameVm)
-            }
-            if !isPowerSelected {
-                UnclosableModalView(content: SelectPowerView(isPowerSelected: $isPowerSelected, gameVm: gameVm))
             }
             if gameVm.isGameOver == .lose {
                 GameOverView(viewModel: gameVm, condition: .lose)
