@@ -60,7 +60,7 @@ struct PegsView: View {
                         .easeOut(duration: Constants.defaultAnimationDuration),
                         value: pegs[index].isVisible)
             } else {
-                PegView(pegType: pegs[index].type, isGlowing: pegs[index].isGlowing)
+                PegView(pegType: pegs[index].type, radius: pegs[index].radius, isGlowing: pegs[index].isGlowing)
                     .position(pegs[index].center)
             }
         }
