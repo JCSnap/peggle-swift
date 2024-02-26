@@ -10,6 +10,9 @@ import Foundation
 class BoardObject: Hashable {
     var center: CGPoint
     var angle: CGFloat
+    var size: CGFloat {
+        .zero
+    }
     
     init(center: CGPoint, angle: CGFloat = .zero) {
         self.center = center

@@ -15,6 +15,9 @@ class Peg: BoardObject {
     var type: PegType
     var radius: CGFloat
     var isGlowing: Bool = false
+    override var size: CGFloat {
+        radius
+    }
 
     init(center: CGPoint, type: PegType, radius: CGFloat = Constants.defaultAssetRadius, angle: CGFloat = .zero) {
         self.type = type
