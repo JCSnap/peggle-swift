@@ -92,23 +92,25 @@ struct EditObjectView: View {
     var body: some View {
         HStack {
             VStack {
-                Text("Edit size")
-                    .font(.headline)
-                
-                Slider(value: $sizeSliderValue, in: 10...50, onEditingChanged: { editing in
-                    viewModel.updateObjectSize(index: viewModel.selectedObjectIndex, newSize: sizeSliderValue)
-                })
-                    .padding()
-                
+                HStack {
+                    Text("Edit size")
+                        .font(.headline)
+                    
+                    Slider(value: $sizeSliderValue, in: 10...50, onEditingChanged: { editing in
+                        viewModel.updateObjectSize(index: viewModel.selectedObjectIndex, newSize: sizeSliderValue)
+                    })
+                        .padding()
+                }
                 Text("Value: \(sizeSliderValue, specifier: "%.2f")")
             }
             VStack {
-                Text("Edit orientation")
-                    .font(.headline)
-                
-                Slider(value: $sizeSliderValue, in: 0...360)
-                    .padding()
-                
+                HStack {
+                    Text("Edit orientation")
+                        .font(.headline)
+                    
+                    Slider(value: $sizeSliderValue, in: 0...360)
+                        .padding()
+                }
                 Text("Value: \(orientationSliderValue, specifier: "%.2f")")
             }
         }
