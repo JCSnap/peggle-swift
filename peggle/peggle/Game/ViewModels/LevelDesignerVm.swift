@@ -58,11 +58,13 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
         let objectToEdit = board.objects[index]
         objectToEdit.updateSize(to: newSize)
         board.replaceObject(at: index, with: objectToEdit)
-       
     }
     
     func updateObjectAngle(index: Int, newAngleInDegree: CGFloat) {
-        //let objectToEdit = board.objects[index]
+        let objectToEdit = board.objects[index]
+        let newAngleInRadian = newAngleInDegree * .pi / 180
+        objectToEdit.updateAngle(to: newAngleInRadian)
+        board.replaceObject(at: index, with: objectToEdit)
     }
 
     func setBoardSize(_ size: CGSize) {

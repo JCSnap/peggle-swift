@@ -42,4 +42,8 @@ class BoardObject: Hashable {
     func updateSize(to newSize: CGFloat) {
         fatalError("Subclasses need to implement this method")
     }
+    
+    func updateAngle(to newAngle: CGFloat) {
+        self.angle = newAngle
+    }
 }

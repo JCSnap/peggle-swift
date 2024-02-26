@@ -87,7 +87,7 @@ struct PegSelectionView: View {
 struct EditObjectView: View {
     var viewModel: LevelDesignerPaletteDelegate
     @State private var sizeSliderValue: Double = 0.5
-    @State private var orientationSliderValue: Double = 0.5
+    @State private var angleSliderValue: Double = 0.5
     
     var body: some View {
         HStack {
@@ -108,10 +108,12 @@ struct EditObjectView: View {
                     Text("Edit orientation")
                         .font(.headline)
                     
-                    Slider(value: $sizeSliderValue, in: 0...360)
+                    Slider(value: $angleSliderValue, in: 0...360, onEditingChanged: { editing in
+                        viewModel.updateObjectAngle(index: viewModel.selectedObjectIndex, newAngleInDegree: angleSliderValue)
+                    })
                         .padding()
                 }
-                Text("Value: \(orientationSliderValue, specifier: "%.2f")")
+                Text("Value: \(angleSliderValue, specifier: "%.2f")")
             }
         }
         .padding()
@@ -155,6 +157,7 @@ protocol LevelDesignerPaletteDelegate: AnyObject {
     
     // MARK: Edit objects
     func updateObjectSize(index: Int, newSize: CGFloat)
+    func updateObjectAngle(index: Int, newAngleInDegree: CGFloat)
 
     // MARK: Actions
     func renderLoadLevelView()

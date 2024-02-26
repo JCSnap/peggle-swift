@@ -20,7 +20,7 @@ struct BoardView: View {
                 ForEach(viewModel.pegs.indices, id: \.self) { index in
                     let isSelected = index == viewModel.selectedObjectIndex
                     PegInteractiveView(peg: viewModel.pegs[index], index: index, viewModel: viewModel,
-                                       radius: viewModel.pegs[index].radius, isSelected: isSelected)
+                                       radius: viewModel.pegs[index].radius, angle: viewModel.pegs[index].angle, isSelected: isSelected)
                 }
 
                 InvisibleLayerView(viewModel: viewModel)
@@ -39,11 +39,12 @@ struct PegInteractiveView: View {
     var index: Int
     var viewModel: LevelDesignerBoardDelegate
     var radius: CGFloat
+    var angle: CGFloat
     var isSelected: Bool
     @State private var longPressTimer: Timer?
 
     var body: some View {
-        PegView(pegType: peg.type, radius: radius, isGlowing: peg.isGlowing)
+        PegView(pegType: peg.type, radius: radius, isGlowing: peg.isGlowing, orientation: .radians(angle))
             .position(peg.center)
             .gesture(DragGesture()
                 .onChanged { value in

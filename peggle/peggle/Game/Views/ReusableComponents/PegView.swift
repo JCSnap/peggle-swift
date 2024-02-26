@@ -11,11 +11,13 @@ struct PegView: View {
     let pegType: PegType
     let radius: CGFloat
     let isGlowing: Bool
+    let orientation: Angle
     
-    init(pegType: PegType, radius: CGFloat = Constants.defaultAssetRadius, isGlowing: Bool) {
+    init(pegType: PegType, radius: CGFloat = Constants.defaultAssetRadius, isGlowing: Bool, orientation: Angle = .zero) {
         self.pegType = pegType
         self.radius = radius
         self.isGlowing = isGlowing
+        self.orientation = orientation
     }
 
     var body: some View {
@@ -25,6 +27,7 @@ struct PegView: View {
             .frame(width: radius * 2, height: radius * 2)
             .clipShape(Circle())
             .contentShape(Circle())
+            .rotationEffect(orientation)
     }
 
     private var pegImage: String {
