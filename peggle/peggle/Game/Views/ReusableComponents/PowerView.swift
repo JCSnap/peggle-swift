@@ -8,11 +8,25 @@
 import SwiftUI
 
 struct PowerView: View {
+    let powerType: PowerType
+    let size: CGSize = CGSize(width: 100, height: 100)
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Image(powerImage)
+            .resizable()
+            .scaledToFit()
+            .frame(width: size.width, height: size.height)
+    }
+    
+    private var powerImage: String {
+        let imageNames: [PowerType: String] = [
+            .exploding: "explosion-power",
+            .spookyBall: "spooky-ball-power"
+        ]
+        return imageNames[powerType] ?? "explosion-power"
     }
 }
 
 #Preview {
-    PowerView()
+    PowerView(powerType: .exploding)
 }

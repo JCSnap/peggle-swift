@@ -13,7 +13,8 @@ class GameVm:
     GameBoardViewDelegate,
     GameBottomViewDelegate,
     GameLoadLevelViewDelegate,
-    GameOverViewDelegate {
+    GameOverViewDelegate,
+    GameSelectPowerViewDelegate {
     private var rootVm: GameRootDelegate
     private var gameStateManager = PhysicsGameStateManager()
     private var persistenceManager: LevelPersistence.Type = Constants.defaultPersistenceManager
@@ -70,6 +71,9 @@ class GameVm:
     }
     var renderGame: Bool {
         gameStateManager.hasLevel
+    }
+    var selectedPowerType: PowerType {
+        rootVm.selectedPowerType
     }
     private var cleanupWorkItem: DispatchWorkItem?
     

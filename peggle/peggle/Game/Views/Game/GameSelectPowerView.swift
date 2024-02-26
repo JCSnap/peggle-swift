@@ -7,12 +7,44 @@
 
 import SwiftUI
 
-struct SelectPowerView: View {
+struct GameSelectPowerView: View {
+    @Binding var isPowerSelected: Bool
+    var viewModel: GameSelectPowerViewDelegate
+    @State private var selectedPowerType: PowerType = .exploding
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("Select your power")
+                .font(.largeTitle)
+                .foregroundStyle(.black)
+            HStack {
+                Button(action: {
+                    selectedPowerType = .exploding
+                }) {
+                    VStack {
+                        PowerView(powerType: .exploding)
+                        Text("EXPLODING")
+                    }
+                }
+                .border(selectedPowerType == .exploding ? Color.blue : Color.clear, width: 5)
+                Button(action: {
+                    selectedPowerType = .spookyBall
+                }) {
+                    VStack {
+                        PowerView(powerType: .spookyBall)
+                        Text("SPOOKYBALL")
+                    }
+                }
+                .border(selectedPowerType == .spookyBall ? Color.blue : Color.clear, width: 5)
+            }
+            Button("OK") {
+                isPowerSelected = true
+                viewModel.selectPowerType(selectedPowerType)
+            }
+        }
     }
 }
 
-#Preview {
-    SelectPowerView()
+protocol GameSelectPowerViewDelegate {
+    func selectPowerType(_ type: PowerType)
 }

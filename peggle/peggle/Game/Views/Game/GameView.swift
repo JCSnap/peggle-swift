@@ -20,7 +20,7 @@ struct GameView: View {
                     GameBottomView(viewModel: gameVm)
                 }
                 if !isPowerSelected {
-                    UnclosableModalView(content: SelectPowerView(isPowerSelected: $isPowerSelected, gameVm: gameVm))
+                    UnclosableModalView(content: GameSelectPowerView(isPowerSelected: $isPowerSelected, viewModel: gameVm))
                 }
             } else {
                 GameLoadLevelView(viewModel: gameVm)
@@ -40,29 +40,4 @@ struct GameView: View {
     }
 }
 
-struct SelectPowerView: View {
-    @Binding var isPowerSelected: Bool
-    var gameVm: GameVm
-    
-    var body: some View {
-        VStack {
-            Text("Select your power")
-                .font(.largeTitle)
-                .foregroundStyle(.black)
-            HStack {
-                Button(action: {
-                    isPowerSelected = true
-                    gameVm.selectPowerType(.exploding)
-                }) {
-                    Text("EXPLODING")
-                }
-                Button(action: {
-                    isPowerSelected = true
-                    gameVm.selectPowerType(.spookyBall)
-                }) {
-                    Text("SPOOKYBALL")
-                }
-            }
-        }
-    }
-}
+
