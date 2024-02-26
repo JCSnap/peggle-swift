@@ -19,7 +19,12 @@ class GamePeg: GameObject, RoundPhysicsObject {
         set { peg.center = newValue }
     }
     var radius: CGFloat {
-        peg.radius
+        get { peg.radius }
+        set { peg.radius = newValue }
+    }
+    var angle: CGFloat {
+        get { peg.angle }
+        set { peg.angle = newValue }
     }
     var type: PegType {
         peg.type

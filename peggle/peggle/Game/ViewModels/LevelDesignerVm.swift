@@ -56,12 +56,13 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
     
     func updateObjectSize(index: Int, newSize: CGFloat) {
         let objectToEdit = board.objects[index]
-        
-        if let pegToEdit = objectToEdit as? Peg {
-            let newPeg = Peg(center: pegToEdit.center, type: pegToEdit.type, radius: newSize)
-            print("updating", pegToEdit.radius, " ", newPeg.radius)
-            board.replaceObject(at: index, with: newPeg)
-        }
+        objectToEdit.updateSize(to: newSize)
+        board.replaceObject(at: index, with: objectToEdit)
+       
+    }
+    
+    func updateObjectAngle(index: Int, newAngleInDegree: CGFloat) {
+        //let objectToEdit = board.objects[index]
     }
 
     func setBoardSize(_ size: CGSize) {

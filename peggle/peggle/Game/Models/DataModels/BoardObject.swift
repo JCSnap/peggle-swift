@@ -9,9 +9,11 @@ import Foundation
 
 class BoardObject: Hashable {
     var center: CGPoint
+    var angle: CGFloat
     
-    init(center: CGPoint) {
+    init(center: CGPoint, angle: CGFloat = .zero) {
         self.center = center
+        self.angle = angle
     }
     func overlaps<T: BoardObject>(with other: T) -> Bool {
         fatalError("Subclasses need to implement this method")
@@ -34,6 +36,10 @@ class BoardObject: Hashable {
     }
     
     func addToBoard(board: inout Board) {
+        fatalError("Subclasses need to implement this method")
+    }
+    
+    func updateSize(to newSize: CGFloat) {
         fatalError("Subclasses need to implement this method")
     }
 }

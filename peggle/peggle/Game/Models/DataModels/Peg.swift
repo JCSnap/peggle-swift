@@ -14,12 +14,12 @@ enum PegType: Codable {
 class Peg: BoardObject {
     var type: PegType
     var radius: CGFloat
-    var isGlowing = false
+    var isGlowing: Bool = false
 
-    init(center: CGPoint, type: PegType, radius: CGFloat = Constants.defaultAssetRadius) {
+    init(center: CGPoint, type: PegType, radius: CGFloat = Constants.defaultAssetRadius, angle: CGFloat = .zero) {
         self.type = type
         self.radius = radius
-        super.init(center: center)
+        super.init(center: center, angle: angle)
     }
     
     required convenience init(from decoder: Decoder) throws {
@@ -29,6 +29,7 @@ class Peg: BoardObject {
         let center = CGPoint(x: x, y: y)
         let type = try container.decode(PegType.self, forKey: .type)
         let radius = try container.decode(CGFloat.self, forKey: .radius)
+        let angle = try container.decode(CGFloat.self, forKey: .angle)
         self.init(center: center, type: type, radius: radius)
     }
     
@@ -60,6 +61,10 @@ class Peg: BoardObject {
         board.addObject(self)
     }
     
+    override func updateSize(to newSize: CGFloat) {
+        self.radius = newSize
+    }
+    
     override func hash(into hasher: inout Hasher) {
         hasher.combine(center.x)
         hasher.combine(center.y)
@@ -83,6 +88,7 @@ extension Peg: Codable {
         case centerY = "center_y"
         case type
         case radius
+        case angle
     }
 
     func encode(to encoder: Encoder) throws {
@@ -91,6 +97,7 @@ extension Peg: Codable {
         try container.encode(center.y, forKey: .centerY)
         try container.encode(type, forKey: .type)
         try container.encode(radius, forKey: .radius)
+        try container.encode(angle, forKey: .angle)
     }
 }
 
