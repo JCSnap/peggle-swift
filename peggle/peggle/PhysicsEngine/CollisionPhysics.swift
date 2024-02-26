@@ -33,6 +33,12 @@ enum BoundsSide {
 }
 
 protocol CollisionPhysicsBehaviour {
-    mutating func handleBoundaryCollision(within bounds: CGRect)
+    mutating func handleBoundaryCollision(within bounds: CGRect, applyPositiomalCorrection: Bool)
     func isColliding<T: RoundPhysicsObject>(with object: T) -> Bool
+}
+
+extension CollisionPhysicsBehaviour {
+    mutating func handleBoundaryCollision(within bounds: CGRect, applyPositiomalCorrection: Bool = true) {
+        handleBoundaryCollision(within: bounds, applyPositiomalCorrection: applyPositiomalCorrection)
+    }
 }

@@ -17,10 +17,12 @@ protocol RectangularPhysicsObject: PhysicsObject & CollisionPhysicsBehaviour {
 }
 
 extension RectangularPhysicsObject {
-    mutating func handleBoundaryCollision(within bounds: CGRect) {
+    mutating func handleBoundaryCollision(within bounds: CGRect, applyPositionalCorrection: Bool = true) {
         self.reflectVelocityIfNeeded(axis: .horizontal, within: bounds)
         self.reflectVelocityIfNeeded(axis: .vertical, within: bounds)
-        self.applyPositionalCorrectionWithBounds(within: bounds)
+        if applyPositionalCorrection {
+            self.applyPositionalCorrectionWithBounds(within: bounds)
+        }
     }
     
     func isColliding<T: RoundPhysicsObject>(with object: T) -> Bool {

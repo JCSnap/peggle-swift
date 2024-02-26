@@ -16,7 +16,7 @@ protocol RoundPhysicsObject: PhysicsObject & CollisionPhysicsBehaviour {
 }
 
 extension RoundPhysicsObject {
-    mutating func handleBoundaryCollision(within bounds: CGRect) {
+    mutating func handleBoundaryCollision(within bounds: CGRect, applyPositiomalCorrection: Bool = true) {
         self.reflectVelocityIfNeeded(axis: .horizontal, within: bounds)
         self.reflectVelocityIfNeeded(axis: .vertical, within: bounds)
         self.applyPositionalCorrectionWithBounds(within: bounds)
