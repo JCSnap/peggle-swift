@@ -124,7 +124,7 @@ class GameVm:
     private func updateGameState() {
         WorldPhysics.applyGravity(to: &ball, deltaTime: timerManager.timeInterval)
         ball.handleBoundaryCollision(within: screenBounds)
-        bucket.handleBoundaryCollision(within: screenBounds)
+        bucket.handleBoundaryCollision(within: screenBounds, applyPositionalCorrection: false)
         checkAndHandleBallStuck()
         checkAndHandleBallExit()
         if ball.isColliding(with: bucket) {
@@ -239,11 +239,11 @@ enum ScreenPosition {
         case .topRight:
             return CGPoint(x: screenBounds.size.width, y: 10)
         case .bottomLeft:
-            return CGPoint(x: 0, y: screenBounds.size.height - 100)
+            return CGPoint(x: 0, y: screenBounds.size.height)
         case .bottomCenter:
-            return CGPoint(x: screenBounds.size.width / 2, y: screenBounds.size.height - 100)
+            return CGPoint(x: screenBounds.size.width / 2, y: screenBounds.size.height)
         case .bottomRight:
-            return CGPoint(x: screenBounds.size.width, y: screenBounds.size.height - 100)
+            return CGPoint(x: screenBounds.size.width, y: screenBounds.size.height)
         }
     }
 }
