@@ -44,7 +44,7 @@ struct PegInteractiveView: View {
     @State private var longPressTimer: Timer?
 
     var body: some View {
-        PegView(pegType: peg.type, radius: radius, isGlowing: peg.isGlowing, orientation: .radians(angle))
+        PegView(pegType: peg.type, radius: radius, isGlowing: peg.isGlowing, angle: .radians(angle))
             .position(peg.center)
             .gesture(DragGesture()
                 .onChanged { value in
