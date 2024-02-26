@@ -37,6 +37,9 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
             return peg
         }
     }
+    var objects: [BoardObject] {
+        board.objects
+    }
 
     func addPeg(at point: CGPoint) {
         board.addPeg(at: point, withType: selectedPegType)

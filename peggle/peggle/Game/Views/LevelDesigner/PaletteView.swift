@@ -86,8 +86,33 @@ struct PegSelectionView: View {
 
 struct EditObjectView: View {
     var viewModel: LevelDesignerPaletteDelegate
-    @State private var sizeSliderValue: Double = 0.5
-    @State private var angleSliderValue: Double = 0.5
+    @State private var sizeSliderValue: CGFloat = 0
+    @State private var angleSliderValue: CGFloat = 0
+    private var sizeBinding: Binding<CGFloat> {
+        Binding<CGFloat>(
+            get: {
+                guard !viewModel.objects.isEmpty && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else { return 0 }
+                return viewModel.objects[viewModel.selectedObjectIndex].size
+            },
+            set: {
+                guard viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else { return }
+                viewModel.updateObjectSize(index: viewModel.selectedObjectIndex, newSize: $0)
+            }
+        )
+    }
+    private var angleBinding: Binding<CGFloat> {
+        Binding<CGFloat>(
+            get: {
+                guard !viewModel.objects.isEmpty && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else { return 0 }
+                let angleInDegree = viewModel.objects[viewModel.selectedObjectIndex].angle * 180 / .pi
+                return angleInDegree
+            },
+            set: {
+                guard viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else { return }
+                viewModel.updateObjectAngle(index: viewModel.selectedObjectIndex, newAngleInDegree: $0)
+            }
+        )
+    }
     
     var body: some View {
         HStack {
@@ -96,9 +121,7 @@ struct EditObjectView: View {
                     Text("Edit size")
                         .font(.headline)
                     
-                    Slider(value: $sizeSliderValue, in: 10...50, onEditingChanged: { editing in
-                        viewModel.updateObjectSize(index: viewModel.selectedObjectIndex, newSize: sizeSliderValue)
-                    })
+                    Slider(value: sizeBinding, in: 10...50)
                         .padding()
                 }
                 Text("Value: \(sizeSliderValue, specifier: "%.2f")")
@@ -108,9 +131,7 @@ struct EditObjectView: View {
                     Text("Edit orientation")
                         .font(.headline)
                     
-                    Slider(value: $angleSliderValue, in: 0...360, onEditingChanged: { editing in
-                        viewModel.updateObjectAngle(index: viewModel.selectedObjectIndex, newAngleInDegree: angleSliderValue)
-                    })
+                    Slider(value: angleBinding, in: 0...360)
                         .padding()
                 }
                 Text("Value: \(angleSliderValue, specifier: "%.2f")")
@@ -150,6 +171,7 @@ protocol LevelDesignerPaletteDelegate: AnyObject {
     var selectedPegType: PegType { get }
     var isInsertMode: Bool { get }
     var selectedObjectIndex: Int { get }
+    var objects: [BoardObject] { get }
 
     // MARK: Peg management
     func selectPegType(type: PegType)
