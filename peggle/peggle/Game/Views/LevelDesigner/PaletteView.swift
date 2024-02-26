@@ -13,7 +13,7 @@ struct PaletteView: View {
     @State private var showSaveAlert = false
     @State private var showInvalidNameAlert = false
     @State private var showResetAlert = false
-
+    
     var body: some View {
         let resetAlertText = "Are you sure you want to reset? This action cannot be reversed"
         let saveAlertText = "Save level with: \(levelName)?"
@@ -23,7 +23,7 @@ struct PaletteView: View {
         Please use a valid name that does not contain unsavable characters,
         consist only of whitespace, or more than 30 characters.
         """
-
+        
         VStack {
             PegSelectionView(viewModel: viewModel)
             EditObjectView(viewModel: viewModel)
@@ -53,7 +53,7 @@ struct PaletteView: View {
 
 struct PegSelectionView: View {
     var viewModel: LevelDesignerPaletteDelegate
-
+    
     var body: some View {
         HStack {
             Button(action: {
@@ -120,21 +120,29 @@ struct EditObjectView: View {
                 HStack {
                     Text("Edit size")
                         .font(.headline)
+                        .foregroundStyle(.black)
                     
                     Slider(value: sizeBinding, in: 10...50)
                         .padding()
                 }
-                Text("Value: \(sizeSliderValue, specifier: "%.2f")")
+                if !viewModel.objects.isEmpty && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) {
+                    Text("Value: \(viewModel.objects[viewModel.selectedObjectIndex].size, specifier: "%.2f")")
+                        .foregroundStyle(.black)
+                }
             }
             VStack {
                 HStack {
                     Text("Edit orientation")
                         .font(.headline)
+                        .foregroundStyle(.black)
                     
                     Slider(value: angleBinding, in: 0...360)
                         .padding()
                 }
-                Text("Value: \(angleSliderValue, specifier: "%.2f")")
+                if !viewModel.objects.isEmpty && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) {
+                    Text("Value: \(viewModel.objects[viewModel.selectedObjectIndex].angle, specifier: "%.2f")")
+                        .foregroundStyle(.black)
+                }
             }
         }
         .padding()
@@ -147,7 +155,7 @@ struct ActionButtonsView: View {
     @Binding var showInvalidNameAlert: Bool
     @Binding var showResetAlert: Bool
     var viewModel: LevelDesignerPaletteDelegate
-
+    
     var body: some View {
         HStack {
             Button("LOAD", action: viewModel.renderLoadLevelView)
@@ -172,7 +180,7 @@ protocol LevelDesignerPaletteDelegate: AnyObject {
     var isInsertMode: Bool { get }
     var selectedObjectIndex: Int { get }
     var objects: [BoardObject] { get }
-
+    
     // MARK: Peg management
     func selectPegType(type: PegType)
     func toggleMode()
@@ -180,15 +188,15 @@ protocol LevelDesignerPaletteDelegate: AnyObject {
     // MARK: Edit objects
     func updateObjectSize(index: Int, newSize: CGFloat)
     func updateObjectAngle(index: Int, newAngleInDegree: CGFloat)
-
+    
     // MARK: Actions
     func renderLoadLevelView()
-
+    
     func isNameInvalid(_ name: String) -> Bool
-
+    
     func saveLevel(levelName: String)
-
+    
     func resetLevel()
-
+    
     func startLevel()
 }
