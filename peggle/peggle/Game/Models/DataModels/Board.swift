@@ -52,7 +52,7 @@ struct Board {
         if let peg = object as? Peg {
             return Peg(center: point, type: peg.type, radius: peg.radius)
         } else if let obstacle = object as? Obstacle {
-            return Obstacle(center: point, type: obstacle.type, angle: obstacle.angle)
+            return Obstacle(center: point, type: obstacle.type, size: obstacle.size, angle: obstacle.angle)
         } else {
             fatalError("Object needs to be a subclass of BoardObject")
         }
