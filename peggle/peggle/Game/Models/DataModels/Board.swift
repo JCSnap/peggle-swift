@@ -124,9 +124,9 @@ extension Board: Hashable & Codable {
 
 // MARK: helpers
 extension Board {
-    internal func isOverlapping(_ peg: BoardObject, excludingIndex index: Int? = nil) -> Bool {
-        for (currentIndex, existingPeg) in objects.enumerated() {
-            if currentIndex != index && peg.overlaps(with: existingPeg) {
+    internal func isOverlapping(_ object: BoardObject, excludingIndex index: Int? = nil) -> Bool {
+        for (currentIndex, existingObject) in objects.enumerated() {
+            if currentIndex != index && object.overlaps(with: existingObject) {
                 return true
             }
         }

@@ -60,6 +60,16 @@ class Obstacle: BoardObject {
     override func isInBoundary(within size: CGSize) -> Bool {
         shape.isInBoundary(within: size)
     }
+    
+    override func overlaps<T: BoardObject>(with other: T) -> Bool {
+        if let peg = other as? Peg {
+            return false
+        } else if let obstacle = other as? Obstacle {
+            return false
+        } else {
+            return false
+        }
+    }
 }
 
 extension Obstacle: Codable {

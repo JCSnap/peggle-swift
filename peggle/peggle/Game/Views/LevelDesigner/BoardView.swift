@@ -19,9 +19,10 @@ struct BoardView: View {
 
                 ForEach(viewModel.pegs.indices, id: \.self) { index in
                     let peg = viewModel.pegs[index]
-                    let isSelected = viewModel.getIndex(of: peg) == viewModel.selectedObjectIndex
+                    let absoluteIndex = viewModel.getIndex(of: peg)
+                    let isSelected = absoluteIndex == viewModel.selectedObjectIndex
                     let pegView = PegView(pegType: peg.type, radius: peg.radius, isGlowing: peg.isGlowing, angle: .radians(peg.angle))
-                    InteractiveView(content: pegView, viewModel: viewModel, object: peg, index: index)
+                    InteractiveView(content: pegView, viewModel: viewModel, object: peg, index: absoluteIndex)
                         .overlay(
                             isSelected ? Rectangle()
                                 .stroke(lineWidth: 2)
@@ -33,14 +34,16 @@ struct BoardView: View {
                 }
                 ForEach(viewModel.obstacles.indices, id: \.self) { index in
                     let obstacle = viewModel.obstacles[index]
-                    let isSelected = viewModel.getIndex(of: obstacle) == viewModel.selectedObjectIndex
+                    let absoluteIndex = viewModel.getIndex(of: obstacle)
+                    let isSelected = absoluteIndex == viewModel.selectedObjectIndex
                     let obstacleView = ObstacleView(type: obstacle.type, width: obstacle.size * 5, height: obstacle.size, angle: obstacle.angle)
-                    InteractiveView(content: obstacleView, viewModel: viewModel, object: obstacle, index: index)
+                    InteractiveView(content: obstacleView, viewModel: viewModel, object: obstacle, index: absoluteIndex)
                         .overlay(
                             isSelected ? Rectangle()
                                 .stroke(lineWidth: 2)
                                 .foregroundColor(.white)
                                 .frame(width: obstacle.size * 5, height: obstacle.size)
+                                .rotationEffect(.radians(obstacle.angle))
                                 .position(obstacle.center)
                             : nil
                         )

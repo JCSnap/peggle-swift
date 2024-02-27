@@ -44,6 +44,8 @@ class Peg: BoardObject {
     override func overlaps<T: BoardObject>(with other: T) -> Bool {
         if let peg = other as? Peg {
             return distance(from: peg.center) <= self.radius + peg.radius
+        } else if let obstacle = other as? Obstacle {
+            return false
         } else {
             return false
         }
