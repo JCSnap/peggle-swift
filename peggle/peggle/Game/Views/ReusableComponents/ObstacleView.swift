@@ -11,11 +11,13 @@ struct ObstacleView: View {
     var type: ObjectType.ObstacleType
     var width: CGFloat
     var height: CGFloat
+    var angle: CGFloat = .zero
     
     var body: some View {
         Image("rectangle-obstacle")
             .resizable()
             .frame(width: width, height: height)
+            .rotationEffect(.radians(angle))
     }
     
     private var pegImage: String {

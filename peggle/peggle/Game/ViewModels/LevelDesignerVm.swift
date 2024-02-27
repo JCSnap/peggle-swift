@@ -70,7 +70,7 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
         board.deleteBoardObject(object)
     }
 
-    func updatePegPosition(index: Int, newPoint: CGPoint) {
+    func updateObjectPosition(index: Int, newPoint: CGPoint) {
         board.updateObjectPosition(index: index, newPoint: newPoint)
     }
     

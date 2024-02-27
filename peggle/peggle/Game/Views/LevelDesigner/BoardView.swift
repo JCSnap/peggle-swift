@@ -20,13 +20,22 @@ struct BoardView: View {
                 ForEach(viewModel.pegs.indices, id: \.self) { index in
                     let isSelected = index == viewModel.selectedObjectIndex
                     let peg = viewModel.pegs[index]
-                    PegInteractiveView(type: peg.type, center: peg.center, index: index, viewModel: viewModel,
-                                       radius: peg.radius, isGlowing: peg.isGlowing, angle: peg.angle, isSelected: isSelected, peg: peg)
-                    }
+                    let pegView = PegView(pegType: peg.type, radius: peg.radius, isGlowing: peg.isGlowing, angle: .radians(peg.angle))
+                    InteractiveView(content: pegView, viewModel: viewModel, object: peg, index: index)
+                        .overlay(
+                            isSelected ? Rectangle()
+                                .stroke(lineWidth: 2)
+                                .foregroundColor(.white)
+                                .frame(width: peg.radius * 2, height: peg.radius * 2)
+                                .position(peg.center)
+                            : nil
+                        )
+                }
                 ForEach(viewModel.obstacles.indices, id: \.self) { index in
                     let isSelected = index == viewModel.selectedObjectIndex
                     let obstacle = viewModel.obstacles[index]
-                    ObstacleInteractiveView(viewModel: viewModel, type: obstacle.type, center: obstacle.center, index: index, size: obstacle.size, angle: obstacle.angle)
+                    let obstacleView = ObstacleView(type: obstacle.type, width: obstacle.size * 5, height: obstacle.size, angle: obstacle.angle)
+                    InteractiveView(content: obstacleView, viewModel: viewModel, object: obstacle, index: index)
                 }
         
                 InvisibleLayerView(viewModel: viewModel)
@@ -36,66 +45,6 @@ struct BoardView: View {
             }
         }
         .frame(maxHeight: .infinity)
-    }
-}
-
-struct PegInteractiveView: View {
-    // TODO: View should not have reference to model
-    var type: ObjectType.PegType
-    var center: CGPoint
-    var index: Int
-    var viewModel: LevelDesignerBoardDelegate
-    var radius: CGFloat
-    var isGlowing: Bool
-    var angle: CGFloat
-    var isSelected: Bool
-    var peg: Peg
-    @State private var longPressTimer: Timer?
-
-    var body: some View {
-        PegView(pegType: type, radius: radius, isGlowing: isGlowing, angle: .radians(angle))
-            .position(center)
-            .gesture(DragGesture()
-                .onChanged { value in
-                    viewModel.updatePegPosition(index: index, newPoint: value.location)
-                    longPressTimer?.invalidate()
-                }
-            )
-            .onTapGesture {
-                if !viewModel.isInsertMode {
-                    viewModel.deleteObject(peg)
-                } else {
-                    viewModel.selectedObjectIndex = index
-                }
-            }
-            .simultaneousGesture(LongPressGesture(minimumDuration: 0.8).onEnded { _ in
-                viewModel.deleteObject(peg)
-            })
-            .simultaneousGesture(LongPressGesture().onEnded { _ in
-                longPressTimer?.invalidate()
-            })
-            .overlay(
-                isSelected ? Rectangle()
-                    .stroke(lineWidth: 2)
-                    .foregroundColor(.white)
-                    .frame(width: radius * 2, height: radius * 2)
-                    .position(center)
-                : nil
-            )
-    }
-}
-
-struct ObstacleInteractiveView: View {
-    var viewModel: LevelDesignerBoardDelegate
-    var type: ObjectType.ObstacleType
-    var center: CGPoint
-    var index: Int
-    var size: CGFloat
-    var angle: CGFloat
-
-    var body: some View {
-        ObstacleView(type: type, width: size * 5, height: size)
-            .position(center)
     }
 }
 
@@ -135,6 +84,39 @@ struct InvisibleLayerView: View {
     }
 }
 
+struct InteractiveView<Content: View>: View {
+    var content: Content
+    var viewModel: LevelDesignerBoardDelegate
+    var object: BoardObject
+    var index: Int
+    @State private var longPressTimer: Timer?
+
+    var body: some View {
+        content
+            .position(object.center)
+            .gesture(DragGesture()
+                .onChanged { value in
+                    viewModel.updateObjectPosition(index: index, newPoint: value.location)
+                    longPressTimer?.invalidate()
+                }
+            )
+            .onTapGesture {
+                if !viewModel.isInsertMode {
+                    viewModel.deleteObject(object)
+                } else {
+                    viewModel.selectedObjectIndex = index
+                }
+            }
+            .simultaneousGesture(LongPressGesture(minimumDuration: 0.8).onEnded { _ in
+                viewModel.deleteObject(object)
+            })
+            .simultaneousGesture(LongPressGesture().onEnded { _ in
+                longPressTimer?.invalidate()
+            })
+    }
+}
+
+
 protocol LevelDesignerBoardDelegate: AnyObject {
     var isInsertMode: Bool { get }
     var pegs: [Peg] { get }
@@ -147,7 +129,7 @@ protocol LevelDesignerBoardDelegate: AnyObject {
 
     func deleteObject(_ object: BoardObject)
 
-    func updatePegPosition(index: Int, newPoint: CGPoint)
+    func updateObjectPosition(index: Int, newPoint: CGPoint)
 
     func setBoardSize(_ size: CGSize)
 }
