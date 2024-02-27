@@ -8,9 +8,9 @@
 import Foundation
 
 @Observable
-class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate, LevelDesignerLoadLevelDelegate {
+class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate, LevelDesignerLoadLevelDelegate {    
     private var rootVm: LevelDesignerRootDelegate
-    var selectedPegType: PegType
+    var selectedObjectType: ObjectType
     var board: Board
     var isInsertMode: Bool
 
@@ -19,7 +19,7 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
     var isLoadLevelViewPresented = false
 
     init(rootVm: LevelDesignerRootDelegate) {
-        self.selectedPegType = .normal
+        self.selectedObjectType = .peg(.normal)
         self.board = Board()
         self.isInsertMode = true
         self.persistenceManager = Constants.defaultPersistenceManager
@@ -41,8 +41,13 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
         board.objects
     }
 
-    func addPeg(at point: CGPoint) {
-        board.addPeg(at: point, withType: selectedPegType)
+    func addObject(at point: CGPoint) {
+        switch selectedObjectType {
+        case .peg(let pegType):
+            board.addObject(Peg(center: point, type: pegType))
+        case .obstacle(let obstacleType):
+            board.addObject(Obstacle(center: point, type: obstacleType))
+        }
     }
 
     func deletePeg(_ peg: Peg) {
@@ -50,7 +55,7 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
     }
 
     func updatePegPosition(index: Int, newPoint: CGPoint) {
-        board.updatePegPosition(index: index, newPoint: newPoint)
+        board.updateObjectPosition(index: index, newPoint: newPoint)
     }
     
     func setSelectedObjectToLastObject() {
@@ -96,8 +101,8 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
     }
 
     // MARK: LevelDesignerPaletteDelegate
-    func selectPegType(type: PegType) {
-        self.selectedPegType = type
+    func selectObjectType(type: ObjectType) {
+        self.selectedObjectType = type
     }
 
     func toggleMode() {

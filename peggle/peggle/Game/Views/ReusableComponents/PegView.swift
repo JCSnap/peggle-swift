@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct PegView: View {
-    let pegType: PegType
+    let pegType: ObjectType.PegType
     let radius: CGFloat
     let isGlowing: Bool
     let angle: Angle
     
-    init(pegType: PegType, radius: CGFloat = Constants.defaultAssetRadius, isGlowing: Bool, angle: Angle = .zero) {
+    init(pegType: ObjectType.PegType, radius: CGFloat = Constants.defaultAssetRadius, isGlowing: Bool, angle: Angle = .zero) {
         self.pegType = pegType
         self.radius = radius
         self.isGlowing = isGlowing
@@ -31,7 +31,7 @@ struct PegView: View {
     }
 
     private var pegImage: String {
-        let imageNames: [PegType: String] = [
+        let imageNames: [ObjectType.PegType: String] = [
             .normal: isGlowing ? "peg-blue-glow" : "peg-blue",
             .scoring: isGlowing ? "peg-orange-glow" : "peg-orange",
             .exploding: isGlowing ? "peg-green-glow" : "peg-green"

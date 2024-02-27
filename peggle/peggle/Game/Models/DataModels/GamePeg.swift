@@ -26,7 +26,7 @@ class GamePeg: GameObject, RoundPhysicsObject {
         get { peg.angle }
         set { peg.angle = newValue }
     }
-    var type: PegType {
+    var type: ObjectType.PegType {
         peg.type
     }
 

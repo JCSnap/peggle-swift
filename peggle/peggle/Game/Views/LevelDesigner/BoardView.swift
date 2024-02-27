@@ -87,7 +87,7 @@ struct InvisibleLayerView: View {
             .contentShape(Rectangle())
             .onTapGesture { location in
                 if viewModel.isInsertMode {
-                    viewModel.addPeg(at: location)
+                    viewModel.addObject(at: location)
                     viewModel.setSelectedObjectToLastObject()
                 } else {
                     warningLocation = CGPoint(x: location.x, y: location.y - 50) // prevent blocking by finger
@@ -117,7 +117,7 @@ protocol LevelDesignerBoardDelegate: AnyObject {
     var pegs: [Peg] { get }
     var selectedObjectIndex: Int { get set }
 
-    func addPeg(at point: CGPoint)
+    func addObject(at point: CGPoint)
     
     func setSelectedObjectToLastObject()
 

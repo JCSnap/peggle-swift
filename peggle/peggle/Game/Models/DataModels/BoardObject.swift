@@ -39,7 +39,7 @@ class BoardObject: Hashable {
     }
     
     func addToBoard(board: inout Board) {
-        fatalError("Subclasses need to implement this method")
+        board.addObject(self)
     }
     
     func updateSize(to newSize: CGFloat) {

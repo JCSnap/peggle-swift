@@ -18,15 +18,7 @@ struct Board {
     mutating func addObject(_ object: BoardObject) {
         objects.append(object)
     }
-    
-    mutating func addPeg(at point: CGPoint, withType type: PegType,
-                         withSize size: CGFloat = Constants.defaultAssetRadius) {
-        let newPeg = Peg(center: CGPoint(x: point.x, y: point.y), type: type, radius: size)
-        if !isOverlapping(newPeg) && isWithinBoard(newPeg) {
-            objects.append(newPeg)
-        }
-    }
-    
+
     mutating func replaceObject(at index: Int, with newObject: BoardObject) {
         print("replacing object")
         objects[index] = newObject
@@ -36,7 +28,7 @@ struct Board {
         objects.removeAll { $0.isEqual(to: object) }
     }
     
-    mutating func updatePegPosition(index: Int, newPoint: CGPoint) {
+    mutating func updateObjectPosition(index: Int, newPoint: CGPoint) {
         if index >= objects.count {
             return
         }
@@ -55,6 +47,8 @@ struct Board {
     private func createNewObject(at point: CGPoint, from object: BoardObject) -> BoardObject {
         if let peg = object as? Peg {
             return Peg(center: point, type: peg.type, radius: peg.radius)
+        } else if let obstacle = object as? Obstacle {
+            return Obstacle(center: point, type: obstacle.type)
         } else {
             fatalError("Object needs to be a subclass of BoardObject")
         }
@@ -72,6 +66,7 @@ extension Board: Hashable & Codable {
     
     enum BoardObjectType: String, Codable {
         case peg = "Peg"
+        case obstacle = "Obstacle"
     }
     
     private enum CodingKeys: String, CodingKey {
@@ -96,6 +91,9 @@ extension Board: Hashable & Codable {
             case .peg:
                 let peg = try objectsArray.decode(Peg.self)
                 objects.append(peg)
+            case .obstacle:
+                let obstacle = try objectsArray.decode(Obstacle.self)
+                objects.append(obstacle)
             }
         }
         self.objects = objects
@@ -133,5 +131,19 @@ extension Board {
     
     internal func isWithinBoard(_ peg: BoardObject) -> Bool {
         peg.isInBoundary(within: self.boardSize)
+    }
+}
+
+
+enum ObjectType: Equatable, Codable {
+    case peg(PegType)
+    case obstacle(ObstacleType)
+    
+    enum PegType: Codable {
+        case normal, scoring, exploding
+    }
+    
+    enum ObstacleType: Codable {
+        case rectangle, triangle, circle
     }
 }

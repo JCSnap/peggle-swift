@@ -7,19 +7,15 @@
 
 import Foundation
 
-enum PegType: Codable {
-    case normal, scoring, exploding
-}
-
 class Peg: BoardObject {
-    var type: PegType
+    var type: ObjectType.PegType
     var radius: CGFloat
     var isGlowing: Bool = false
     override var size: CGFloat {
         radius
     }
 
-    init(center: CGPoint, type: PegType, radius: CGFloat = Constants.defaultAssetRadius, angle: CGFloat = .zero) {
+    init(center: CGPoint, type: ObjectType.PegType, radius: CGFloat = Constants.defaultAssetRadius, angle: CGFloat = .zero) {
         self.type = type
         self.radius = radius
         super.init(center: center, angle: angle)
@@ -30,7 +26,7 @@ class Peg: BoardObject {
         let x = try container.decode(CGFloat.self, forKey: .centerX)
         let y = try container.decode(CGFloat.self, forKey: .centerY)
         let center = CGPoint(x: x, y: y)
-        let type = try container.decode(PegType.self, forKey: .type)
+        let type = try container.decode(ObjectType.PegType.self, forKey: .type)
         let radius = try container.decode(CGFloat.self, forKey: .radius)
         let angle = try container.decode(CGFloat.self, forKey: .angle)
         self.init(center: center, type: type, radius: radius)
@@ -58,10 +54,6 @@ class Peg: BoardObject {
         center.x + self.radius <= size.width &&  // Right
         center.y - self.radius >= 0 &&           // Bottom
         center.y + self.radius <= size.height    // Top
-    }
-    
-    override func addToBoard(board: inout Board) {
-        board.addObject(self)
     }
     
     override func updateSize(to newSize: CGFloat) {

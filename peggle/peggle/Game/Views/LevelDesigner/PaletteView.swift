@@ -57,22 +57,22 @@ struct PegSelectionView: View {
     var body: some View {
         HStack {
             Button(action: {
-                viewModel.selectPegType(type: .normal)
+                viewModel.selectObjectType(type: .peg(.normal))
             }) {
                 PegView(pegType: .normal, isGlowing: false)
-                    .border(viewModel.selectedPegType == .normal ? Color.blue : Color.clear, width: 3)
+                    .border(viewModel.selectedObjectType == .peg(.normal) ? Color.blue : Color.clear, width: 3)
             }
             Button(action: {
-                viewModel.selectPegType(type: .scoring)
+                viewModel.selectObjectType(type: .peg(.scoring))
             }) {
                 PegView(pegType: .scoring, isGlowing: false)
-                    .border(viewModel.selectedPegType == .scoring ? Color.orange : Color.clear, width: 3)
+                    .border(viewModel.selectedObjectType == .peg(.scoring) ? Color.orange : Color.clear, width: 3)
             }
             Button(action: {
-                viewModel.selectPegType(type: .exploding)
+                viewModel.selectObjectType(type: .peg(.exploding))
             }) {
                 PegView(pegType: .exploding, isGlowing: false)
-                    .border(viewModel.selectedPegType == .exploding ? Color.green : Color.clear, width: 3)
+                    .border(viewModel.selectedObjectType == .peg(.exploding) ? Color.green : Color.clear, width: 3)
             }
             Spacer()
             Button(action: viewModel.toggleMode) {
@@ -176,13 +176,13 @@ struct ActionButtonsView: View {
 }
 
 protocol LevelDesignerPaletteDelegate: AnyObject {
-    var selectedPegType: PegType { get }
+    var selectedObjectType: ObjectType { get }
     var isInsertMode: Bool { get }
     var selectedObjectIndex: Int { get }
     var objects: [BoardObject] { get }
     
     // MARK: Peg management
-    func selectPegType(type: PegType)
+    func selectObjectType(type: ObjectType)
     func toggleMode()
     
     // MARK: Edit objects
