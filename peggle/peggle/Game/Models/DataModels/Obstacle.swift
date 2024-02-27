@@ -66,7 +66,7 @@ class Obstacle: BoardObject {
     
     override func overlaps<T: BoardObject>(with other: T) -> Bool {
         if let peg = other as? Peg {
-            return false
+            return shape.overlaps(with: peg)
         } else if let obstacle = other as? Obstacle {
             //shape.overlaps(with: obstacle.shape)
             return false
@@ -108,101 +108,4 @@ extension Obstacle: Codable {
         try container.encode(shapeType, forKey: .shapeType)
     }
 
-}
-
-
-
-class ObjectShape: Codable {
-    var center: CGPoint
-    var angle: CGFloat
-    var size: CGFloat {
-        .zero
-    }
-    
-    required init(center: CGPoint, angle: CGFloat) {
-        self.center = center
-        self.angle = angle
-    }
-    
-    func isInBoundary(within size: CGSize) -> Bool {
-        fatalError("Subclasses should implement this method")
-    }
-    
-    func updateSize(to newSize: CGFloat) {
-        fatalError("Subclasses should implement this method")
-    }
-}
-
-class RectangleShape: ObjectShape {
-    var width: CGFloat
-    var height: CGFloat
-    
-    override var size: CGFloat {
-        width / Constants.rectangleWidthToHeightRatio
-    }
-    
-    init(center: CGPoint, angle: CGFloat, width: CGFloat = Constants.rectangleObstacleSize * Constants.rectangleWidthToHeightRatio, height: CGFloat = Constants.rectangleObstacleSize) {
-        self.width = width
-        self.height = height
-        super.init(center: center, angle: angle)
-    }
-    
-    required init(center: CGPoint, angle: CGFloat) {
-        self.width = Constants.rectangleObstacleSize * Constants.rectangleWidthToHeightRatio
-        self.height = Constants.rectangleObstacleSize
-        super.init(center: center, angle: angle)
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case centerX = "center_x"
-        case centerY = "center_y"
-        case angle
-        case size
-    }
-    
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let x = try container.decode(CGFloat.self, forKey: .centerX)
-        let y = try container.decode(CGFloat.self, forKey: .centerY)
-        let center = CGPoint(x: x, y: y)
-        let angle = try container.decode(CGFloat.self, forKey: .angle)
-        let size = try container.decode(CGFloat.self, forKey: .size)
-        self.width = size * Constants.rectangleWidthToHeightRatio
-        self.height = size
-        super.init(center: center, angle: angle)
-    }
-    
-    override func isInBoundary(within size: CGSize) -> Bool {
-        let halfWidth = width / 2
-        let halfHeight = height / 2
-        let corners = [
-            CGPoint(x: -halfWidth, y: -halfHeight),
-            CGPoint(x: halfWidth, y: -halfHeight),
-            CGPoint(x: -halfWidth, y: halfHeight),
-            CGPoint(x: halfWidth, y: halfHeight)
-        ]
-        
-        let rotatedCorners = corners.map { corner -> CGPoint in
-            let rotatedX = corner.x * cos(angle) - corner.y * sin(angle)
-            let rotatedY = corner.x * sin(angle) + corner.y * cos(angle)
-            return CGPoint(x: center.x + rotatedX, y: center.y + rotatedY)
-        }
-        
-        return rotatedCorners.allSatisfy { corner in
-            corner.x >= 0 && corner.x <= size.width && corner.y >= 0 && corner.y <= size.height
-        }
-    }
-    
-    override func updateSize(to newSize: CGFloat) {
-        self.width = Constants.rectangleWidthToHeightRatio * newSize
-        self.height = newSize
-    }
-}
-
-class CircleShape: ObjectShape {
-    
-}
-
-class TriangleShape: ObjectShape {
-    
 }

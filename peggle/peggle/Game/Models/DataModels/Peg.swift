@@ -45,7 +45,7 @@ class Peg: BoardObject {
         if let peg = other as? Peg {
             return distance(from: peg.center) <= self.radius + peg.radius
         } else if let obstacle = other as? Obstacle {
-            return false
+            return obstacle.shape.overlaps(with: self)
         } else {
             return false
         }
