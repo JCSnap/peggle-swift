@@ -33,9 +33,9 @@ struct Board {
             return
         }
         let oldObject = objects[index]
+        let newObject = createNewObject(at: newPoint, from: oldObject)
  
-        if isWithinBoard(oldObject) && !isOverlapping(oldObject, excludingIndex: index) {
-            let newObject = createNewObject(at: newPoint, from: oldObject)
+        if isWithinBoard(newObject) && !isOverlapping(newObject, excludingIndex: index) {
             objects[index] = newObject
         }
     }
