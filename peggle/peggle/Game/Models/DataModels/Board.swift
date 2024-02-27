@@ -25,7 +25,7 @@ struct Board {
     }
     
     mutating func deleteBoardObject(_ object: BoardObject) {
-        objects.removeAll { $0.isEqual(to: object) }
+        objects.removeAll { $0 == object }
     }
     
     mutating func updateObjectPosition(index: Int, newPoint: CGPoint) {

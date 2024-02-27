@@ -10,6 +10,9 @@ import Foundation
 class Obstacle: BoardObject {
     var shape: ObjectShape
     var type: ObjectType.ObstacleType
+    override var size: CGFloat {
+        shape.size
+    }
     
     init(center: CGPoint, type: ObjectType.ObstacleType, shape: ObjectShape, angle: CGFloat = .zero) {
         self.type = type
@@ -30,7 +33,7 @@ class Obstacle: BoardObject {
         self.init(center: center, type: type, shape: shape, angle: angle)
     }
     
-    required init(from decoder: Decoder) throws {
+    required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let x = try container.decode(CGFloat.self, forKey: .centerX)
         let y = try container.decode(CGFloat.self, forKey: .centerY)
@@ -48,12 +51,10 @@ class Obstacle: BoardObject {
         case String(describing: CircleShape.self):
             shape = CircleShape()
         default:
-            fatalError("Unknown shape type")
+            shape = RectangleShape()
         }
         
-        self.type = type
-        self.shape = shape
-        super.init(center: center, angle: angle)
+        self.init(center: center, type: type, shape: shape, angle: angle)
     }
 }
 
@@ -81,7 +82,11 @@ extension Obstacle: Codable {
 
 
 class ObjectShape: Codable {
+    var size: CGFloat = Constants.defaultAssetRadius
     
+    required init() {
+        self.size = Constants.defaultAssetRadius
+    }
 }
 
 class RectangleShape: ObjectShape {

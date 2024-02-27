@@ -26,10 +26,6 @@ class BoardObject: Hashable {
         fatalError("Subclasses need to implement this method")
     }
     
-    func isEqual<T: BoardObject>(to other: T) -> Bool {
-        fatalError("Subclasses need to implement this method")
-    }
-    
     func hash(into hasher: inout Hasher) {
         hasher.combine(center)
     }

@@ -29,16 +29,24 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
     var selectedObjectIndex: Int = 0
 
     // MARK: LevelDesignerBoardDelegate
+    var objects: [BoardObject] {
+        board.objects
+    }
     var pegs: [Peg] {
-        board.objects.compactMap { object in
+        objects.compactMap { object in
             guard let peg = object as? Peg else {
                 return nil
             }
             return peg
         }
     }
-    var objects: [BoardObject] {
-        board.objects
+    var obstacles: [Obstacle] {
+        objects.compactMap { object in
+            guard let obstacle = object as? Obstacle else {
+                return nil
+            }
+            return obstacle
+        }
     }
 
     func addObject(at point: CGPoint) {
@@ -49,9 +57,17 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
             board.addObject(Obstacle(center: point, type: obstacleType))
         }
     }
-
-    func deletePeg(_ peg: Peg) {
-        board.deleteBoardObject(peg)
+    
+    func deleteObject(at index: Int) {
+        if index >= objects.count {
+            return
+        }
+        let object = objects[index]
+        board.deleteBoardObject(object)
+    }
+    
+    func deleteObject(_ object: BoardObject) {
+        board.deleteBoardObject(object)
     }
 
     func updatePegPosition(index: Int, newPoint: CGPoint) {
@@ -59,17 +75,17 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
     }
     
     func setSelectedObjectToLastObject() {
-        selectedObjectIndex = board.objects.count - 1
+        selectedObjectIndex = objects.count - 1
     }
     
     func updateObjectSize(index: Int, newSize: CGFloat) {
-        let objectToEdit = board.objects[index]
+        let objectToEdit = objects[index]
         objectToEdit.updateSize(to: newSize)
         board.replaceObject(at: index, with: objectToEdit)
     }
     
     func updateObjectAngle(index: Int, newAngleInDegree: CGFloat) {
-        let objectToEdit = board.objects[index]
+        let objectToEdit = objects[index]
         let newAngleInRadian = newAngleInDegree * .pi / 180
         objectToEdit.updateAngle(to: newAngleInRadian)
         board.replaceObject(at: index, with: objectToEdit)

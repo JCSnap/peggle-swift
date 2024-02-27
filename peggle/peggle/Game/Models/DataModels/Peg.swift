@@ -29,7 +29,7 @@ class Peg: BoardObject {
         let type = try container.decode(ObjectType.PegType.self, forKey: .type)
         let radius = try container.decode(CGFloat.self, forKey: .radius)
         let angle = try container.decode(CGFloat.self, forKey: .angle)
-        self.init(center: center, type: type, radius: radius)
+        self.init(center: center, type: type, radius: radius, angle: angle)
     }
     
     
