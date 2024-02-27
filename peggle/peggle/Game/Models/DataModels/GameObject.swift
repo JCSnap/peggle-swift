@@ -7,12 +7,14 @@
 
 import Foundation
 
-class GameObject: HittableObject {
+class GameObject: HittableObject, PhysicsObject {
+    var center: CGPoint
     var velocity: CGVector
     var mass: CGFloat
     var isStatic: Bool
     
-    init (velocity: CGVector, mass: CGFloat, isStatic: Bool) {
+    init (center: CGPoint, velocity: CGVector, mass: CGFloat, isStatic: Bool) {
+        self.center = center
         self.velocity = velocity
         self.mass = mass
         self.isStatic = isStatic

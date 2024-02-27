@@ -9,7 +9,7 @@ import Foundation
 
 class GameObstacle: GameObject {
     var obstacle: Obstacle
-    var center: CGPoint {
+    override var center: CGPoint {
         get { obstacle.center }
         set { obstacle.center = newValue }
     }
@@ -27,7 +27,7 @@ class GameObstacle: GameObject {
     
     init(obstacle: Obstacle) {
         self.obstacle = obstacle
-        super.init(velocity: Constants.defaultObstacleVelocity, mass: Constants.defaultObstacleMass, isStatic: true)
+        super.init(center: obstacle.center, velocity: Constants.defaultObstacleVelocity, mass: Constants.defaultObstacleMass, isStatic: true)
     }
     
     // factory
@@ -54,6 +54,10 @@ class GameObstacle: GameObject {
 }
 
 class GameRectangleObstacle: GameObstacle, RectangularPhysicsObject {
+    func isColliding(with object: PhysicsObject) -> Bool {
+        return false
+    }
+    
     var rectangleShape: RectangleShape {
         guard let shape = obstacle.shape as? RectangleShape else {
             fatalError("GameRectangleObstacle can only be initialized with a RectangleShape")

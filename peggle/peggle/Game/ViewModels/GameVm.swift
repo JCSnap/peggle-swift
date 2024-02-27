@@ -50,6 +50,10 @@ class GameVm:
             gameStateManager.objects.append(contentsOf: newObstacle)
         }
     }
+    var objects: [GameObject] {
+        get { gameStateManager.objects }
+        set { gameStateManager.objects = newValue }
+    }
     var bucket: GameBucket {
         get { gameStateManager.bucket }
         set { gameStateManager.bucket = newValue }
@@ -187,23 +191,33 @@ class GameVm:
     
     private func handleCollisionsInAnotherThread() {
         DispatchQueue.global(qos: .userInitiated).async {
-            var hitPegsIndices: [Int] = []
-            var pegs = self.pegs
+            var hitObjectsIndices: [Int] = []
+            var objects = self.objects
             
-            for (index, peg) in pegs.enumerated() {
-                if self.ball.isColliding(with: peg) {
-                    hitPegsIndices.append(index)
+            for (index, object) in objects.enumerated() {
+                if let peg = object as? GamePeg {
+                    if self.ball.isColliding(with: peg) {
+                        hitObjectsIndices.append(index)
+                    }
+                } else if let rectangleObstacle = object as? GameRectangleObstacle {
+                    if self.ball.isColliding(with: rectangleObstacle) {
+                        hitObjectsIndices.append(index)
+                    }
                 }
             }
             
             DispatchQueue.main.async {
-                for index in hitPegsIndices {
-                    var peg = pegs[index]
-                    peg.effectWhenHit(gameStateManager: &self.gameStateManager)
-                    self.ball.handleCollision(with: &peg)
-                    pegs[index] = peg
+                for index in hitObjectsIndices {
+                    var object = objects[index]
+                    if var peg = object as? GamePeg {
+                        peg.effectWhenHit(gameStateManager: &self.gameStateManager)
+                        self.ball.handleCollision(with: &peg)
+                    } else if var rectangleObstacle = object as? GameRectangleObstacle {
+                        self.ball.handleCollision(with: &rectangleObstacle)
+                    }
+                    objects[index] = object
                 }
-                self.pegs = pegs
+                self.objects = objects
             }
         }
     }

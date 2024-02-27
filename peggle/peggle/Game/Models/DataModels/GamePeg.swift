@@ -14,7 +14,7 @@ class GamePeg: GameObject, RoundPhysicsObject {
         peg.isGlowing
     }
     var isVisible = true
-    var center: CGPoint {
+    override var center: CGPoint {
         get { peg.center }
         set { peg.center = newValue }
     }
@@ -52,7 +52,7 @@ class GamePeg: GameObject, RoundPhysicsObject {
         } else {
             massToInit = mass
         }
-        super.init(velocity: velocity, mass: massToInit, isStatic: true)
+        super.init(center: peg.center, velocity: velocity, mass: massToInit, isStatic: true)
     }
 
     func incrementCollisionCount() {
