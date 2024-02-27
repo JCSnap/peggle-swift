@@ -69,6 +69,10 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
     func deleteObject(_ object: BoardObject) {
         board.deleteBoardObject(object)
     }
+    
+    func getIndex(of object: BoardObject) -> Int {
+        board.getIndexOf(object: object)
+    }
 
     func updateObjectPosition(index: Int, newPoint: CGPoint) {
         board.updateObjectPosition(index: index, newPoint: newPoint)

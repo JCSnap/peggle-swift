@@ -44,6 +44,10 @@ struct Board {
         boardSize = size
     }
     
+    func getIndexOf(object: BoardObject) -> Int {
+        objects.firstIndex(where: { $0 === object }) ?? 0
+    }
+    
     private func createNewObject(at point: CGPoint, from object: BoardObject) -> BoardObject {
         if let peg = object as? Peg {
             return Peg(center: point, type: peg.type, radius: peg.radius)
@@ -129,8 +133,8 @@ extension Board {
         return false
     }
     
-    internal func isWithinBoard(_ peg: BoardObject) -> Bool {
-        peg.isInBoundary(within: self.boardSize)
+    internal func isWithinBoard(_ object: BoardObject) -> Bool {
+        object.isInBoundary(within: self.boardSize)
     }
 }
 

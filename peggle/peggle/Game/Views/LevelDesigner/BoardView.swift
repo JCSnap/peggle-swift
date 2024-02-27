@@ -18,8 +18,8 @@ struct BoardView: View {
                     .zIndex(-3)
 
                 ForEach(viewModel.pegs.indices, id: \.self) { index in
-                    let isSelected = index == viewModel.selectedObjectIndex
                     let peg = viewModel.pegs[index]
+                    let isSelected = viewModel.getIndex(of: peg) == viewModel.selectedObjectIndex
                     let pegView = PegView(pegType: peg.type, radius: peg.radius, isGlowing: peg.isGlowing, angle: .radians(peg.angle))
                     InteractiveView(content: pegView, viewModel: viewModel, object: peg, index: index)
                         .overlay(
@@ -32,8 +32,8 @@ struct BoardView: View {
                         )
                 }
                 ForEach(viewModel.obstacles.indices, id: \.self) { index in
-                    let isSelected = index == viewModel.selectedObjectIndex
                     let obstacle = viewModel.obstacles[index]
+                    let isSelected = viewModel.getIndex(of: obstacle) == viewModel.selectedObjectIndex
                     let obstacleView = ObstacleView(type: obstacle.type, width: obstacle.size * 5, height: obstacle.size, angle: obstacle.angle)
                     InteractiveView(content: obstacleView, viewModel: viewModel, object: obstacle, index: index)
                 }
@@ -124,6 +124,8 @@ protocol LevelDesignerBoardDelegate: AnyObject {
     var selectedObjectIndex: Int { get set }
 
     func addObject(at point: CGPoint)
+    
+    func getIndex(of object: BoardObject) -> Int
     
     func setSelectedObjectToLastObject()
 

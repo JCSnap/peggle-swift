@@ -24,11 +24,11 @@ class Obstacle: BoardObject {
         let shape: ObjectShape
         switch type {
         case .rectangle:
-            shape = RectangleShape()
+            shape = RectangleShape(center: center, width: Constants.paletteRectangleObstacleWidth, height: Constants.paletteRectangleObstacleHeight)
         case .triangle:
-            shape = TriangleShape()
+            shape = TriangleShape(center: center)
         case .circle:
-            shape = CircleShape()
+            shape = CircleShape(center: center)
         }
         self.init(center: center, type: type, shape: shape, angle: angle)
     }
@@ -45,16 +45,20 @@ class Obstacle: BoardObject {
         let shape: ObjectShape
         switch shapeType {
         case String(describing: RectangleShape.self):
-            shape = RectangleShape()
+            shape = try RectangleShape(from: decoder)
         case String(describing: TriangleShape.self):
-            shape = TriangleShape()
+            shape = try TriangleShape(from: decoder)
         case String(describing: CircleShape.self):
-            shape = CircleShape()
+            shape = try CircleShape(from: decoder)
         default:
-            shape = RectangleShape()
+            shape = try RectangleShape(from: decoder)
         }
         
         self.init(center: center, type: type, shape: shape, angle: angle)
+    }
+    
+    override func isInBoundary(within size: CGSize) -> Bool {
+        shape.isInBoundary(within: size)
     }
 }
 
@@ -82,15 +86,50 @@ extension Obstacle: Codable {
 
 
 class ObjectShape: Codable {
-    var size: CGFloat = Constants.defaultAssetRadius
+    var center: CGPoint
+    var size: CGFloat {
+        .zero
+    }
     
-    required init() {
-        self.size = Constants.defaultAssetRadius
+    required init(center: CGPoint) {
+        self.center = center
+    }
+    
+    func isInBoundary(within size: CGSize) -> Bool {
+        fatalError("Subclasses should implement this method")
     }
 }
 
 class RectangleShape: ObjectShape {
+    var width: CGFloat
+    var height: CGFloat
     
+    override var size: CGFloat {
+        0.5 * width + 0.5 * height
+    }
+    
+    init(center: CGPoint, width: CGFloat, height: CGFloat) {
+        self.width = width
+        self.height = height
+        super.init(center: center)
+    }
+    
+    required init(center: CGPoint) {
+        fatalError("init(center:) has not been implemented")
+    }
+    
+    required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
+    }
+    
+    override func isInBoundary(within size: CGSize) -> Bool {
+        let leftEdge = center.x - width / 2
+        let rightEdge = center.x + width / 2
+        let topEdge = center.y - height / 2
+        let bottomEdge = center.y + height / 2
+        
+        return leftEdge >= 0 && rightEdge <= size.width && topEdge >= 0 && bottomEdge <= size.height
+    }
 }
 
 class CircleShape: ObjectShape {
