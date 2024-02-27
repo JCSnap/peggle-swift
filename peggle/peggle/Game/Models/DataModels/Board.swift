@@ -20,7 +20,6 @@ struct Board {
     }
 
     mutating func replaceObject(at index: Int, with newObject: BoardObject) {
-        print("replacing object")
         objects[index] = newObject
     }
     
@@ -29,17 +28,38 @@ struct Board {
     }
     
     mutating func updateObjectPosition(index: Int, newPoint: CGPoint) {
-        if index >= objects.count {
-            return
-        }
+        guard index < objects.count else { return }
         let oldObject = objects[index]
         let newObject = createNewObject(at: newPoint, from: oldObject)
  
-        if isWithinBoard(newObject) && !isOverlapping(newObject, excludingIndex: index) {
+        if isWithinBoardAndNotOverlapping(object: newObject, index: index) {
             objects[index] = newObject
         }
     }
     
+    mutating func updateObjectSize(index: Int, newSize: CGFloat) {
+        guard index < objects.count else { return }
+        let objectToEdit = objects[index]
+        if newSize <= objectToEdit.size {
+            objectToEdit.updateSize(to: newSize)
+            return
+        }
+        if isWithinBoardAndNotOverlapping(object: objectToEdit, index: index) {
+            objectToEdit.updateSize(to: newSize)
+        }
+    }
+    
+    mutating func updateObjectAngle(index: Int, newAngleInDegree: CGFloat) {
+        guard index < objects.count else { return }
+        let objectToEdit = objects[index]
+        let oldAngle = objectToEdit.angle
+        let newAngleInRadian = newAngleInDegree * .pi / 180
+        objectToEdit.updateAngle(to: newAngleInRadian)
+        if !isWithinBoardAndNotOverlapping(object: objectToEdit, index: index) {
+            objectToEdit.updateAngle(to: oldAngle)
+        }
+    }
+
     mutating func setBoardSize(_ size: CGSize) {
         boardSize = size
     }
@@ -56,6 +76,10 @@ struct Board {
         } else {
             fatalError("Object needs to be a subclass of BoardObject")
         }
+    }
+                
+    private func isWithinBoardAndNotOverlapping(object: BoardObject, index: Int) -> Bool {
+        isWithinBoard(object) && !isOverlapping(object, excludingIndex: index)
     }
 }
 

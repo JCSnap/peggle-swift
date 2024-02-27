@@ -78,6 +78,11 @@ class Obstacle: BoardObject {
     override func updateSize(to newSize: CGFloat) {
         self.shape.updateSize(to: newSize)
     }
+    
+    override func updateAngle(to newAngle: CGFloat) {
+        self.angle = newAngle
+        self.shape.angle = newAngle
+    }
 }
 
 extension Obstacle: Codable {
@@ -190,6 +195,7 @@ class RectangleShape: ObjectShape {
     
     override func updateSize(to newSize: CGFloat) {
         self.width = Constants.rectangleWidthToHeightRatio * newSize
+        self.height = newSize
     }
 }
 
