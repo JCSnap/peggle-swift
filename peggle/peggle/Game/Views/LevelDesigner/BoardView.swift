@@ -36,6 +36,14 @@ struct BoardView: View {
                     let isSelected = viewModel.getIndex(of: obstacle) == viewModel.selectedObjectIndex
                     let obstacleView = ObstacleView(type: obstacle.type, width: obstacle.size * 5, height: obstacle.size, angle: obstacle.angle)
                     InteractiveView(content: obstacleView, viewModel: viewModel, object: obstacle, index: index)
+                        .overlay(
+                            isSelected ? Rectangle()
+                                .stroke(lineWidth: 2)
+                                .foregroundColor(.white)
+                                .frame(width: obstacle.size * 5, height: obstacle.size)
+                                .position(obstacle.center)
+                            : nil
+                        )
                 }
         
                 InvisibleLayerView(viewModel: viewModel)
@@ -104,7 +112,7 @@ struct InteractiveView<Content: View>: View {
                 if !viewModel.isInsertMode {
                     viewModel.deleteObject(object)
                 } else {
-                    viewModel.selectedObjectIndex = index
+                    viewModel.selectedObjectIndex = viewModel.getIndex(of: object)
                 }
             }
             .simultaneousGesture(LongPressGesture(minimumDuration: 0.8).onEnded { _ in
