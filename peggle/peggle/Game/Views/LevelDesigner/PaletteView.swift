@@ -53,26 +53,21 @@ struct PaletteView: View {
 
 struct PegSelectionView: View {
     var viewModel: LevelDesignerPaletteDelegate
+    let pegTypes: [(ObjectType.PegType, Color)] = [
+        (.normal, Color.blue),
+        (.scoring, Color.orange),
+        (.exploding, Color.green)
+    ]
     
     var body: some View {
         HStack {
-            Button(action: {
-                viewModel.selectObjectType(type: .peg(.normal))
-            }) {
-                PegView(pegType: .normal, isGlowing: false)
-                    .border(viewModel.selectedObjectType == .peg(.normal) ? Color.blue : Color.clear, width: 3)
-            }
-            Button(action: {
-                viewModel.selectObjectType(type: .peg(.scoring))
-            }) {
-                PegView(pegType: .scoring, isGlowing: false)
-                    .border(viewModel.selectedObjectType == .peg(.scoring) ? Color.orange : Color.clear, width: 3)
-            }
-            Button(action: {
-                viewModel.selectObjectType(type: .peg(.exploding))
-            }) {
-                PegView(pegType: .exploding, isGlowing: false)
-                    .border(viewModel.selectedObjectType == .peg(.exploding) ? Color.green : Color.clear, width: 3)
+            ForEach(pegTypes, id: \.0) { pegType, borderColor in
+                Button(action: {
+                    viewModel.selectObjectType(type: .peg(pegType))
+                }) {
+                    PegView(pegType: pegType, isGlowing: false)
+                        .border(viewModel.selectedObjectType == .peg(pegType) ? borderColor : Color.clear, width: 3)
+                }
             }
             Spacer()
             Button(action: viewModel.toggleMode) {
