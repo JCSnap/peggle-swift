@@ -24,11 +24,11 @@ class Obstacle: BoardObject {
         let shape: ObjectShape
         switch type {
         case .rectangle:
-            shape = RectangleShape(center: center, width: Constants.rectangleObstacleSize * 5, height: Constants.rectangleObstacleSize)
+            shape = RectangleShape(center: center, angle: angle, width: Constants.rectangleObstacleSize * 5, height: Constants.rectangleObstacleSize)
         case .triangle:
-            shape = TriangleShape(center: center)
+            shape = TriangleShape(center: center, angle: angle)
         case .circle:
-            shape = CircleShape(center: center)
+            shape = CircleShape(center: center, angle: angle)
         }
         self.init(center: center, type: type, shape: shape, angle: angle)
     }
@@ -101,12 +101,14 @@ extension Obstacle: Codable {
 
 class ObjectShape: Codable {
     var center: CGPoint
+    var angle: CGFloat
     var size: CGFloat {
         .zero
     }
     
-    required init(center: CGPoint) {
+    required init(center: CGPoint, angle: CGFloat) {
         self.center = center
+        self.angle = angle
     }
     
     func isInBoundary(within size: CGSize) -> Bool {
@@ -126,13 +128,13 @@ class RectangleShape: ObjectShape {
         width / 5
     }
     
-    init(center: CGPoint, width: CGFloat = Constants.rectangleObstacleSize * 5, height: CGFloat = Constants.rectangleObstacleSize) {
+    init(center: CGPoint, angle: CGFloat, width: CGFloat = Constants.rectangleObstacleSize * 5, height: CGFloat = Constants.rectangleObstacleSize) {
         self.width = width
         self.height = height
-        super.init(center: center)
+        super.init(center: center, angle: angle)
     }
     
-    required init(center: CGPoint) {
+    required init(center: CGPoint, angle: CGFloat) {
         fatalError("init(center:) has not been implemented")
     }
     
@@ -141,12 +143,24 @@ class RectangleShape: ObjectShape {
     }
     
     override func isInBoundary(within size: CGSize) -> Bool {
-        let leftEdge = center.x - width / 2
-        let rightEdge = center.x + width / 2
-        let topEdge = center.y - height / 2
-        let bottomEdge = center.y + height / 2
+        let halfWidth = width / 2
+        let halfHeight = height / 2
+        let corners = [
+            CGPoint(x: -halfWidth, y: -halfHeight),
+            CGPoint(x: halfWidth, y: -halfHeight),
+            CGPoint(x: -halfWidth, y: halfHeight),
+            CGPoint(x: halfWidth, y: halfHeight)
+        ]
         
-        return leftEdge >= 0 && rightEdge <= size.width && topEdge >= 0 && bottomEdge <= size.height
+        let rotatedCorners = corners.map { corner -> CGPoint in
+            let rotatedX = corner.x * cos(angle) - corner.y * sin(angle)
+            let rotatedY = corner.x * sin(angle) + corner.y * cos(angle)
+            return CGPoint(x: center.x + rotatedX, y: center.y + rotatedY)
+        }
+        
+        return rotatedCorners.allSatisfy { corner in
+            corner.x >= 0 && corner.x <= size.width && corner.y >= 0 && corner.y <= size.height
+        }
     }
     
     override func updateSize(to newSize: CGFloat) {
