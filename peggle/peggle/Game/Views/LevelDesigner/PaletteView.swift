@@ -58,6 +58,11 @@ struct PegSelectionView: View {
         (.scoring, Color.orange),
         (.exploding, Color.green)
     ]
+    let objectTypes: [(ObjectType.ObstacleType, Color)] = [
+        (.rectangle, Color.black),
+        (.triangle, Color.black),
+        (.circle, Color.black)
+    ]
     
     var body: some View {
         HStack {
@@ -67,6 +72,14 @@ struct PegSelectionView: View {
                 }) {
                     PegView(pegType: pegType, isGlowing: false)
                         .border(viewModel.selectedObjectType == .peg(pegType) ? borderColor : Color.clear, width: 3)
+                }
+            }
+            ForEach(objectTypes, id: \.0) { objectType, borderColor in
+                Button(action: {
+                    viewModel.selectObjectType(type: .obstacle(objectType))
+                }) {
+                    ObstacleView(type: objectType, width: Constants.paletteRectangleObstacleWidth, height: Constants.paletteRectangleObstacleHeight)
+                        .border(viewModel.selectedObjectType == .obstacle(objectType) ? borderColor : Color.clear, width: 3)
                 }
             }
             Spacer()

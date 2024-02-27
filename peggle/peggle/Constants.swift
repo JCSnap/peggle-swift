@@ -12,6 +12,10 @@ struct Constants {
     static let defaultMaxLevelNameLength = 30
 
     static let defaultPersistenceManager = LocalPersistenceManager.self
+    
+    static let paletteRectangleObstacleHeight = 30.0
+    static let paletteRectangleObstacleWidth = 80.0
+    
 
     static let timeInterval = 1.0 / 40.0 // 60 FPS
 
