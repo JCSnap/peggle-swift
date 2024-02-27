@@ -78,7 +78,7 @@ struct PegSelectionView: View {
                 Button(action: {
                     viewModel.selectObjectType(type: .obstacle(objectType))
                 }) {
-                    ObstacleView(type: objectType, width: Constants.paletteRectangleObstacleWidth, height: Constants.paletteRectangleObstacleHeight)
+                    ObstacleView(type: objectType, size: Constants.rectangleObstacleSize)
                         .border(viewModel.selectedObjectType == .obstacle(objectType) ? borderColor : Color.clear, width: 3)
                 }
             }

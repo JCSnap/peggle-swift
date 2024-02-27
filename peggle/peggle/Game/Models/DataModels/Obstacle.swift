@@ -24,7 +24,7 @@ class Obstacle: BoardObject {
         let shape: ObjectShape
         switch type {
         case .rectangle:
-            shape = RectangleShape(center: center, width: Constants.paletteRectangleObstacleWidth, height: Constants.paletteRectangleObstacleHeight)
+            shape = RectangleShape(center: center, width: Constants.rectangleObstacleSize * 5, height: Constants.rectangleObstacleSize)
         case .triangle:
             shape = TriangleShape(center: center)
         case .circle:
@@ -70,6 +70,10 @@ class Obstacle: BoardObject {
             return false
         }
     }
+    
+    override func updateSize(to newSize: CGFloat) {
+        self.shape.updateSize(to: newSize)
+    }
 }
 
 extension Obstacle: Codable {
@@ -108,6 +112,10 @@ class ObjectShape: Codable {
     func isInBoundary(within size: CGSize) -> Bool {
         fatalError("Subclasses should implement this method")
     }
+    
+    func updateSize(to newSize: CGFloat) {
+        fatalError("Subclasses should implement this method")
+    }
 }
 
 class RectangleShape: ObjectShape {
@@ -115,10 +123,10 @@ class RectangleShape: ObjectShape {
     var height: CGFloat
     
     override var size: CGFloat {
-        0.5 * width + 0.5 * height
+        width / 5
     }
     
-    init(center: CGPoint, width: CGFloat, height: CGFloat) {
+    init(center: CGPoint, width: CGFloat = Constants.rectangleObstacleSize * 5, height: CGFloat = Constants.rectangleObstacleSize) {
         self.width = width
         self.height = height
         super.init(center: center)
@@ -139,6 +147,10 @@ class RectangleShape: ObjectShape {
         let bottomEdge = center.y + height / 2
         
         return leftEdge >= 0 && rightEdge <= size.width && topEdge >= 0 && bottomEdge <= size.height
+    }
+    
+    override func updateSize(to newSize: CGFloat) {
+        self.width = 5 * newSize
     }
 }
 

@@ -9,14 +9,13 @@ import SwiftUI
 
 struct ObstacleView: View {
     var type: ObjectType.ObstacleType
-    var width: CGFloat
-    var height: CGFloat
+    var size: CGFloat
     var angle: CGFloat = .zero
     
     var body: some View {
         Image("rectangle-obstacle")
             .resizable()
-            .frame(width: width, height: height)
+            .frame(width: frameWidth * size, height: frameHeight * size)
             .rotationEffect(.radians(angle))
     }
     
@@ -27,5 +26,19 @@ struct ObstacleView: View {
             .circle: "rectangle-obstacle",
         ]
         return imageNames[type] ?? "rectangle-obstacle"
+    }
+    
+    private let frameDimensions: [ObjectType.ObstacleType: (widthMultiplier: CGFloat, heightMultiplier: CGFloat)] = [
+        .rectangle: (widthMultiplier: 5, heightMultiplier: 1),
+        .triangle: (widthMultiplier: 5, heightMultiplier: 1),
+        .circle: (widthMultiplier: 2, heightMultiplier: 2)
+    ]
+    
+    private var frameWidth: CGFloat {
+        frameDimensions[type]?.widthMultiplier ?? 1 * size
+    }
+    
+    private var frameHeight: CGFloat {
+        frameDimensions[type]?.heightMultiplier ?? 1 * size
     }
 }

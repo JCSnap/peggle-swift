@@ -36,7 +36,7 @@ struct BoardView: View {
                     let obstacle = viewModel.obstacles[index]
                     let absoluteIndex = viewModel.getIndex(of: obstacle)
                     let isSelected = absoluteIndex == viewModel.selectedObjectIndex
-                    let obstacleView = ObstacleView(type: obstacle.type, width: obstacle.size * 5, height: obstacle.size, angle: obstacle.angle)
+                    let obstacleView = ObstacleView(type: obstacle.type, size: obstacle.size, angle: obstacle.angle)
                     InteractiveView(content: obstacleView, viewModel: viewModel, object: obstacle, index: absoluteIndex)
                         .overlay(
                             isSelected ? Rectangle()
