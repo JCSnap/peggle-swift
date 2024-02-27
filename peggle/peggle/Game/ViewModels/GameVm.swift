@@ -41,6 +41,15 @@ class GameVm:
             gameStateManager.objects.append(contentsOf: newPegs)
         }
     }
+    var obstacles: [GameObstacle] {
+        get {
+            gameStateManager.objects.compactMap { $0 as? GameObstacle }
+        }
+        set(newObstacle) {
+            gameStateManager.objects = gameStateManager.objects.filter { !($0 is GameObstacle) }
+            gameStateManager.objects.append(contentsOf: newObstacle)
+        }
+    }
     var bucket: GameBucket {
         get { gameStateManager.bucket }
         set { gameStateManager.bucket = newValue }

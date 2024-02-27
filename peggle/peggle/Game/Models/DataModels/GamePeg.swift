@@ -31,7 +31,7 @@ class GamePeg: GameObject, RoundPhysicsObject {
     }
 
     // factory
-    static func createPhysicsPeg(from peg: Peg,
+    static func createGamePeg(from peg: Peg,
                                  velocity: CGVector = Constants.defaultPegVelocity,
                                  mass: CGFloat = Constants.defaultPegMass) -> GamePeg {
         switch peg.type {

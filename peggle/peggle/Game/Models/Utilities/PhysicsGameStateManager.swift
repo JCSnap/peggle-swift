@@ -43,10 +43,12 @@ class PhysicsGameStateManager {
         self.level = level
         self.screenBounds = CGRect(origin: .zero, size: level.board.boardSize)
         self.objects = level.board.objects.compactMap { object in
-            guard let peg = object as? Peg else {
-                return nil
+            if let peg = object as? Peg {
+                return GamePeg.createGamePeg(from: peg)
+            } else if let obstacle = object as? Obstacle {
+                return GameObstacle.createGameObstacle(from: obstacle)
             }
-            return GamePeg.createPhysicsPeg(from: peg)
+            return nil
         }
         self.ball.center = ScreenPosition.topCenter.point(for: screenBounds)
         self.bucket.center = ScreenPosition.bottomCenter.point(for: screenBounds)

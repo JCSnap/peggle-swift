@@ -50,6 +50,7 @@ struct PegsView: View {
 
     var body: some View {
         let pegs = viewModel.pegs
+        let obstacles = viewModel.obstacles
         
         ForEach(pegs.indices, id: \.self) { index in
             if pegs[index].isGlowing {
@@ -64,6 +65,10 @@ struct PegsView: View {
                 PegView(pegType: pegs[index].type, radius: pegs[index].radius, isGlowing: pegs[index].isGlowing, angle: .radians(pegs[index].angle))
                     .position(pegs[index].center)
             }
+        }
+        ForEach(obstacles.indices, id: \.self) { index in
+            ObstacleView(type: obstacles[index].type, size: obstacles[index].size, angle: obstacles[index].angle)
+                .position(obstacles[index].center)
         }
     }
 }
@@ -107,6 +112,7 @@ struct DottedLineShape: Shape {
 
 protocol GameBoardViewDelegate: AnyObject {
     var pegs: [GamePeg] { get }
+    var obstacles: [GameObstacle] { get }
     var cannonAngle: CGFloat { get }
     var ball: GameBall { get }
     var bucket: GameBucket { get }
