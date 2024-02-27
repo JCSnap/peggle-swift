@@ -83,26 +83,29 @@ extension Board: Hashable & Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let objectsArrayForType = try container.nestedUnkeyedContainer(forKey: .objects)
+        var objectsArray = try container.nestedUnkeyedContainer(forKey: .objects)
         var objects = [BoardObject]()
-        
-        var objectsArray = objectsArrayForType
+
         while !objectsArray.isAtEnd {
             let objectContainer = try objectsArray.nestedContainer(keyedBy: ObjectTypeKey.self)
-            let type = try objectContainer.decode(BoardObjectType.self, forKey: .type)
+            let type = try objectContainer.decode(String.self, forKey: .type)
             
             switch type {
-            case .peg:
+            case "Peg":
                 let peg = try objectsArray.decode(Peg.self)
                 objects.append(peg)
-            case .obstacle:
+            case "Obstacle":
                 let obstacle = try objectsArray.decode(Obstacle.self)
                 objects.append(obstacle)
+            default:
+                throw DecodingError.dataCorruptedError(forKey: .type, in: objectContainer, debugDescription: "Unknown type")
             }
         }
+
         self.objects = objects
         self.boardSize = try container.decode(CGSize.self, forKey: .boardSize)
     }
+
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -114,8 +117,10 @@ extension Board: Hashable & Codable {
             if let peg = object as? Peg {
                 try objectContainer.encode(BoardObjectType.peg, forKey: .type)
                 try objectsArray.encode(peg)
-            }
-            else {
+            } else if let obstacle = object as? Obstacle {
+                try objectContainer.encode(BoardObjectType.obstacle, forKey: .type)
+                try objectsArray.encode(obstacle)
+            } else {
                 fatalError("Unknown BoardObject subclass")
             }
         }
@@ -149,5 +154,31 @@ enum ObjectType: Equatable, Codable {
     
     enum ObstacleType: Codable {
         case rectangle, triangle, circle
+    }
+}
+
+extension ObjectType.ObstacleType {
+    var stringValue: String {
+        switch self {
+        case .rectangle:
+            return "rectangle"
+        case .triangle:
+            return "triangle"
+        case .circle:
+            return "circle"
+        }
+    }
+
+    init?(stringValue: String) {
+        switch stringValue {
+        case "rectangle":
+            self = .rectangle
+        case "triangle":
+            self = .triangle
+        case "circle":
+            self = .circle
+        default:
+            return nil
+        }
     }
 }

@@ -38,7 +38,10 @@ class Obstacle: BoardObject {
         let x = try container.decode(CGFloat.self, forKey: .centerX)
         let y = try container.decode(CGFloat.self, forKey: .centerY)
         let center = CGPoint(x: x, y: y)
-        let type = try container.decode(ObjectType.ObstacleType.self, forKey: .type)
+        let typeString = try container.decode(String.self, forKey: .type)
+            guard let type = ObjectType.ObstacleType(stringValue: typeString) else {
+                throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "Invalid obstacle type")
+            }
         let angle = try container.decode(CGFloat.self, forKey: .angle)
         
         let shapeType = try container.decode(String.self, forKey: .shapeType)
@@ -65,6 +68,7 @@ class Obstacle: BoardObject {
         if let peg = other as? Peg {
             return false
         } else if let obstacle = other as? Obstacle {
+            //shape.overlaps(with: obstacle.shape)
             return false
         } else {
             return false
@@ -83,18 +87,22 @@ extension Obstacle: Codable {
         case type
         case shapeType
         case angle
+        case size
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(center.x, forKey: .centerX)
         try container.encode(center.y, forKey: .centerY)
-        try container.encode(type, forKey: .type)
+        try container.encode(type.stringValue, forKey: .type)
+        
         try container.encode(angle, forKey: .angle)
+        try container.encode(size, forKey: .size)
         
         let shapeType = String(describing: Swift.type(of: shape))
         try container.encode(shapeType, forKey: .shapeType)
     }
+
 }
 
 
@@ -135,11 +143,28 @@ class RectangleShape: ObjectShape {
     }
     
     required init(center: CGPoint, angle: CGFloat) {
-        fatalError("init(center:) has not been implemented")
+        self.width = Constants.rectangleObstacleSize * 5
+        self.height = Constants.rectangleObstacleSize
+        super.init(center: center, angle: angle)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case centerX = "center_x"
+        case centerY = "center_y"
+        case angle
+        case size
     }
     
     required init(from decoder: Decoder) throws {
-        fatalError("init(from:) has not been implemented")
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let x = try container.decode(CGFloat.self, forKey: .centerX)
+        let y = try container.decode(CGFloat.self, forKey: .centerY)
+        let center = CGPoint(x: x, y: y)
+        let angle = try container.decode(CGFloat.self, forKey: .angle)
+        let size = try container.decode(CGFloat.self, forKey: .size)
+        self.width = size * 5
+        self.height = size
+        super.init(center: center, angle: angle)
     }
     
     override func isInBoundary(within size: CGSize) -> Bool {

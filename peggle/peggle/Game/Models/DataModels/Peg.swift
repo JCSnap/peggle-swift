@@ -26,7 +26,7 @@ class Peg: BoardObject {
         let x = try container.decode(CGFloat.self, forKey: .centerX)
         let y = try container.decode(CGFloat.self, forKey: .centerY)
         let center = CGPoint(x: x, y: y)
-        let type = try container.decode(ObjectType.PegType.self, forKey: .type)
+        let type = try container.decode(ObjectType.PegType.self, forKey: .pegType)
         let radius = try container.decode(CGFloat.self, forKey: .radius)
         let angle = try container.decode(CGFloat.self, forKey: .angle)
         self.init(center: center, type: type, radius: radius, angle: angle)
@@ -83,7 +83,7 @@ extension Peg: Codable {
     enum CodingKeys: String, CodingKey {
         case centerX = "center_x"
         case centerY = "center_y"
-        case type
+        case pegType
         case radius
         case angle
     }
@@ -92,7 +92,7 @@ extension Peg: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(center.x, forKey: .centerX)
         try container.encode(center.y, forKey: .centerY)
-        try container.encode(type, forKey: .type)
+        try container.encode(type, forKey: .pegType)
         try container.encode(radius, forKey: .radius)
         try container.encode(angle, forKey: .angle)
     }
