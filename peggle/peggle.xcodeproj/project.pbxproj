@@ -31,6 +31,8 @@
 		0A3BE5F62B71DE1400276847 /* WorldPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5F52B71DE1400276847 /* WorldPhysics.swift */; };
 		0A3BE5F82B71DF8900276847 /* CollisionPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5F72B71DF8900276847 /* CollisionPhysics.swift */; };
 		0A3BE5FA2B71E04B00276847 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5F92B71E04B00276847 /* CGExtensions.swift */; };
+		0A447CF32B8D844500B29A88 /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A447CF22B8D844500B29A88 /* Obstacle.swift */; };
+		0A447CF52B8D8E7F00B29A88 /* ObstacleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A447CF42B8D8E7F00B29A88 /* ObstacleView.swift */; };
 		0A99EDEA2B7364BF0062758F /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A99EDE92B7364BF0062758F /* Ball.swift */; };
 		0A99EDF12B77BB100062758F /* WorldPhysicsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A99EDF02B77BB100062758F /* WorldPhysicsTests.swift */; };
 		0A9F3CDE2B85DEDD004CEA71 /* BucketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9F3CDD2B85DEDD004CEA71 /* BucketView.swift */; };
@@ -59,6 +61,12 @@
 		0ACD02DB2B7F391C0034459C /* UnclosableModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD02DA2B7F391C0034459C /* UnclosableModalView.swift */; };
 		0ADECD442B7EFA3200556A18 /* RootVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADECD432B7EFA3200556A18 /* RootVm.swift */; };
 		0ADECD462B7F0BC000556A18 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADECD452B7F0BC000556A18 /* GameOverView.swift */; };
+		0AFCA7042B89D07F0073E078 /* ExplodingPower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFCA7032B89D07F0073E078 /* ExplodingPower.swift */; };
+		0AFCA7062B89D08E0073E078 /* Power.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFCA7052B89D08E0073E078 /* Power.swift */; };
+		0AFCA7082B89D0BC0073E078 /* PowerOnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFCA7072B89D0BC0073E078 /* PowerOnView.swift */; };
+		0AFCA70A2B8A129B0073E078 /* SpookyBallPower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFCA7092B8A129B0073E078 /* SpookyBallPower.swift */; };
+		0AFCA70C2B8C92080073E078 /* PowerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFCA70B2B8C92080073E078 /* PowerView.swift */; };
+		0AFCA70E2B8C932D0073E078 /* GameSelectPowerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFCA70D2B8C932D0073E078 /* GameSelectPowerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +115,8 @@
 		0A3BE5F52B71DE1400276847 /* WorldPhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPhysics.swift; sourceTree = "<group>"; };
 		0A3BE5F72B71DF8900276847 /* CollisionPhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionPhysics.swift; sourceTree = "<group>"; };
 		0A3BE5F92B71E04B00276847 /* CGExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGExtensions.swift; sourceTree = "<group>"; };
+		0A447CF22B8D844500B29A88 /* Obstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
+		0A447CF42B8D8E7F00B29A88 /* ObstacleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleView.swift; sourceTree = "<group>"; };
 		0A99EDE92B7364BF0062758F /* Ball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
 		0A99EDF02B77BB100062758F /* WorldPhysicsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPhysicsTests.swift; sourceTree = "<group>"; };
 		0A9F3CDD2B85DEDD004CEA71 /* BucketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketView.swift; sourceTree = "<group>"; };
@@ -135,6 +145,12 @@
 		0ACD02DA2B7F391C0034459C /* UnclosableModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnclosableModalView.swift; sourceTree = "<group>"; };
 		0ADECD432B7EFA3200556A18 /* RootVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootVm.swift; sourceTree = "<group>"; };
 		0ADECD452B7F0BC000556A18 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+		0AFCA7032B89D07F0073E078 /* ExplodingPower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplodingPower.swift; sourceTree = "<group>"; };
+		0AFCA7052B89D08E0073E078 /* Power.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Power.swift; sourceTree = "<group>"; };
+		0AFCA7072B89D0BC0073E078 /* PowerOnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerOnView.swift; sourceTree = "<group>"; };
+		0AFCA7092B8A129B0073E078 /* SpookyBallPower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpookyBallPower.swift; sourceTree = "<group>"; };
+		0AFCA70B2B8C92080073E078 /* PowerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerView.swift; sourceTree = "<group>"; };
+		0AFCA70D2B8C932D0073E078 /* GameSelectPowerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectPowerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				0A394BD22B7CE815002E6F03 /* GameView.swift */,
+				0AFCA70D2B8C932D0073E078 /* GameSelectPowerView.swift */,
 				0A394BD42B7CE8F0002E6F03 /* GameTopView.swift */,
 				0A394BDC2B7CF087002E6F03 /* GameLoadLevelView.swift */,
 				0A394BD62B7CE8F8002E6F03 /* GameBottomView.swift */,
@@ -311,7 +328,10 @@
 				0A394BE42B7E2449002E6F03 /* CannonView.swift */,
 				0AA669942B7CD55C00916547 /* DeleteButtonView.swift */,
 				0A39D0392B81A27E00B4C07F /* BallView.swift */,
+				0A447CF42B8D8E7F00B29A88 /* ObstacleView.swift */,
 				0AA669962B7CD56700916547 /* PegView.swift */,
+				0AFCA7072B89D0BC0073E078 /* PowerOnView.swift */,
+				0AFCA70B2B8C92080073E078 /* PowerView.swift */,
 				0ACD02DA2B7F391C0034459C /* UnclosableModalView.swift */,
 			);
 			path = ReusableComponents;
@@ -343,6 +363,7 @@
 			children = (
 				0AA669A12B7CD5F600916547 /* LevelPersistence.swift */,
 				0A39D0312B805C9400B4C07F /* HittableObject.swift */,
+				0AFCA7052B89D08E0073E078 /* Power.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -355,8 +376,11 @@
 				0AA669AE2B7CD65500916547 /* Peg.swift */,
 				0A9F3CE42B85E0A4004CEA71 /* Bucket.swift */,
 				0A99EDE92B7364BF0062758F /* Ball.swift */,
+				0A447CF22B8D844500B29A88 /* Obstacle.swift */,
 				0A394BDE2B7DE7F6002E6F03 /* GamePeg.swift */,
 				0A394BE02B7E0F56002E6F03 /* GameBall.swift */,
+				0AFCA7032B89D07F0073E078 /* ExplodingPower.swift */,
+				0AFCA7092B8A129B0073E078 /* SpookyBallPower.swift */,
 				0A9F3CEC2B88F11A004CEA71 /* BoardObject.swift */,
 				0A9F3CF02B899FE5004CEA71 /* GameObject.swift */,
 				0A9F3CE22B85E064004CEA71 /* GameBucket.swift */,
@@ -507,15 +531,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A3BE5F62B71DE1400276847 /* WorldPhysics.swift in Sources */,
+				0AFCA70A2B8A129B0073E078 /* SpookyBallPower.swift in Sources */,
 				0A39D0342B80739700B4C07F /* TimerManager.swift in Sources */,
 				0A3BE5F22B71DC9300276847 /* RoundPhysicsObject.swift in Sources */,
 				0AA669892B7CD4E600916547 /* HomeView.swift in Sources */,
 				0AA669AB2B7CD63E00916547 /* Level.swift in Sources */,
 				0A394BD32B7CE815002E6F03 /* GameView.swift in Sources */,
 				0A39D0322B805C9400B4C07F /* HittableObject.swift in Sources */,
+				0AFCA70E2B8C932D0073E078 /* GameSelectPowerView.swift in Sources */,
 				0A99EDEA2B7364BF0062758F /* Ball.swift in Sources */,
 				0AA669AF2B7CD65500916547 /* Peg.swift in Sources */,
 				0A3BE5C72B7121D600276847 /* ContentView.swift in Sources */,
+				0A447CF32B8D844500B29A88 /* Obstacle.swift in Sources */,
 				0AA669922B7CD52900916547 /* LoadLevelView.swift in Sources */,
 				0AA669832B7CD4A100916547 /* HomeVm.swift in Sources */,
 				0A394BDF2B7DE7F6002E6F03 /* GamePeg.swift in Sources */,
@@ -525,16 +552,20 @@
 				0AA6698C2B7CD50200916547 /* LevelDesignerView.swift in Sources */,
 				0AA669A22B7CD5F600916547 /* LevelPersistence.swift in Sources */,
 				0A394BD92B7CE903002E6F03 /* GameBoardView.swift in Sources */,
+				0AFCA70C2B8C92080073E078 /* PowerView.swift in Sources */,
 				0A9F3CED2B88F11A004CEA71 /* BoardObject.swift in Sources */,
 				0A3BE5F82B71DF8900276847 /* CollisionPhysics.swift in Sources */,
 				0AA6699D2B7CD5C800916547 /* Constants.swift in Sources */,
 				0A394BD52B7CE8F0002E6F03 /* GameTopView.swift in Sources */,
+				0AFCA7082B89D0BC0073E078 /* PowerOnView.swift in Sources */,
 				0AA669952B7CD55C00916547 /* DeleteButtonView.swift in Sources */,
 				0AA669852B7CD4AC00916547 /* LevelDesignerVm.swift in Sources */,
 				0A3BE5C52B7121D600276847 /* app.swift in Sources */,
 				0A394BE12B7E0F56002E6F03 /* GameBall.swift in Sources */,
 				0A394BDB2B7CE9F2002E6F03 /* GameVm.swift in Sources */,
 				0AA669AD2B7CD64900916547 /* Board.swift in Sources */,
+				0AFCA7042B89D07F0073E078 /* ExplodingPower.swift in Sources */,
+				0A447CF52B8D8E7F00B29A88 /* ObstacleView.swift in Sources */,
 				0A9F3CDE2B85DEDD004CEA71 /* BucketView.swift in Sources */,
 				0A3BE5F02B71DC5900276847 /* PhysicsEngineConstants.swift in Sources */,
 				0AA6699F2B7CD5D200916547 /* Validator.swift in Sources */,
@@ -552,6 +583,7 @@
 				0AA6698E2B7CD50F00916547 /* PaletteView.swift in Sources */,
 				0A9F3CF12B899FE5004CEA71 /* GameObject.swift in Sources */,
 				0A394BDD2B7CF087002E6F03 /* GameLoadLevelView.swift in Sources */,
+				0AFCA7062B89D08E0073E078 /* Power.swift in Sources */,
 				0ADECD462B7F0BC000556A18 /* GameOverView.swift in Sources */,
 				0AA669972B7CD56700916547 /* PegView.swift in Sources */,
 			);
