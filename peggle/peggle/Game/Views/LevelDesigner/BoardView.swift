@@ -42,7 +42,7 @@ struct BoardView: View {
                             isSelected ? Rectangle()
                                 .stroke(lineWidth: 2)
                                 .foregroundColor(.white)
-                                .frame(width: obstacle.size * 5, height: obstacle.size)
+                                .frame(width: obstacle.size * Constants.rectangleWidthToHeightRatio, height: obstacle.size)
                                 .rotationEffect(.radians(obstacle.angle))
                                 .position(obstacle.center)
                             : nil

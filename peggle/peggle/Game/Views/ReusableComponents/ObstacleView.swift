@@ -29,7 +29,7 @@ struct ObstacleView: View {
     }
     
     private let frameDimensions: [ObjectType.ObstacleType: (widthMultiplier: CGFloat, heightMultiplier: CGFloat)] = [
-        .rectangle: (widthMultiplier: 5, heightMultiplier: 1),
+        .rectangle: (widthMultiplier: Constants.rectangleWidthToHeightRatio, heightMultiplier: 1),
         .triangle: (widthMultiplier: 5, heightMultiplier: 1),
         .circle: (widthMultiplier: 2, heightMultiplier: 2)
     ]

@@ -14,7 +14,7 @@ struct Constants {
     static let defaultPersistenceManager = LocalPersistenceManager.self
     
     static let rectangleObstacleSize = 30.0
-    
+    static let rectangleWidthToHeightRatio = 5.0
 
     static let timeInterval = 1.0 / 40.0 // 60 FPS
 

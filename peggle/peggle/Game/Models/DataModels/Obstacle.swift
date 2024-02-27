@@ -14,17 +14,17 @@ class Obstacle: BoardObject {
         shape.size
     }
     
-    init(center: CGPoint, type: ObjectType.ObstacleType, shape: ObjectShape, angle: CGFloat = .zero) {
+    init(center: CGPoint, type: ObjectType.ObstacleType, shape: ObjectShape, size: CGFloat = Constants.rectangleObstacleSize, angle: CGFloat = .zero) {
         self.type = type
         self.shape = shape
         super.init(center: center, angle: angle)
     }
     
-    convenience init(center: CGPoint, type: ObjectType.ObstacleType, angle: CGFloat = .zero) {
+    convenience init(center: CGPoint, type: ObjectType.ObstacleType, size: CGFloat = Constants.rectangleObstacleSize, angle: CGFloat = .zero) {
         let shape: ObjectShape
         switch type {
         case .rectangle:
-            shape = RectangleShape(center: center, angle: angle, width: Constants.rectangleObstacleSize * 5, height: Constants.rectangleObstacleSize)
+            shape = RectangleShape(center: center, angle: angle, width: size * Constants.rectangleWidthToHeightRatio, height: size)
         case .triangle:
             shape = TriangleShape(center: center, angle: angle)
         case .circle:
@@ -133,17 +133,17 @@ class RectangleShape: ObjectShape {
     var height: CGFloat
     
     override var size: CGFloat {
-        width / 5
+        width / Constants.rectangleWidthToHeightRatio
     }
     
-    init(center: CGPoint, angle: CGFloat, width: CGFloat = Constants.rectangleObstacleSize * 5, height: CGFloat = Constants.rectangleObstacleSize) {
+    init(center: CGPoint, angle: CGFloat, width: CGFloat = Constants.rectangleObstacleSize * Constants.rectangleWidthToHeightRatio, height: CGFloat = Constants.rectangleObstacleSize) {
         self.width = width
         self.height = height
         super.init(center: center, angle: angle)
     }
     
     required init(center: CGPoint, angle: CGFloat) {
-        self.width = Constants.rectangleObstacleSize * 5
+        self.width = Constants.rectangleObstacleSize * Constants.rectangleWidthToHeightRatio
         self.height = Constants.rectangleObstacleSize
         super.init(center: center, angle: angle)
     }
@@ -162,7 +162,7 @@ class RectangleShape: ObjectShape {
         let center = CGPoint(x: x, y: y)
         let angle = try container.decode(CGFloat.self, forKey: .angle)
         let size = try container.decode(CGFloat.self, forKey: .size)
-        self.width = size * 5
+        self.width = size * Constants.rectangleWidthToHeightRatio
         self.height = size
         super.init(center: center, angle: angle)
     }
@@ -189,7 +189,7 @@ class RectangleShape: ObjectShape {
     }
     
     override func updateSize(to newSize: CGFloat) {
-        self.width = 5 * newSize
+        self.width = Constants.rectangleWidthToHeightRatio * newSize
     }
 }
 
