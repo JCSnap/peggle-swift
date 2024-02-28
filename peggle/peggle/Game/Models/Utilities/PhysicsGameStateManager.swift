@@ -58,6 +58,11 @@ class PhysicsGameStateManager {
     func updateObjects(for timeInterval: TimeInterval) {
         WorldPhysics.updateObjectPosition(object: &ball, timeInterval: timeInterval)
         WorldPhysics.updateObjectPosition(object: &bucket, timeInterval: timeInterval)
+        for index in objects.indices {
+            var object = objects[index]
+            WorldPhysics.updateObjectPosition(object: &object, timeInterval: timeInterval)
+            objects[index] = object
+        }
     }
 
     func setGameOver(with result: GameStage) {

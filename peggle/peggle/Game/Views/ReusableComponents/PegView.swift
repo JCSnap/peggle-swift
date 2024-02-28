@@ -34,7 +34,8 @@ struct PegView: View {
         let imageNames: [ObjectType.PegType: String] = [
             .normal: isGlowing ? "peg-blue-glow" : "peg-blue",
             .scoring: isGlowing ? "peg-orange-glow" : "peg-orange",
-            .exploding: isGlowing ? "peg-green-glow" : "peg-green"
+            .exploding: isGlowing ? "peg-green-glow" : "peg-green",
+            .stubborn: isGlowing ? "peg-red-glow" : "peg-red"
         ]
         return imageNames[pegType] ?? "default-peg-image"
     }

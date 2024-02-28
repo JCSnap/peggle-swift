@@ -56,7 +56,8 @@ struct PegSelectionView: View {
     let pegTypes: [(ObjectType.PegType, Color)] = [
         (.normal, Color.blue),
         (.scoring, Color.orange),
-        (.exploding, Color.green)
+        (.exploding, Color.green),
+        (.stubborn, Color.red)
     ]
     let objectTypes: [(ObjectType.ObstacleType, Color)] = [
         (.rectangle, Color.black),

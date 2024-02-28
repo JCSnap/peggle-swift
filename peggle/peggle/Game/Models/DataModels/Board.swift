@@ -175,7 +175,7 @@ enum ObjectType: Equatable, Codable {
     case obstacle(ObstacleType)
     
     enum PegType: Codable {
-        case normal, scoring, exploding
+        case normal, scoring, exploding, stubborn
     }
     
     enum ObstacleType: Codable {

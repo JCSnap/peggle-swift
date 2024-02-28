@@ -39,7 +39,7 @@ extension RoundPhysicsObject {
         let impulse = self.getImpulse(with: object)
         self.velocity += impulse
         if !object.isStatic {
-            object.velocity -= impulse
+            object.velocity = (object.velocity - impulse) * (1 / object.mass)
         }
     }
     

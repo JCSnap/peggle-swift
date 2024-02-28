@@ -41,10 +41,12 @@ class GamePeg: GameObject, RoundPhysicsObject {
             return ScoringGamePeg(peg: peg, velocity: velocity, mass: mass)
         case .exploding:
             return ExplodingGamePeg(peg: peg, velocity: velocity, mass: mass)
+        case .stubborn:
+            return StubbornGamePeg(peg: peg, velocity: velocity, mass: Constants.stubbornPegMass, isStatic: false)
         }
     }
 
-    init(peg: Peg, velocity: CGVector, mass: CGFloat) {
+    init(peg: Peg, velocity: CGVector, mass: CGFloat, isStatic: Bool = true) {
         self.peg = peg
         let massToInit: CGFloat
         if mass <= 0 {
@@ -52,7 +54,7 @@ class GamePeg: GameObject, RoundPhysicsObject {
         } else {
             massToInit = mass
         }
-        super.init(center: peg.center, velocity: velocity, mass: massToInit, isStatic: true)
+        super.init(center: peg.center, velocity: velocity, mass: massToInit, isStatic: isStatic)
     }
 
     func incrementCollisionCount() {
@@ -92,6 +94,15 @@ class ScoringGamePeg: GamePeg {
 }
 
 class ExplodingGamePeg: GamePeg {
+    override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
+        super.effectWhenHit(gameStateManager: &gameStateManager)
+        if !self.isGlowing {
+            self.glowUp()
+        }
+    }
+}
+
+class StubbornGamePeg: GamePeg {
     override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
         super.effectWhenHit(gameStateManager: &gameStateManager)
         if !self.isGlowing {

@@ -140,18 +140,26 @@ class GameVm:
     
     private func updateGameState() {
         WorldPhysics.applyGravity(to: &ball, deltaTime: timerManager.timeInterval)
-        ball.handleBoundaryCollision(within: screenBounds)
-        bucket.handleBoundaryCollision(within: screenBounds, applyPositionalCorrection: false)
+        checkAndHandleBoundaryCollisions()
         checkAndHandleBallStuck()
         checkAndHandleBallExit()
         if ball.isColliding(with: bucket) {
             bucket.effectWhenHit(gameStateManager: &gameStateManager)
             removePegAndTransitionToNextStage()
         }
-        handleCollisionsInAnotherThread()
+        handleCollisions()
         gameStateManager.updateObjects(for: timerManager.timeInterval)
     }
     
+    private func checkAndHandleBoundaryCollisions() {
+        ball.handleBoundaryCollision(within: screenBounds)
+        bucket.handleBoundaryCollision(within: screenBounds, applyPositionalCorrection: false)
+        for object in objects {
+            if var peg = object as? GamePeg {
+                peg.handleBoundaryCollision(within: screenBounds)
+            }
+        }
+    }
     // a peg is to "stuck-causing" if its collision count is greater than an arbitrary threshold
     private func checkAndHandleBallStuck() {
         let isBallStuck = self.pegs.contains(where: { $0.collisionCount > Constants.collisionThresholdToBeConsideredStuck })
@@ -189,35 +197,47 @@ class GameVm:
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.defaultAnimationDuration, execute: workItem)
     }
     
-    private func handleCollisionsInAnotherThread() {
-        DispatchQueue.global(qos: .userInitiated).async {
-            var hitObjectsIndices: [Int] = []
-            var objects = self.objects
-            
-            for (index, object) in objects.enumerated() {
-                if let peg = object as? GamePeg {
-                    if self.ball.isColliding(with: peg) {
-                        hitObjectsIndices.append(index)
-                    }
-                } else if let rectangleObstacle = object as? GameRectangleObstacle {
-                    if self.ball.isColliding(with: rectangleObstacle) {
-                        hitObjectsIndices.append(index)
-                    }
+    private func handleCollisions() {
+        var hitObjectsIndices: [Int] = []
+        let objects = self.objects
+        
+        for (index, object) in objects.enumerated() {
+            if let peg = object as? GamePeg {
+                if self.ball.isColliding(with: peg) {
+                    hitObjectsIndices.append(index)
+                }
+            } else if let rectangleObstacle = object as? GameRectangleObstacle {
+                if self.ball.isColliding(with: rectangleObstacle) {
+                    hitObjectsIndices.append(index)
                 }
             }
-            
-            DispatchQueue.main.async {
-                for index in hitObjectsIndices {
-                    var object = objects[index]
-                    if var peg = object as? GamePeg {
-                        peg.effectWhenHit(gameStateManager: &self.gameStateManager)
-                        self.ball.handleCollision(with: &peg)
-                    } else if var rectangleObstacle = object as? GameRectangleObstacle {
-                        self.ball.handleCollision(with: &rectangleObstacle)
+        }
+        
+        for index in hitObjectsIndices {
+            let object = objects[index]
+            if var peg = object as? GamePeg {
+                peg.effectWhenHit(gameStateManager: &self.gameStateManager)
+                self.ball.handleCollision(with: &peg)
+            } else if var rectangleObstacle = object as? GameRectangleObstacle {
+                self.ball.handleCollision(with: &rectangleObstacle)
+            }
+        }
+        
+        for i in 0..<objects.count {
+            for j in (i + 1)..<objects.count {
+                if var peg1 = objects[i] as? GamePeg, var peg2 = objects[j] as? GamePeg, peg1.isColliding(with: peg2) {
+                    if !peg1.isStatic {
+                        peg1.handleCollision(with: &peg2)
+                        self.objects[i] = peg1
+                        self.objects[j] = peg2
                     }
-                    objects[index] = object
+                } else if var peg = objects[i] as? GamePeg, var obstacle = objects[j] as? GameRectangleObstacle, peg.isColliding(with: obstacle) {
+                    if !peg.isStatic {
+                        peg.handleCollision(with: &obstacle)
+                        self.objects[i] = peg
+                        self.objects[j] = obstacle
+                    }
                 }
-                self.objects = objects
             }
         }
     }
