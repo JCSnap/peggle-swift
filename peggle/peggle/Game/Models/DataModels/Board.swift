@@ -16,7 +16,9 @@ struct Board {
     }
     
     mutating func addObject(_ object: BoardObject) {
-        objects.append(object)
+        if isWithinBoardAndNotOverlapping(object: object) {
+            objects.append(object)
+        }
     }
 
     mutating func replaceObject(at index: Int, with newObject: BoardObject) {
@@ -78,7 +80,7 @@ struct Board {
         }
     }
                 
-    private func isWithinBoardAndNotOverlapping(object: BoardObject, index: Int) -> Bool {
+    private func isWithinBoardAndNotOverlapping(object: BoardObject, index: Int? = nil) -> Bool {
         isWithinBoard(object) && !isOverlapping(object, excludingIndex: index)
     }
 }
