@@ -20,6 +20,7 @@ struct GameSelectPowerView: View {
             HStack {
                 Button(action: {
                     selectedPowerType = .exploding
+                    viewModel.playSound(sound: .select)
                 }) {
                     VStack {
                         PowerView(powerType: .exploding)
@@ -29,6 +30,7 @@ struct GameSelectPowerView: View {
                 .border(selectedPowerType == .exploding ? Color.blue : Color.clear, width: 5)
                 Button(action: {
                     selectedPowerType = .spookyBall
+                    viewModel.playSound(sound: .select)
                 }) {
                     VStack {
                         PowerView(powerType: .spookyBall)
@@ -39,6 +41,7 @@ struct GameSelectPowerView: View {
             }
             Button("OK") {
                 isPowerSelected = true
+                viewModel.playSound(sound: .interface)
                 viewModel.selectPowerType(selectedPowerType)
             }
         }
@@ -46,5 +49,6 @@ struct GameSelectPowerView: View {
 }
 
 protocol GameSelectPowerViewDelegate {
+    func playSound(sound: SoundType)
     func selectPowerType(_ type: PowerType)
 }

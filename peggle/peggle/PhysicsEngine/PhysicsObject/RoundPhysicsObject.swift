@@ -70,6 +70,11 @@ extension RoundPhysicsObject {
         let rotatedCenter = getRotatedPoint(point: self.center, around: object.center, by: object.angle)
         return isCollidingWithAxisAlignedRect(center: rotatedCenter, object: object)
     }
+    
+    func isColliding(with bounds: CGRect) -> Bool {
+        return self.center.x - self.radius < bounds.minX || self.center.x + self.radius > bounds.maxX ||
+        self.center.y - self.radius < bounds.minY || self.center.y + self.radius > bounds.maxY
+    }
 }
 
 // MARK: helpers

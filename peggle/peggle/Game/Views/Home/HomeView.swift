@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct HomeView: View {
     @State var homeVm: HomeViewDelegate
@@ -16,10 +17,12 @@ struct HomeView: View {
             Text("PEGGLE")
                 .font(.system(size: 100))
             Button("LEVEL DESIGNER") {
+                homeVm.playSound(sound: .interface)
                 homeVm.goToLevelDesignerView()
             }
             .font(.system(size: 70))
             Button("GAME") {
+                homeVm.playSound(sound: .interface)
                 homeVm.goToGameView()
             }
             .font(.system(size: 70))
@@ -28,6 +31,7 @@ struct HomeView: View {
 }
 
 protocol HomeViewDelegate: AnyObject {
+    func playSound(sound: SoundType)
     func goToLevelDesignerView()
 
     func goToGameView()

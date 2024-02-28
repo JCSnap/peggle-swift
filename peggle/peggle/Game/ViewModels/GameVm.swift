@@ -125,7 +125,12 @@ class GameVm:
     func startGame() {
         isAiming = false
         gameStateManager.initialiseStartStates()
+        playSound(sound: .cannon)
         timerManager.startTimer(update: self.updateGameState)
+    }
+    
+    func playSound(sound: SoundType) {
+        rootVm.playSound(sound: sound)
     }
     
     func selectPowerType(_ type: PowerType) {
@@ -183,6 +188,7 @@ class GameVm:
     
     private func removePegAndTransitionToNextStage() {
         gameStateManager.markGlowingPegsForRemoval()
+        playSound(sound: .clear)
         // wait for animation to complete
         let workItem = DispatchWorkItem {
             self.isAiming = true
@@ -204,10 +210,12 @@ class GameVm:
         for (index, object) in objects.enumerated() {
             if let peg = object as? GamePeg {
                 if self.ball.isColliding(with: peg) {
+                    playSound(sound: .bounce)
                     hitObjectsIndices.append(index)
                 }
             } else if let rectangleObstacle = object as? GameRectangleObstacle {
                 if self.ball.isColliding(with: rectangleObstacle) {
+                    playSound(sound: .bounce)
                     hitObjectsIndices.append(index)
                 }
             }
@@ -246,6 +254,11 @@ class GameVm:
         finalScore = score
         timerManager.invalidateTimer()
         gameStateManager.setGameOver(with: result)
+        if result == GameStage.win {
+            playSound(sound: .win)
+        } else if result == GameStage.lose {
+            playSound(sound: .gameOver)
+        }
     }
     
     func goToHomeView() {

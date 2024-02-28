@@ -70,6 +70,7 @@ struct InvisibleLayerView: View {
             .contentShape(Rectangle())
             .onTapGesture { location in
                 if viewModel.isInsertMode {
+                    viewModel.playSound(sound: .tick)
                     viewModel.addObject(at: location)
                     viewModel.setSelectedObjectToLastObject()
                 } else {
@@ -113,12 +114,14 @@ struct InteractiveView<Content: View>: View {
             )
             .onTapGesture {
                 if !viewModel.isInsertMode {
+                    viewModel.playSound(sound: .bubble)
                     viewModel.deleteObject(object)
                 } else {
                     viewModel.selectedObjectIndex = viewModel.getIndex(of: object)
                 }
             }
             .simultaneousGesture(LongPressGesture(minimumDuration: 0.8).onEnded { _ in
+                viewModel.playSound(sound: .bubble)
                 viewModel.deleteObject(object)
             })
             .simultaneousGesture(LongPressGesture().onEnded { _ in
@@ -134,15 +137,11 @@ protocol LevelDesignerBoardDelegate: AnyObject {
     var obstacles: [Obstacle] { get }
     var selectedObjectIndex: Int { get set }
 
+    func playSound(sound: SoundType)
     func addObject(at point: CGPoint)
-    
     func getIndex(of object: BoardObject) -> Int
-    
     func setSelectedObjectToLastObject()
-
     func deleteObject(_ object: BoardObject)
-
     func updateObjectPosition(index: Int, newPoint: CGPoint)
-
     func setBoardSize(_ size: CGSize)
 }

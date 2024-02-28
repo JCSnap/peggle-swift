@@ -69,6 +69,7 @@ struct PegSelectionView: View {
         HStack {
             ForEach(pegTypes, id: \.0) { pegType, borderColor in
                 Button(action: {
+                    viewModel.playSound(sound: .select)
                     viewModel.selectObjectType(type: .peg(pegType))
                 }) {
                     PegView(pegType: pegType, isGlowing: false)
@@ -77,6 +78,7 @@ struct PegSelectionView: View {
             }
             ForEach(objectTypes, id: \.0) { objectType, borderColor in
                 Button(action: {
+                    viewModel.playSound(sound: .select)
                     viewModel.selectObjectType(type: .obstacle(objectType))
                 }) {
                     ObstacleView(type: objectType, size: Constants.rectangleObstacleSize)
@@ -84,7 +86,10 @@ struct PegSelectionView: View {
                 }
             }
             Spacer()
-            Button(action: viewModel.toggleMode) {
+            Button(action: {
+                viewModel.playSound(sound: .select)
+                viewModel.toggleMode()
+            }) {
                 DeleteButtonView()
                     .background(viewModel.isInsertMode ? Color.clear : Color.red.opacity(0.3))
                     .cornerRadius(5)
@@ -189,6 +194,8 @@ protocol LevelDesignerPaletteDelegate: AnyObject {
     var isInsertMode: Bool { get }
     var selectedObjectIndex: Int { get }
     var objects: [BoardObject] { get }
+    
+    func playSound(sound: SoundType)
     
     // MARK: Peg management
     func selectObjectType(type: ObjectType)

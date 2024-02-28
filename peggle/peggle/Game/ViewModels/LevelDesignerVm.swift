@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate, LevelDesignerLoadLevelDelegate {    
+class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate, LevelDesignerLoadLevelDelegate {
     private var rootVm: LevelDesignerRootDelegate
     var selectedObjectType: ObjectType
     var board: Board
@@ -122,6 +122,10 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
 
     func toggleMode() {
         self.isInsertMode.toggle()
+    }
+    
+    func playSound(sound: SoundType) {
+        rootVm.playSound(sound: sound)
     }
 
     func renderLoadLevelView() {
