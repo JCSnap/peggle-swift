@@ -9,6 +9,7 @@ import Foundation
 
 protocol RoundPhysicsObject: PhysicsObject & CollisionPhysicsBehaviour {
     var center: CGPoint { get set }
+    var angle: CGFloat { get set }
     var velocity: CGVector { get set }
     var radius: CGFloat { get }
     var mass: CGFloat { get }
@@ -22,6 +23,14 @@ extension RoundPhysicsObject {
         self.applyPositionalCorrectionWithBounds(within: bounds)
     }
     
+    mutating func handleCollision<T: PhysicsObject>(with object: inout T) {
+        if object is RoundPhysicsObject {
+            handleCollision(with: &object)
+        } else if object is RectangularPhysicsObject {
+            handleCollision(with: &object)
+        }
+    }
+    
     mutating func handleCollision<T: RoundPhysicsObject>(with object: inout T) {
         if !self.isColliding(with: object) || self.isStatic {
             return
@@ -29,7 +38,6 @@ extension RoundPhysicsObject {
         self.applyPositionalCorrection(asItCollidesWith: &object)
         let impulse = self.getImpulse(with: object)
         self.velocity += impulse
-        print("new velocity", self.velocity)
         if !object.isStatic {
             object.velocity -= impulse
         }
@@ -46,19 +54,15 @@ extension RoundPhysicsObject {
             object.velocity -= impulse
         }
     }
-    
+
     func isColliding<T: RoundPhysicsObject>(with object: T) -> Bool {
         let distance = (self.center - object.center).magnitude
         return distance <= (self.radius + object.radius)
     }
     
     func isColliding<T: RectangularPhysicsObject>(with object: T) -> Bool {
-        let closestPoint = self.getClosestPoint(to: object)
-        
-        let distanceX = self.center.x - closestPoint.x
-        let distanceY = self.center.y - closestPoint.y
-        
-        return sqrt(distanceX * distanceX + distanceY * distanceY) < self.radius
+        let rotatedCenter = getRotatedPoint(point: self.center, around: object.center, by: object.angle)
+        return isCollidingWithAxisAlignedRect(center: rotatedCenter, object: object)
     }
     
     private mutating func reflectVelocityIfNeeded(axis: Axis, within bounds: CGRect) {
@@ -157,6 +161,29 @@ extension RoundPhysicsObject {
         return CGPoint(
             x: max(object.center.x - object.width / 2, min(self.center.x, object.center.x + object.width / 2)),
             y: max(object.center.y - object.height / 2, min(self.center.y, object.center.y + object.height / 2))
+        )
+    }
+    
+    private func getRotatedPoint(point: CGPoint, around center: CGPoint, by angle: CGFloat) -> CGPoint {
+        let cosAngle = cos(-angle)
+        let sinAngle = sin(-angle)
+        let translatedX = point.x - center.x
+        let translatedY = point.y - center.y
+        let rotatedX = translatedX * cosAngle - translatedY * sinAngle
+        let rotatedY = translatedX * sinAngle + translatedY * cosAngle
+        return CGPoint(x: rotatedX + center.x, y: rotatedY + center.y)
+    }
+
+    private func isCollidingWithAxisAlignedRect<T: RectangularPhysicsObject>(center: CGPoint, object: T) -> Bool {
+        let closestPoint = getClosestPointToAxisAlignedRect(center: center, object: object)
+        let distance = (center - closestPoint).magnitude
+        return distance < self.radius
+    }
+
+    private func getClosestPointToAxisAlignedRect<T: RectangularPhysicsObject>(center: CGPoint, object: T) -> CGPoint {
+        return CGPoint(
+            x: max(object.center.x - object.width / 2, min(center.x, object.center.x + object.width / 2)),
+            y: max(object.center.y - object.height / 2, min(center.y, object.center.y + object.height / 2))
         )
     }
 }

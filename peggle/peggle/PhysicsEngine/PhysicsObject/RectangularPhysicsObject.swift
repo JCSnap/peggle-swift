@@ -9,6 +9,7 @@ import Foundation
 
 protocol RectangularPhysicsObject: PhysicsObject & CollisionPhysicsBehaviour {
     var center: CGPoint { get set }
+    var angle: CGFloat { get set }
     var velocity: CGVector { get set }
     var mass: CGFloat { get }
     var width: CGFloat { get }
@@ -25,8 +26,23 @@ extension RectangularPhysicsObject {
         }
     }
     
+    func isColliding(with object: PhysicsObject) -> Bool {
+        switch object {
+        case let roundObject as RoundPhysicsObject:
+            return isColliding(with: roundObject)
+        case let rectangularObject as RectangularPhysicsObject:
+            return isColliding(with: rectangularObject)
+        default:
+            return false
+        }
+    }
+    
     func isColliding<T: RoundPhysicsObject>(with object: T) -> Bool {
         object.isColliding(with: self)
+    }
+    
+    func isColliding<T: RectangularPhysicsObject>(with object: T) -> Bool {
+        return false
     }
     
     private mutating func reflectVelocityIfNeeded(axis: Axis, within bounds: CGRect) {

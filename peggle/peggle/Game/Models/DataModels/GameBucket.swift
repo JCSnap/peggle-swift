@@ -16,6 +16,7 @@ struct GameBucket: RectangularPhysicsObject & HittableObject {
         get { bucket.center }
         set { bucket.center = newValue }
     }
+    var angle: CGFloat = .zero
     var width: CGFloat {
         get { bucket.width }
         set { bucket.width = newValue }

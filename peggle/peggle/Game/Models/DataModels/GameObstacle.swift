@@ -13,7 +13,7 @@ class GameObstacle: GameObject {
         get { obstacle.center }
         set { obstacle.center = newValue }
     }
-    var angle: CGFloat {
+    override var angle: CGFloat {
         get { obstacle.angle }
         set { obstacle.angle = newValue }
     }

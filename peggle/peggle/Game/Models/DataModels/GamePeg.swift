@@ -22,7 +22,7 @@ class GamePeg: GameObject, RoundPhysicsObject {
         get { peg.radius }
         set { peg.radius = newValue }
     }
-    var angle: CGFloat {
+    override var angle: CGFloat {
         get { peg.angle }
         set { peg.angle = newValue }
     }

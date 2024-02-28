@@ -9,6 +9,7 @@ import Foundation
 
 protocol PhysicsObject {
     var center: CGPoint { get set }
+    var angle: CGFloat { get set }
     var velocity: CGVector { get set }
     var mass: CGFloat { get }
     var isStatic: Bool { get }
