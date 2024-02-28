@@ -44,17 +44,23 @@ extension RoundPhysicsObject {
     }
     
     mutating func handleCollision<T: RectangularPhysicsObject>(with object: inout T) {
-        if !self.isColliding(with: object) || self.isStatic {
-            return
-        }
-        self.applyPositionalCorrection(asItCollidesWith: &object)
-        let impulse = getImpulse(with: object)
-        self.velocity += impulse
-        if !object.isStatic {
-            object.velocity -= impulse
-        }
+        guard self.isColliding(with: object) && !self.isStatic else { return }
+        
+        let closestPoint = self.getClosestPoint(to: object)
+        let initialCollisionNormal = calculateInitialCollisionNormal(to: closestPoint)
+        let (overlapX, overlapY) = calculateOverlap(with: object)
+        
+        let (differenceVector, collisionNormal) = determineCorrectionVectorAndNormal(
+            overlapX: overlapX,
+            overlapY: overlapY,
+            initialNormal: initialCollisionNormal,
+            objectAngle: object.angle
+        )
+        
+        applyPositionalCorrection(differenceVector)
+        applyVelocityCorrection(collisionNormal, with: object)
     }
-
+    
     func isColliding<T: RoundPhysicsObject>(with object: T) -> Bool {
         let distance = (self.center - object.center).magnitude
         return distance <= (self.radius + object.radius)
@@ -64,7 +70,10 @@ extension RoundPhysicsObject {
         let rotatedCenter = getRotatedPoint(point: self.center, around: object.center, by: object.angle)
         return isCollidingWithAxisAlignedRect(center: rotatedCenter, object: object)
     }
-    
+}
+
+// MARK: helpers
+extension RoundPhysicsObject {
     private mutating func reflectVelocityIfNeeded(axis: Axis, within bounds: CGRect) {
         switch axis {
         case .horizontal:
@@ -185,5 +194,59 @@ extension RoundPhysicsObject {
             x: max(object.center.x - object.width / 2, min(center.x, object.center.x + object.width / 2)),
             y: max(object.center.y - object.height / 2, min(center.y, object.center.y + object.height / 2))
         )
+    }
+    
+    private func calculateInitialCollisionNormal(to closestPoint: CGPoint) -> CGVector {
+        return (self.center - closestPoint).normalized
+    }
+
+    private func calculateOverlap<T: RectangularPhysicsObject>(with object: T) -> (CGFloat, CGFloat) {
+        let overlapX = self.radius + object.width / 2 - abs(self.center.x - object.center.x)
+        let overlapY = self.radius + object.height / 2 - abs(self.center.y - object.center.y)
+        return (overlapX, overlapY)
+    }
+
+    private func determineCorrectionVectorAndNormal(
+        overlapX: CGFloat,
+        overlapY: CGFloat,
+        initialNormal: CGVector,
+        objectAngle: CGFloat
+    ) -> (CGVector, CGVector) {
+        let isHorizontalCorrection = overlapX < overlapY
+        let directionSign: CGFloat = isHorizontalCorrection ? (initialNormal.dx > 0 ? 1 : -1) : (initialNormal.dy > 0 ? 1 : -1)
+
+        var differenceVector: CGVector
+        var correctedNormal: CGVector
+
+        if isHorizontalCorrection {
+            differenceVector = CGVector(dx: overlapX * directionSign, dy: 0)
+            correctedNormal = CGVector(dx: directionSign, dy: 0)
+        } else {
+            differenceVector = CGVector(dx: 0, dy: overlapY * directionSign)
+            correctedNormal = CGVector(dx: 0, dy: directionSign)
+        }
+
+        if objectAngle != 0 {
+            correctedNormal = rotateVector(correctedNormal, by: objectAngle).normalized
+        }
+
+        return (differenceVector, correctedNormal)
+    }
+
+    private mutating func applyPositionalCorrection(_ differenceVector: CGVector) {
+        self.center += differenceVector
+    }
+
+    private mutating func applyVelocityCorrection(_ collisionNormal: CGVector, with object: RectangularPhysicsObject) {
+        let velocityAlongNormal = self.velocity.dotProduct(with: collisionNormal)
+        let minRestitution = PhysicsEngineConstants.defaultRestitution
+        let impulse = collisionNormal * (-velocityAlongNormal * (1 + minRestitution))
+        self.velocity += impulse
+    }
+
+    private func rotateVector(_ vector: CGVector, by angle: CGFloat) -> CGVector {
+        let cosAngle = cos(angle)
+        let sinAngle = sin(angle)
+        return CGVector(dx: vector.dx * cosAngle - vector.dy * sinAngle, dy: vector.dx * sinAngle + vector.dy * cosAngle)
     }
 }
