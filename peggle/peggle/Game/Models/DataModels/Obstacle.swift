@@ -68,8 +68,7 @@ class Obstacle: BoardObject {
         if let peg = other as? Peg {
             return shape.overlaps(with: peg)
         } else if let obstacle = other as? Obstacle {
-            //shape.overlaps(with: obstacle.shape)
-            return false
+            return shape.overlaps(with: obstacle.shape)
         } else {
             return false
         }

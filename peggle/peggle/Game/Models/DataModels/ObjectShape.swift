@@ -31,6 +31,18 @@ class ObjectShape: Codable {
         fatalError("Subclasses should implement this method")
     }
     
+    func overlaps(with shape: ObjectShape) -> Bool {
+        if let rectangleShape = shape as? RectangleShape {
+            return overlaps(with: rectangleShape)
+        } else if let circleShape = shape as? CircleShape {
+            return overlaps(with: circleShape)
+        } else if let triangleShape = shape as? TriangleShape {
+            return overlaps(with: triangleShape)
+        } else {
+            return false
+        }
+    }
+    
     func overlaps(with rectangle: RectangleShape) -> Bool {
         fatalError("Subclasses should implement this method")
     }
@@ -102,7 +114,22 @@ class RectangleShape: ObjectShape {
         
         return sqrt(distanceX * distanceX + distanceY * distanceY) < peg.radius
     }
+    
+    override func overlaps(with rectangle: RectangleShape) -> Bool {
+        let axes = union(axes1: self.getAxes(), axes2: rectangle.getAxes())
+        
+        for axis in axes {
+            let projection1 = self.projectOntoAxis(axis)
+            let projection2 = rectangle.projectOntoAxis(axis)
+            
+            if projection1.max < projection2.min || projection2.max < projection1.min {
+                return false
+            }
+        }
 
+        return true
+    }
+    
     required init(center: CGPoint, angle: CGFloat) {
         self.width = Constants.rectangleObstacleSize * Constants.rectangleWidthToHeightRatio
         self.height = Constants.rectangleObstacleSize
@@ -129,9 +156,6 @@ class RectangleShape: ObjectShape {
     }
     
     override func isInBoundary(within size: CGSize) -> Bool {
-        let halfWidth = width / 2
-        let halfHeight = height / 2
-        
         return corners.allSatisfy { corner in
             corner.x >= 0 && corner.x <= size.width && corner.y >= 0 && corner.y <= size.height
         }
@@ -140,6 +164,46 @@ class RectangleShape: ObjectShape {
     override func updateSize(to newSize: CGFloat) {
         self.width = Constants.rectangleWidthToHeightRatio * newSize
         self.height = newSize
+    }
+    
+    func getAxes() -> [CGPoint] {
+        var axes = [CGPoint]()
+        let corners = self.corners
+
+        for i in 0..<corners.count {
+            let p1 = corners[i]
+            let p2 = corners[(i + 1) % corners.count]
+            let edge = CGPoint(x: p2.x - p1.x, y: p2.y - p1.y)
+
+            let normal = CGPoint(x: -edge.y, y: edge.x)
+            axes.append(normal.normalized)
+        }
+
+        return axes
+    }
+
+    func projectOntoAxis(_ axis: CGPoint) -> (min: CGFloat, max: CGFloat) {
+        let projections = corners.map { corner in
+            return (corner.x * axis.x + corner.y * axis.y)
+        }
+
+        guard let minProjection = projections.min(), let maxProjection = projections.max() else {
+            fatalError("There should always be min and max projections for a non-empty set of corners.")
+        }
+
+        return (minProjection, maxProjection)
+    }
+    
+    func union(axes1: [CGPoint], axes2: [CGPoint]) -> [CGPoint] {
+        var combinedAxes = axes1
+        
+        for axis in axes2 {
+            if !combinedAxes.contains(where: { $0.isAlmostEqual(to: axis) }) {
+                combinedAxes.append(axis)
+            }
+        }
+        
+        return combinedAxes
     }
 }
 

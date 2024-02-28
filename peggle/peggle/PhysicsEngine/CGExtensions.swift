@@ -19,6 +19,12 @@ extension CGPoint {
     var magnitude: CGFloat {
         sqrt(x * x + y * y)
     }
+    
+    var normalized: CGPoint {
+        let length = sqrt(self.x * self.x + self.y * self.y)
+        guard length != 0 else { return CGPoint(x: 0, y: 0) }
+        return CGPoint(x: self.x / length, y: self.y / length)
+    }
 
     static func + (point: CGPoint, vector: CGVector) -> CGPoint {
         CGPoint(x: point.x + vector.dx, y: point.y + vector.dy)
@@ -34,6 +40,12 @@ extension CGPoint {
 
     static func -= (point: inout CGPoint, vector: CGVector) {
         point = point - vector
+    }
+}
+
+extension CGPoint {
+    func isAlmostEqual(to point: CGPoint, epsilon: CGFloat = 1e-5) -> Bool {
+        abs(self.x - point.x) < epsilon && abs(self.y - point.y) < epsilon
     }
 }
 
