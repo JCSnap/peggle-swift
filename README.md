@@ -25,9 +25,10 @@ your guide.
 
 ## TODO
 - fix pegs can be added to bucket level
-- refactor pegs to use OOP
 - Make it such that physics object that takes in game state can only call functions allowed (delegate pattern)
-- Bucket should continue to move even when the game is at aiming state
+- replace if...Peg with polymorphism similar to addBoard
+- fix glowing persists after switching tab
+- make it such that collision between ball and rectangular block will reflect in the correct direction
 
 ## Enhancements
 - Assign score to pegs, and score should animate when peg is hit
@@ -57,6 +58,9 @@ Please explain how the player resizes the pegs.
 ## Bells and Whistles
 Please write all of the additional features that you have implemented so that
 your grader can award you credit.
+
+### Audio
+Add audio to clicking buttons when selecting the `Level Designer` or `Game`, when selecting the different power ups, when the ball collides with objects, when the glowing pegs are removed, when the game wins/loses.
 
 ## Tests
 If you decide to write how you are going to do your tests instead of writing
