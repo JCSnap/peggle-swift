@@ -15,9 +15,8 @@ struct GameBoardView: View {
             ZStack {
                 Image("background")
                     .resizable()
-                ForEach(viewModel.pegs.indices, id: \.self) { _ in
-                    PegsView(viewModel: viewModel)
-                }
+                PegsView(viewModel: viewModel)
+                ObstaclesView(viewModel: viewModel)
                 BallView()
                     .position(viewModel.ball.center)
                 CannonView()
@@ -50,7 +49,6 @@ struct PegsView: View {
 
     var body: some View {
         let pegs = viewModel.pegs
-        let obstacles = viewModel.obstacles
         
         ForEach(pegs.indices, id: \.self) { index in
             if pegs[index].isGlowing {
@@ -66,6 +64,16 @@ struct PegsView: View {
                     .position(pegs[index].center)
             }
         }
+
+    }
+}
+
+struct ObstaclesView: View {
+    let viewModel: GameBoardViewDelegate
+    
+    var body: some View {
+        let obstacles = viewModel.obstacles
+        
         ForEach(obstacles.indices, id: \.self) { index in
             ObstacleView(type: obstacles[index].type, size: obstacles[index].size, angle: obstacles[index].angle)
                 .position(obstacles[index].center)
