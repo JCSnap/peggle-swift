@@ -13,19 +13,49 @@ struct HomeView: View {
     @State var homeVm: HomeViewDelegate
 
     var body: some View {
-        VStack {
-            Text("PEGGLE")
-                .font(.system(size: 100))
-            Button("LEVEL DESIGNER") {
-                homeVm.playSound(sound: .interface)
-                homeVm.goToLevelDesignerView()
+        ZStack {
+            Image("nature-background")
+                .resizable()
+                .scaledToFill()
+            VStack {
+                Text("PEGGLE")
+                    .font(.custom("Marker Felt", size: 200))
+                    .foregroundStyle(.blue)
+                MenuButton(
+                    title: "LEVEL DESIGNER",
+                    action: {
+                        homeVm.playSound(sound: .interface)
+                        homeVm.goToLevelDesignerView()
+                    }
+                )
+                
+                MenuButton(
+                    title: "GAME",
+                    action: {
+                        homeVm.playSound(sound: .interface)
+                        homeVm.goToGameView()
+                    }
+                )
             }
-            .font(.system(size: 70))
-            Button("GAME") {
-                homeVm.playSound(sound: .interface)
-                homeVm.goToGameView()
+        }
+    }
+}
+
+struct MenuButton: View {
+    let title: String
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            ZStack {
+                Image("brown-board")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 550)
+                Text(title)
+                    .font(.custom("Marker Felt", size: 40))
+                    .foregroundStyle(.black)
             }
-            .font(.system(size: 70))
         }
     }
 }
@@ -35,4 +65,8 @@ protocol HomeViewDelegate: AnyObject {
     func goToLevelDesignerView()
 
     func goToGameView()
+}
+
+#Preview {
+    HomeView(homeVm: HomeVm(rootVm: RootVm()))
 }
