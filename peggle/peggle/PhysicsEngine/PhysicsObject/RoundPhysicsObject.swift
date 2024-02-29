@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol RoundPhysicsObject: PhysicsObject & CollisionPhysicsBehaviour {
+protocol RoundPhysicsObject: PhysicsObject {
     var center: CGPoint { get set }
     var angle: CGFloat { get set }
     var velocity: CGVector { get set }
@@ -83,6 +83,19 @@ extension RoundPhysicsObject {
     func isColliding(with bounds: CGRect) -> Bool {
         return self.center.x - self.radius < bounds.minX || self.center.x + self.radius > bounds.maxX ||
         self.center.y - self.radius < bounds.minY || self.center.y + self.radius > bounds.maxY
+    }
+    
+    func isObjectCollidingWithBoundarySide(bounds: CGRect, side: BoundsSide) -> Bool {
+        switch side {
+        case .left:
+            return self.center.x - self.radius <= bounds.minX
+        case .right:
+            return self.center.x + self.radius >= bounds.maxX
+        case .top:
+            return self.center.y - self.radius <= bounds.minY
+        case .bottom:
+            return self.center.y + self.radius >= bounds.maxY
+        }
     }
 }
 

@@ -176,7 +176,7 @@ class GameVm:
     }
     
     private func checkAndHandleBallExit() {
-        let isBallExitingScreen = CollisionPhysics.isObjectCollidingWithBoundarySide(object: self.ball, bounds: self.screenBounds, side: .bottom)
+        let isBallExitingScreen = ball.isObjectCollidingWithBoundarySide(bounds: self.screenBounds, side: .bottom)
         
         if isBallExitingScreen {
             self.gameStateManager.handleBallExitScreen()

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol PhysicsObject {
+protocol PhysicsObject: CollisionPhysicsBehaviour, WorldPhysicsBehaviour {
     var center: CGPoint { get set }
     var angle: CGFloat { get set }
     var velocity: CGVector { get set }
@@ -46,4 +46,12 @@ extension PhysicsObject {
         self.velocity.dx += accelerationX * CGFloat(deltaTime)
         self.velocity.dy += accelerationY * CGFloat(deltaTime)
     }
+}
+
+enum Axis {
+    case horizontal, vertical
+}
+
+enum BoundsSide {
+    case left, right, top, bottom
 }
