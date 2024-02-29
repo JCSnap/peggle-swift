@@ -33,10 +33,7 @@ class PhysicsGameStateManager {
     func initialiseStartStates() {
         ball.isStatic = false
         ball.velocity = .zero
-        WorldPhysics.applyForceWithAngle(to: &ball,
-                                         deltaTime: Constants.defaultCannonTimeInterval,
-                                         radian: cannonAngle,
-                                         force: Constants.defaultCannonForce)
+        ball.applyForceWithAngle(deltaTime: Constants.defaultCannonTimeInterval, radian: cannonAngle, force: Constants.defaultCannonForce)
     }
 
     func initialiseLevelProperties(level: Level) {
@@ -56,11 +53,11 @@ class PhysicsGameStateManager {
     }
 
     func updateObjects(for timeInterval: TimeInterval) {
-        WorldPhysics.updateObjectPosition(object: &ball, timeInterval: timeInterval)
-        WorldPhysics.updateObjectPosition(object: &bucket, timeInterval: timeInterval)
+        ball.updateObjectPosition(timeInterval: timeInterval)
+        bucket.updateObjectPosition(timeInterval: timeInterval)
         for index in objects.indices {
             var object = objects[index]
-            WorldPhysics.updateObjectPosition(object: &object, timeInterval: timeInterval)
+            object.updateObjectPosition(timeInterval: timeInterval)
             objects[index] = object
         }
     }
