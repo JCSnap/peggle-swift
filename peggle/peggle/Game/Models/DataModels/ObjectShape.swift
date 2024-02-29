@@ -20,15 +20,17 @@ class ObjectShape: Codable {
     }
     
     func isInBoundary(within size: CGSize) -> Bool {
-        fatalError("Subclasses should implement this method")
+        print("Subclasses should implement this method")
+        return false
     }
     
     func updateSize(to newSize: CGFloat) {
-        fatalError("Subclasses should implement this method")
+        print("Subclasses should implement this method")
     }
     
     func overlaps(with peg: Peg) -> Bool {
-        fatalError("Subclasses should implement this method")
+        print("Subclasses should implement this method")
+        return false
     }
     
     func overlaps(with shape: ObjectShape) -> Bool {
@@ -44,15 +46,18 @@ class ObjectShape: Codable {
     }
     
     func overlaps(with rectangle: RectangleShape) -> Bool {
-        fatalError("Subclasses should implement this method")
+        print("Subclasses should implement this method")
+        return false
     }
     
     func overlaps(with circle: CircleShape) -> Bool {
-        fatalError("Subclasses should implement this method")
+        print("Subclasses should implement this method")
+        return false
     }
     
     func overlaps(with triangle: TriangleShape) -> Bool {
-        fatalError("Subclasses should implement this method")
+        print("Subclasses should implement this method")
+        return false
     }
 }
 

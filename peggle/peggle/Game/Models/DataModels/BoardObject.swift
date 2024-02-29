@@ -19,11 +19,13 @@ class BoardObject: Hashable {
         self.angle = angle
     }
     func overlaps<T: BoardObject>(with other: T) -> Bool {
-        fatalError("Subclasses need to implement this method")
+        print("Subclasses need to implement this method")
+        return false
     }
     
     func isInBoundary(within size: CGSize) -> Bool {
-        fatalError("Subclasses need to implement this method")
+        print("Subclasses need to implement this method")
+        return false
     }
     
     func hash(into hasher: inout Hasher) {
@@ -39,7 +41,7 @@ class BoardObject: Hashable {
     }
     
     func updateSize(to newSize: CGFloat) {
-        fatalError("Subclasses need to implement this method")
+        print("Subclasses need to implement this method")
     }
     
     func updateAngle(to newAngle: CGFloat) {

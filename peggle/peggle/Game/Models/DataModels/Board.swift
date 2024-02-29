@@ -147,7 +147,7 @@ extension Board: Hashable & Codable {
                 try objectContainer.encode(BoardObjectType.obstacle, forKey: .type)
                 try objectsArray.encode(obstacle)
             } else {
-                fatalError("Unknown BoardObject subclass")
+                print("Unknown BoardObject subclass")
             }
         }
     }

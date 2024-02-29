@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol RectangularPhysicsObject: PhysicsObject {
+protocol RectangularPhysicsObject: PhysicsObject, CollisionPhysicsBehaviour {
     var center: CGPoint { get set }
     var angle: CGFloat { get set }
     var velocity: CGVector { get set }
@@ -18,6 +18,14 @@ protocol RectangularPhysicsObject: PhysicsObject {
 }
 
 extension RectangularPhysicsObject {
+    mutating func handleCollision<T: RoundPhysicsObject>(with object: inout T) {
+        object.handleCollision(with: &self)
+    }
+    
+    mutating func handleCollision<T: RectangularPhysicsObject>(with object: inout T) {
+        // TODO: implement in future, not needed now
+    }
+    
     mutating func handleBoundaryCollision(within bounds: CGRect, applyPositionalCorrection: Bool = true) {
         self.reflectVelocityIfNeeded(axis: .horizontal, within: bounds)
         self.reflectVelocityIfNeeded(axis: .vertical, within: bounds)

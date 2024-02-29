@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol PhysicsObject: CollisionPhysicsBehaviour, WorldPhysicsBehaviour {
+protocol PhysicsObject: WorldPhysicsBehaviour {
     var center: CGPoint { get set }
     var angle: CGFloat { get set }
     var velocity: CGVector { get set }

@@ -181,7 +181,6 @@ class GameVm:
         if isBallExitingScreen {
             self.gameStateManager.handleBallExitScreen()
             if gameStateManager.allowBallExitToInterruptPlayAndRemovePegs {
-                self.gameStateManager.markGlowingPegsForRemoval()
                 self.removePegAndTransitionToNextStage()
             }
         }
