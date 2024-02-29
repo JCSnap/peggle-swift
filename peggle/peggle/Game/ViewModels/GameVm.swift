@@ -161,6 +161,7 @@ class GameVm:
         bucket.handleBoundaryCollision(within: screenBounds, applyPositionalCorrection: false)
         for object in objects {
             if var peg = object as? GamePeg {
+                peg.applyFriction(deltaTime: timerManager.timeInterval)
                 peg.handleBoundaryCollision(within: screenBounds)
             }
         }
@@ -270,6 +271,9 @@ class GameVm:
     }
     
     func cleanUp() {
+        for gamePeg in pegs {
+            gamePeg.peg.isGlowing = false
+        }
         gameStateManager.cleanUp()
         timerManager.invalidateTimer()
         self.isAiming = true

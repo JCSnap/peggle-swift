@@ -24,6 +24,9 @@ extension PhysicsObject {
     }
     
     mutating func applyFriction(deltaTime: TimeInterval, frictionCoefficient: CGFloat = PhysicsEngineConstants.defaultFrictionCoefficient) {
+        if self.isStatic || self.velocity.magnitude == 0 {
+            return
+        }
         // friction is proportional to velocity squared
         let frictionalForceMagnitude = frictionCoefficient * self.velocity.magnitude * self.velocity.magnitude
         let frictionalForceX = frictionalForceMagnitude * (self.velocity.dx / self.velocity.magnitude)
