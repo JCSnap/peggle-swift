@@ -108,7 +108,7 @@ class PhysicsGameStateManager {
 
     func markGlowingPegsForRemoval() {
         objects.forEach { object in
-            if let gamePeg = object as? GamePeg, gamePeg.isGlowing {
+            if let gamePeg = object as? GamePeg, gamePeg.hasNoHealth {
                 gamePeg.isVisible = false
             }
         }

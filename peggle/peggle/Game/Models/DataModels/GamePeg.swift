@@ -13,6 +13,11 @@ class GamePeg: GameObject, RoundPhysicsObject {
     var isGlowing: Bool {
         peg.isGlowing
     }
+    private var _health: CGFloat
+    var health: CGFloat {
+        get { _health }
+        set { _health = min(max(newValue, 0), 100) }
+    }
     var isVisible = true
     override var center: CGPoint {
         get { peg.center }
@@ -28,6 +33,9 @@ class GamePeg: GameObject, RoundPhysicsObject {
     }
     var type: ObjectType.PegType {
         peg.type
+    }
+    var hasNoHealth: Bool {
+        health == 0
     }
 
     // factory
@@ -54,6 +62,7 @@ class GamePeg: GameObject, RoundPhysicsObject {
         } else {
             massToInit = mass
         }
+        self._health = Constants.defaultPegMaxHealth
         super.init(center: peg.center, velocity: velocity, mass: massToInit, isStatic: isStatic)
     }
 
@@ -68,6 +77,13 @@ class GamePeg: GameObject, RoundPhysicsObject {
     func glowUp() {
         peg.glowUp()
     }
+    
+    func deductHealthBasedOnImpact(impactVelocity: CGVector) {
+        let defaultMagnitude = Constants.defaultBallVelocity.magnitude
+        let scalingFactor = 3.0
+        let toDeduct = impactVelocity.magnitude / (defaultMagnitude * scalingFactor) * Constants.defaultPegMaxHealth
+        self.health -= toDeduct
+    }
 
     override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
         collisionCount += 1
@@ -80,6 +96,7 @@ class NormalGamePeg: GamePeg {
         if !self.isGlowing {
             self.glowUp()
         }
+        deductHealthBasedOnImpact(impactVelocity: gameStateManager.ball.velocity)
     }
 }
 
@@ -90,6 +107,7 @@ class ScoringGamePeg: GamePeg {
             self.glowUp()
             gameStateManager.score += 1
         }
+        deductHealthBasedOnImpact(impactVelocity: gameStateManager.ball.velocity)
     }
 }
 
@@ -99,6 +117,7 @@ class ExplodingGamePeg: GamePeg {
         if !self.isGlowing {
             self.glowUp()
         }
+        deductHealthBasedOnImpact(impactVelocity: gameStateManager.ball.velocity)
     }
 }
 
@@ -108,5 +127,6 @@ class StubbornGamePeg: GamePeg {
         if !self.isGlowing {
             self.glowUp()
         }
+        deductHealthBasedOnImpact(impactVelocity: gameStateManager.ball.velocity)
     }
 }

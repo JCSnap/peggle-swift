@@ -51,20 +51,36 @@ struct PegsView: View {
         let pegs = viewModel.pegs
         
         ForEach(pegs.indices, id: \.self) { index in
-            if pegs[index].isGlowing {
-                PegView(pegType: pegs[index].type, radius: pegs[index].radius,
-                        isGlowing: pegs[index].isGlowing, angle: .radians(pegs[index].angle))
+            ZStack {
+                if pegs[index].isGlowing {
+                    PegView(pegType: pegs[index].type, radius: pegs[index].radius,
+                            isGlowing: pegs[index].isGlowing, angle: .radians(pegs[index].angle))
                     .position(pegs[index].center)
                     .opacity(pegs[index].isVisible ? 1 : 0)
                     .animation(
                         .easeOut(duration: Constants.defaultAnimationDuration),
-                        value: pegs[index].isVisible)
-            } else {
-                PegView(pegType: pegs[index].type, radius: pegs[index].radius, isGlowing: pegs[index].isGlowing, angle: .radians(pegs[index].angle))
-                    .position(pegs[index].center)
+                        value: pegs[index].hasNoHealth)
+                } else {
+                    PegView(pegType: pegs[index].type, radius: pegs[index].radius, isGlowing: pegs[index].isGlowing, angle: .radians(pegs[index].angle))
+                        .position(pegs[index].center)
+                }
+                HealthBarView(health: viewModel.pegs[index].health, pegRadius: viewModel.pegs[index].radius)
+                    .position(viewModel.pegs[index].center)
             }
         }
 
+    }
+}
+
+struct HealthBarView: View {
+    var health: CGFloat
+    var pegRadius: CGFloat
+
+    var body: some View {
+        Rectangle()
+            .fill(Color.green)
+            .frame(width: health / 100 * pegRadius * 2, height: 5)
+            .offset(y: -pegRadius - 5)
     }
 }
 

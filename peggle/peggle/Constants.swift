@@ -37,6 +37,7 @@ struct Constants {
     static let defaultPegMass = 1_000_000.0
     static let stubbornPegMass = 10.0
     static let defaultPegVelocity = CGVector(dx: 0, dy: 0)
+    static let defaultPegMaxHealth = 100.0
 
     static let defaultObstacleMass = 1_000_000.0
     static let defaultObstacleVelocity = CGVector(dx: 0, dy: 0)

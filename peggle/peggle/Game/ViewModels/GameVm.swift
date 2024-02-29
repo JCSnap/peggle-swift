@@ -205,44 +205,37 @@ class GameVm:
     }
     
     private func handleCollisions() {
-        var hitObjectsIndices: [Int] = []
         let objects = self.objects
         
-        for (index, object) in objects.enumerated() {
-            if let peg = object as? GamePeg {
+        for object in objects {
+            if var peg = object as? GamePeg {
                 if self.ball.isColliding(with: peg) {
                     playSound(sound: .bounce)
-                    hitObjectsIndices.append(index)
+                    peg.effectWhenHit(gameStateManager: &self.gameStateManager)
+                    self.ball.handleCollision(with: &peg)
                 }
-            } else if let rectangleObstacle = object as? GameRectangleObstacle {
+            } else if var rectangleObstacle = object as? GameRectangleObstacle {
                 if self.ball.isColliding(with: rectangleObstacle) {
                     playSound(sound: .bounce)
-                    hitObjectsIndices.append(index)
+                    self.ball.handleCollision(with: &rectangleObstacle)
                 }
             }
         }
-        
-        for index in hitObjectsIndices {
-            let object = objects[index]
-            if var peg = object as? GamePeg {
-                peg.effectWhenHit(gameStateManager: &self.gameStateManager)
-                self.ball.handleCollision(with: &peg)
-            } else if var rectangleObstacle = object as? GameRectangleObstacle {
-                self.ball.handleCollision(with: &rectangleObstacle)
-            }
-        }
+ 
         
         for i in 0..<objects.count {
             for j in (i + 1)..<objects.count {
-                if var peg1 = objects[i] as? GamePeg, var peg2 = objects[j] as? GamePeg, peg1.isColliding(with: peg2) {
+                if var peg1 = self.objects[i] as? GamePeg, var peg2 = self.objects[j] as? GamePeg, peg1.isColliding(with: peg2) {
                     if !peg1.isStatic {
                         peg1.handleCollision(with: &peg2)
+                        playSound(sound: .bounce)
                         self.objects[i] = peg1
                         self.objects[j] = peg2
                     }
-                } else if var peg = objects[i] as? GamePeg, var obstacle = objects[j] as? GameRectangleObstacle, peg.isColliding(with: obstacle) {
+                } else if var peg = self.objects[i] as? GamePeg, var obstacle = self.objects[j] as? GameRectangleObstacle, peg.isColliding(with: obstacle) {
                     if !peg.isStatic {
                         peg.handleCollision(with: &obstacle)
+                        playSound(sound: .bounce)
                         self.objects[i] = peg
                         self.objects[j] = obstacle
                     }
