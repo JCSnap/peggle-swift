@@ -226,12 +226,10 @@ class GameVm:
         for i in 0..<objects.count {
             for j in (i + 1)..<objects.count {
                 if var peg1 = self.objects[i] as? GamePeg, var peg2 = self.objects[j] as? GamePeg, peg1.isColliding(with: peg2) {
-                    if !peg1.isStatic {
-                        peg1.handleCollision(with: &peg2)
-                        playSound(sound: .bounce)
-                        self.objects[i] = peg1
-                        self.objects[j] = peg2
-                    }
+                    peg1.handleCollision(with: &peg2)
+                    playSound(sound: .bounce)
+                    self.objects[i] = peg1
+                    self.objects[j] = peg2
                 } else if var peg = self.objects[i] as? GamePeg, var obstacle = self.objects[j] as? GameRectangleObstacle, peg.isColliding(with: obstacle) {
                     if !peg.isStatic {
                         peg.handleCollision(with: &obstacle)

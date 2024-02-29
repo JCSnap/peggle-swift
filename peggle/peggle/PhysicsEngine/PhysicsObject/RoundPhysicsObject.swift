@@ -32,14 +32,23 @@ extension RoundPhysicsObject {
     }
     
     mutating func handleCollision<T: RoundPhysicsObject>(with object: inout T) {
-        if !self.isColliding(with: object) || self.isStatic {
+        if !self.isColliding(with: object) || (self.isStatic && object.isStatic) {
             return
         }
-        self.applyPositionalCorrection(asItCollidesWith: &object)
-        let impulse = self.getImpulse(with: object)
-        self.velocity += impulse
-        if !object.isStatic {
-            object.velocity = (object.velocity - impulse) * (1 / object.mass)
+        
+        if !self.isStatic && !object.isStatic {
+            self.applyPositionalCorrection(asItCollidesWith: &object)
+            let impulse = self.getImpulse(with: object)
+            self.velocity += impulse
+            object.velocity -= impulse
+        } else if !self.isStatic {
+            self.applyPositionalCorrection(asItCollidesWith: &object)
+            let impulse = self.getImpulse(with: object)
+            self.velocity += impulse
+        } else {
+            object.applyPositionalCorrection(asItCollidesWith: &self)
+            let impulse = object.getImpulse(with: self)
+            object.velocity += impulse
         }
     }
     

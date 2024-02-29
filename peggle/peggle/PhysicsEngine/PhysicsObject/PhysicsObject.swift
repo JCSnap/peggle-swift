@@ -27,23 +27,7 @@ extension PhysicsObject {
         if self.isStatic || self.velocity.magnitude == 0 {
             return
         }
-        // friction is proportional to velocity squared
-        let frictionalForceMagnitude = frictionCoefficient * self.velocity.magnitude * self.velocity.magnitude
-        let frictionalForceX = frictionalForceMagnitude * (self.velocity.dx / self.velocity.magnitude)
-        let frictionalForceY = frictionalForceMagnitude * (self.velocity.dy / self.velocity.magnitude)
-        
-        self.velocity.dx -= frictionalForceX * CGFloat(deltaTime)
-        
-        self.velocity.dy -= frictionalForceY * CGFloat(deltaTime)
-        // velocity will not change direction due to friction
-        if self.velocity.dx.sign != frictionalForceX.sign {
-            self.velocity.dx = 0
-        }
-        
-        self.velocity.dy -= frictionalForceY * CGFloat(deltaTime)
-        if self.velocity.dy.sign != frictionalForceY.sign {
-            self.velocity.dy = 0
-        }
+        self.velocity = self.velocity * PhysicsEngineConstants.defaultFrictionCoefficient
     }
     
     mutating func updateObjectPosition(timeInterval: TimeInterval) {
