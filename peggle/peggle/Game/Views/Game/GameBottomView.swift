@@ -42,8 +42,7 @@ struct ActivatedPowerView: View {
     @State private var opacity: CGFloat = 1.0
     
     var body: some View {
-        Text("Power Activated!")
-            .font(.custom("Marker Felt", size: 30))
+        MainText(text: "Power Activated", size: 30, color: .black)
             .frame(width: 500, height: 200)
             .foregroundStyle(.brown)
             .offset(y: -150)

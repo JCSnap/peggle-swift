@@ -24,8 +24,7 @@ struct GameSelectPowerView: View {
                 }) {
                     VStack {
                         PowerView(powerType: .exploding)
-                        Text("EXPLODING")
-                            .font(.custom("Marker Felt", size: 15))
+                        MainText(text: "EXPLODING", size: 15, color: .black)
                     }
                 }
                 .border(selectedPowerType == .exploding ? Color.blue : Color.clear, width: 5)
@@ -35,8 +34,7 @@ struct GameSelectPowerView: View {
                 }) {
                     VStack {
                         PowerView(powerType: .spookyBall)
-                        Text("SPOOKYBALL")
-                            .font(.custom("Marker Felt", size: 15))
+                        MainText(text: "SPOOKYBALL", size: 15, color: .black)
                     }
                 }
                 .border(selectedPowerType == .spookyBall ? Color.blue : Color.clear, width: 5)
@@ -46,8 +44,7 @@ struct GameSelectPowerView: View {
                 }) {
                     VStack {
                         PowerView(powerType: .reverseGravity)
-                        Text("REVERSE GRAVITY")
-                            .font(.custom("Marker Felt", size: 15))
+                        MainText(text: "REVERSE GRAVITY", size: 15, color: .black)
                     }
                 }
                 .border(selectedPowerType == .reverseGravity ? Color.blue : Color.clear, width: 5)

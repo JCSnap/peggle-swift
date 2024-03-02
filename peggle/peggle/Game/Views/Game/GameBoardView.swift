@@ -95,10 +95,8 @@ struct ComputedScoreView: View {
     @State private var opacity = 1.0
     
     var body: some View {
-        Text("\(score)")
+        MainText(text: "\(score)", size: scoreSize, color: .red)
             .offset(y: pegRadius + 5)
-            .font(.custom("Marker Felt", size: scoreSize))
-            .foregroundStyle(.red)
             .opacity(opacity)
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

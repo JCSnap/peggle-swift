@@ -18,9 +18,7 @@ struct HomeView: View {
                 .resizable()
                 .scaledToFill()
             VStack {
-                Text("PEGGLE")
-                    .font(.custom("Marker Felt", size: 200))
-                    .foregroundStyle(.blue)
+                MainText(text: "PEGGLE", size: 200, color: .blue)
                 MenuButton(
                     title: "LEVEL DESIGNER",
                     action: {
@@ -52,9 +50,7 @@ struct MenuButton: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 550)
-                Text(title)
-                    .font(.custom("Marker Felt", size: 40))
-                    .foregroundStyle(.black)
+                MainText(text: "\(title)", size: 40, color: .black)
             }
         }
     }
