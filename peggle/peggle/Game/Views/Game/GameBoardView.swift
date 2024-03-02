@@ -64,6 +64,10 @@ struct PegsView: View {
                     PegView(pegType: pegs[index].type, radius: pegs[index].radius, isGlowing: pegs[index].isGlowing, angle: .radians(pegs[index].angle))
                         .position(pegs[index].center)
                 }
+                if viewModel.mostRecentCollisionObject == pegs[index] {
+                    ComputedScoreView(score: viewModel.computedScore, pegRadius: viewModel.pegs[index].radius, scoreSize: viewModel.scoreSize)
+                        .position(pegs[index].center)
+                }
                 HealthBarView(health: viewModel.pegs[index].health, pegRadius: viewModel.pegs[index].radius)
                     .position(viewModel.pegs[index].center)
             }
@@ -81,6 +85,28 @@ struct HealthBarView: View {
             .fill(Color.green)
             .frame(width: health / 100 * pegRadius * 2, height: 5)
             .offset(y: -pegRadius - 5)
+    }
+}
+
+struct ComputedScoreView: View {
+    var score: Int
+    var pegRadius: CGFloat
+    @State var scoreSize: CGFloat
+    @State private var opacity = 1.0
+    
+    var body: some View {
+        Text("\(score)")
+            .offset(y: pegRadius + 5)
+            .font(.custom("Marker Felt", size: scoreSize))
+            .foregroundStyle(.red)
+            .opacity(opacity)
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    withAnimation {
+                        opacity = 0
+                    }
+                }
+            }
     }
 }
 
@@ -142,6 +168,9 @@ protocol GameBoardViewDelegate: AnyObject {
     var bucket: GameBucket { get }
     var screenBounds: CGRect { get }
     var isAiming: Bool { get }
+    var computedScore: Int { get }
+    var scoreSize: CGFloat { get }
+    var mostRecentCollisionObject: GameObject? { get }
 
     func setCannonAngle(fromPoint: CGPoint, toPoint: CGPoint)
 }

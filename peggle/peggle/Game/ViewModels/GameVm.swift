@@ -15,11 +15,11 @@ class GameVm:
     GameLoadLevelViewDelegate,
     GameOverViewDelegate,
     GameSelectPowerViewDelegate {
+    
     private var rootVm: GameRootDelegate
     private var gameStateManager = GameStateManager()
     private var persistenceManager: LevelPersistence.Type = Constants.defaultPersistenceManager
     private var timerManager = TimerManager(timeInterval: Constants.timeInterval)
-    private var scoreManager = ScoreManager()
     private var power: Power = ExplodingPower()
     private let powerConstructors: [PowerType: () -> Power] = [
         .exploding: { ExplodingPower() },
@@ -69,6 +69,12 @@ class GameVm:
     var score: Int {
         gameStateManager.score
     }
+    var computedScore: Int {
+        gameStateManager.computedScore
+    }
+    var scoreSize: CGFloat {
+        gameStateManager.scoreSize
+    }
     var maxScore: Int {
         gameStateManager.maxScore
     }
@@ -89,6 +95,7 @@ class GameVm:
     var selectedPowerType: PowerType {
         rootVm.selectedPowerType
     }
+    var mostRecentCollisionObject: GameObject?
     private var cleanupWorkItem: DispatchWorkItem?
     
     init(rootVm: GameRootDelegate) {
@@ -224,6 +231,7 @@ class GameVm:
                     playSound(sound: .bounce)
                     peg.effectWhenHit(gameStateManager: &self.gameStateManager)
                     self.ball.handleCollision(with: &peg)
+                    self.mostRecentCollisionObject = peg
                 }
             } else if var rectangleObstacle = object as? GameRectangleObstacle {
                 if self.ball.isColliding(with: rectangleObstacle) {

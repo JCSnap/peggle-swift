@@ -15,6 +15,12 @@ class GameStateManager {
     var objects: [GameObject] = []
     var bucket: GameBucket = GameBucket(bucket: Bucket(center: CGPoint(x: -100, y: -100)))
     var cannonAngle: CGFloat = .zero
+    var computedScore: Int = 0
+    var scoreSize: CGFloat {
+        let velocityRatio = ball.velocity.magnitude / Constants.defaultBallVelocity.magnitude
+        let scaleFactor = 40.0 // this is arbitrary
+        return velocityRatio * scaleFactor
+    }
     var score: Int = 0
     var finalScore: Int?
     var isGameOver: GameStage = .playing
@@ -87,6 +93,19 @@ class GameStateManager {
             }
             return false
         }
+    }
+    
+    func addComputedScore(_ score: Int) {
+        self.computedScore += score
+    }
+    
+    func addComputedScoreBasedOnBallSpeed() {
+        let defaultSpeed = Constants.defaultBallVelocity.magnitude
+        let currentSpeed = ball.velocity.magnitude
+        // score is calculated based on relative speed of the ball to its default speed, scale factor is arbitrary
+        let scaleFactor = 50.0
+        let scoreToAdd = Int(currentSpeed / defaultSpeed * scaleFactor)
+        addComputedScore(scoreToAdd)
     }
 
     func removePegsPrematurelyWith(collisionsMoreThan threshold: Int) {

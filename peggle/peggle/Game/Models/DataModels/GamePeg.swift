@@ -95,6 +95,8 @@ class NormalGamePeg: GamePeg {
         super.effectWhenHit(gameStateManager: &gameStateManager)
         if !self.isGlowing {
             self.glowUp()
+            gameStateManager.addComputedScore(100)
+            gameStateManager.addComputedScoreBasedOnBallSpeed()
         }
         deductHealthBasedOnImpact(impactVelocity: gameStateManager.ball.velocity)
     }
@@ -106,6 +108,8 @@ class ScoringGamePeg: GamePeg {
         if !self.isGlowing {
             self.glowUp()
             gameStateManager.score += 1
+            gameStateManager.addComputedScore(500)
+            gameStateManager.addComputedScoreBasedOnBallSpeed()
         }
         deductHealthBasedOnImpact(impactVelocity: gameStateManager.ball.velocity)
     }
@@ -116,6 +120,8 @@ class ExplodingGamePeg: GamePeg {
         super.effectWhenHit(gameStateManager: &gameStateManager)
         if !self.isGlowing {
             self.glowUp()
+            gameStateManager.addComputedScore(300)
+            gameStateManager.addComputedScoreBasedOnBallSpeed()
         }
         deductHealthBasedOnImpact(impactVelocity: gameStateManager.ball.velocity)
     }
@@ -126,6 +132,8 @@ class StubbornGamePeg: GamePeg {
         super.effectWhenHit(gameStateManager: &gameStateManager)
         if !self.isGlowing {
             self.glowUp()
+            gameStateManager.addComputedScore(400)
+            gameStateManager.addComputedScoreBasedOnBallSpeed()
         }
         deductHealthBasedOnImpact(impactVelocity: gameStateManager.ball.velocity)
     }
