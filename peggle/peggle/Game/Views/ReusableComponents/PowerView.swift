@@ -21,7 +21,8 @@ struct PowerView: View {
     private var powerImage: String {
         let imageNames: [PowerType: String] = [
             .exploding: "explosion-power",
-            .spookyBall: "spooky-ball-power"
+            .spookyBall: "spooky-ball-power",
+            .reverseGravity: "reverse-gravity-power"
         ]
         return imageNames[powerType] ?? "explosion-power"
     }

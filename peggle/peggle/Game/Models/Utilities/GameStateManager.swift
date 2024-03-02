@@ -30,6 +30,7 @@ class GameStateManager {
     }
     var maxScore: Int = 0
     var allowBallExitToInterruptPlayAndRemovePegs: Bool = true
+    var reverseGravity: Bool = false
 
     func hasReachedObjective() -> Bool {
         let gamePegs = objects.compactMap { $0 as? GamePeg }

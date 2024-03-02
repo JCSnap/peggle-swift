@@ -38,6 +38,16 @@ struct GameSelectPowerView: View {
                     }
                 }
                 .border(selectedPowerType == .spookyBall ? Color.blue : Color.clear, width: 5)
+                Button(action: {
+                    selectedPowerType = .reverseGravity
+                    viewModel.playSound(sound: .select)
+                }) {
+                    VStack {
+                        PowerView(powerType: .reverseGravity)
+                        Text("REVERSE GRAVITY")
+                    }
+                }
+                .border(selectedPowerType == .reverseGravity ? Color.blue : Color.clear, width: 5)
             }
             Button("OK") {
                 isPowerSelected = true

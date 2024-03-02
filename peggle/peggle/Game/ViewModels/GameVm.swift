@@ -23,7 +23,8 @@ class GameVm:
     private var power: Power = ExplodingPower()
     private let powerConstructors: [PowerType: () -> Power] = [
         .exploding: { ExplodingPower() },
-        .spookyBall: { SpookyBallPower() }
+        .spookyBall: { SpookyBallPower() },
+        .reverseGravity: { ReverseGravityPower() }
     ]
     
     var level: Level? {
@@ -148,16 +149,16 @@ class GameVm:
     }
     
     func activatePower() {
-        power.effectWhenActivated(gameStateManager: &gameStateManager)
+        power.effectWhenActivated(gameStateManager: gameStateManager)
     }
     
     private func updateGameState() {
-        ball.applyGravity(deltaTime: timerManager.timeInterval)
+        ball.applyGravity(deltaTime: timerManager.timeInterval, reverse: gameStateManager.reverseGravity)
         checkAndHandleBoundaryCollisions()
         checkAndHandleBallStuck()
         checkAndHandleBallExit()
         if ball.isColliding(with: bucket, on: .top) {
-            bucket.effectWhenHit(gameStateManager: &gameStateManager)
+            bucket.effectWhenHit(gameStateManager: gameStateManager)
             removePegAndTransitionToNextStage()
         }
         handleCollisions()
@@ -229,7 +230,7 @@ class GameVm:
             if var peg = object as? GamePeg {
                 if self.ball.isColliding(with: peg) {
                     playSound(sound: .bounce)
-                    peg.effectWhenHit(gameStateManager: &self.gameStateManager)
+                    peg.effectWhenHit(gameStateManager: self.gameStateManager)
                     self.ball.handleCollision(with: &peg)
                     self.mostRecentCollisionObject = peg
                 }

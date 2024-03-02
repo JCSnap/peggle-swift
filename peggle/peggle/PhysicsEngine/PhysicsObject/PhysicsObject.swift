@@ -16,11 +16,15 @@ protocol PhysicsObject: WorldPhysicsBehaviour {
 }
 
 extension PhysicsObject {
-    mutating func applyGravity(deltaTime: TimeInterval, gravity: CGFloat = PhysicsEngineConstants.earthGravity) {
+    mutating func applyGravity(deltaTime: TimeInterval, gravity: CGFloat = PhysicsEngineConstants.earthGravity, reverse: Bool = false) {
         if self.isStatic {
             return
         }
-        self.velocity.dy -= gravity * CGFloat(deltaTime)
+        if reverse {
+            self.velocity.dy += gravity * CGFloat(deltaTime)
+        } else {
+            self.velocity.dy -= gravity * CGFloat(deltaTime)
+        }
     }
     
     mutating func applyFriction(deltaTime: TimeInterval, frictionCoefficient: CGFloat = PhysicsEngineConstants.defaultFrictionCoefficient) {

@@ -8,5 +8,5 @@
 import Foundation
 
 protocol HittableObject {
-    func effectWhenHit(gameStateManager: inout GameStateManager)
+    func effectWhenHit(gameStateManager: GameStateManager)
 }

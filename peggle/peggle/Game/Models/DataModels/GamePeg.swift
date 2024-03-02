@@ -85,14 +85,14 @@ class GamePeg: GameObject, RoundPhysicsObject {
         self.health -= toDeduct
     }
 
-    override func effectWhenHit(gameStateManager: inout GameStateManager) {
+    override func effectWhenHit(gameStateManager: GameStateManager) {
         collisionCount += 1
     }
 }
 
 class NormalGamePeg: GamePeg {
-    override func effectWhenHit(gameStateManager: inout GameStateManager) {
-        super.effectWhenHit(gameStateManager: &gameStateManager)
+    override func effectWhenHit(gameStateManager: GameStateManager) {
+        super.effectWhenHit(gameStateManager: gameStateManager)
         if !self.isGlowing {
             self.glowUp()
             gameStateManager.addComputedScore(100)
@@ -103,8 +103,8 @@ class NormalGamePeg: GamePeg {
 }
 
 class ScoringGamePeg: GamePeg {
-    override func effectWhenHit(gameStateManager: inout GameStateManager) {
-        super.effectWhenHit(gameStateManager: &gameStateManager)
+    override func effectWhenHit(gameStateManager: GameStateManager) {
+        super.effectWhenHit(gameStateManager: gameStateManager)
         if !self.isGlowing {
             self.glowUp()
             gameStateManager.score += 1
@@ -116,8 +116,8 @@ class ScoringGamePeg: GamePeg {
 }
 
 class ExplodingGamePeg: GamePeg {
-    override func effectWhenHit(gameStateManager: inout GameStateManager) {
-        super.effectWhenHit(gameStateManager: &gameStateManager)
+    override func effectWhenHit(gameStateManager: GameStateManager) {
+        super.effectWhenHit(gameStateManager: gameStateManager)
         if !self.isGlowing {
             self.glowUp()
             gameStateManager.addComputedScore(300)
@@ -128,8 +128,8 @@ class ExplodingGamePeg: GamePeg {
 }
 
 class StubbornGamePeg: GamePeg {
-    override func effectWhenHit(gameStateManager: inout GameStateManager) {
-        super.effectWhenHit(gameStateManager: &gameStateManager)
+    override func effectWhenHit(gameStateManager: GameStateManager) {
+        super.effectWhenHit(gameStateManager: gameStateManager)
         if !self.isGlowing {
             self.glowUp()
             gameStateManager.addComputedScore(400)
