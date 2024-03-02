@@ -207,6 +207,7 @@ class GameVm:
             self.isAiming = true
             self.gameStateManager.removeInvisiblePegs()
             if self.gameStateManager.hasReachedObjective() {
+                self.gameStateManager.updateComputedScoreBasedOnBallRemaining()
                 self.endGame(with: .win)
             } else if self.gameStateManager.ballCountRemaining == 0 {
                 self.endGame(with: .lose)

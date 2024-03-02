@@ -108,6 +108,11 @@ class GameStateManager {
         let scoreToAdd = Int(currentSpeed / defaultSpeed * scaleFactor)
         addComputedScore(scoreToAdd)
     }
+    
+    func updateComputedScoreBasedOnBallRemaining() {
+        let scaleFactor = 500
+        addComputedScore(scaleFactor * ballCountRemaining)
+    }
 
     func removePegsPrematurelyWith(collisionsMoreThan threshold: Int) {
         objects.forEach { object in
