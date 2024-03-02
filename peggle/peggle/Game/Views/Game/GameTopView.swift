@@ -47,7 +47,7 @@ struct BallCountView: View {
 
     var body: some View {
         HStack {
-            MainText(text: "Ball(s) left: ", size: 40, color: .black)
+            MainText(text: "Ball(s) left: ", size: 40, color: .gray)
             MainText(text: "\(viewModel.ballCountRemaining)", size: 40, color: .brown)
         }
     }
@@ -57,9 +57,9 @@ struct ScoreView: View {
 
     var body: some View {
         HStack {
-            MainText(text: "Score: ", size: 40, color: .black)
+            MainText(text: "Score: ", size: 40, color: .gray)
             MainText(text: "\(viewModel.computedScore)", size: 40, color: .green)
-            MainText(text: "Orange: ", size: 40, color: .black)
+            MainText(text: "Orange: ", size: 40, color: .gray)
             MainText(text: "\(viewModel.score)/\(viewModel.maxScore)", size: 40, color: .orange)
         }
     }

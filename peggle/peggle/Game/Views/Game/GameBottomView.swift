@@ -14,7 +14,6 @@ struct GameBottomView: View {
 
     var body: some View {
         HStack {
-            Text("This is the bottom view")
             if viewModel.isAiming {
                 Button("LAUNCH") {
                     viewModel.startGame()
