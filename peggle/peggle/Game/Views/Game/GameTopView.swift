@@ -9,11 +9,14 @@ import SwiftUI
 
 struct GameTopView: View {
     var viewModel: GameTopViewDelegate
+    @State private var showMenuAlert = false    
 
     var body: some View {
+        let menuText = "Exit to main menu? Your progress will not be saved!"
+        
         HStack {
             Spacer()
-            MenuView()
+            MenuView(showMenuAlert: $showMenuAlert)
             Spacer()
             BallCountView(viewModel: viewModel)
             Spacer()
@@ -21,13 +24,19 @@ struct GameTopView: View {
             Spacer()
         }
         .frame(width: .infinity, height: 100)
+        .alert(menuText, isPresented: $showMenuAlert) {
+            Button("CANCEL", role: .cancel) { }
+            Button("YES") { viewModel.goToHomeView() }
+        }
     }
 }
 
 struct MenuView: View {
+    @Binding var showMenuAlert: Bool
+    
     var body: some View {
         Button("Menu") {
-            print("This is the meny button")
+            showMenuAlert = true
         }
         .font(.largeTitle)
     }
@@ -64,6 +73,8 @@ protocol GameTopViewDelegate: AnyObject {
     var ballCountRemaining: Int { get }
     var score: Int { get }
     var maxScore: Int { get }
+    
+    func goToHomeView()
 }
 
 #Preview {
