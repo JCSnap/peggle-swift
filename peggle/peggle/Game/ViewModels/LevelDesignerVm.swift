@@ -110,6 +110,10 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
         }
         updateCurrentLevel(with: level)
     }
+    
+    func deleteLevel(_ levelName: String) {
+        persistenceManager.deleteLevel(name: levelName)
+    }
 
     func toggleLoadLevelView() {
         self.isLoadLevelViewPresented.toggle()
