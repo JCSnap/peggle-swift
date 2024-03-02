@@ -144,6 +144,11 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
     func startLevel() {
         rootVm.goToGameViewWithBoard(board)
     }
+    
+    func isNameOverwriting(_ name: String) -> Bool {
+        let levels = getNamesOfAvailableLevels()
+        return levels.contains(name)
+    }
 }
 
 extension LevelDesignerVm {

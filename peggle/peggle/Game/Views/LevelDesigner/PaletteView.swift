@@ -12,11 +12,13 @@ struct PaletteView: View {
     @State private var levelName: String = ""
     @State private var showSaveAlert = false
     @State private var showInvalidNameAlert = false
+    @State private var showOverwriteNameAlert = false
     @State private var showResetAlert = false
     
     var body: some View {
         let resetAlertText = "Are you sure you want to reset? This action cannot be reversed"
         let saveAlertText = "Save level with: \(levelName)?"
+        let overwriteNameAlertText = "\(levelName) already exists. Do you want to overwrite it?"
         let invalidNameAlertText = "Invalid Level Name"
         let invalidNameAlertMessage =
         """
@@ -28,6 +30,7 @@ struct PaletteView: View {
             PegSelectionView(viewModel: viewModel)
             EditObjectView(viewModel: viewModel)
             ActionButtonsView(levelName: $levelName, showSaveAlert: $showSaveAlert,
+                              showOverwriteNameAlert: $showOverwriteNameAlert,
                               showInvalidNameAlert: $showInvalidNameAlert,
                               showResetAlert: $showResetAlert, viewModel: viewModel)
             .alert(resetAlertText, isPresented: $showResetAlert) {
@@ -36,7 +39,15 @@ struct PaletteView: View {
             }
             .alert(saveAlertText, isPresented: $showSaveAlert) {
                 Button("CANCEL", role: .cancel) { }
-                Button("OK") { viewModel.saveLevel(levelName: levelName) }
+                Button("OK") {
+                    viewModel.saveLevel(levelName: levelName)
+                }
+            }
+            .alert(overwriteNameAlertText, isPresented: $showOverwriteNameAlert) {
+                Button("CANCEL", role: .cancel) { }
+                Button("OK") {
+                    viewModel.saveLevel(levelName: levelName)
+                }
             }
             .alert(invalidNameAlertText, isPresented: $showInvalidNameAlert) {
                 Button("OK", role: .cancel) { }
@@ -166,6 +177,7 @@ struct EditObjectView: View {
 struct ActionButtonsView: View {
     @Binding var levelName: String
     @Binding var showSaveAlert: Bool
+    @Binding var showOverwriteNameAlert: Bool
     @Binding var showInvalidNameAlert: Bool
     @Binding var showResetAlert: Bool
     var viewModel: LevelDesignerPaletteDelegate
@@ -177,6 +189,8 @@ struct ActionButtonsView: View {
             Button("SAVE") {
                 if viewModel.isNameInvalid(levelName) {
                     showInvalidNameAlert = true
+                } else if viewModel.isNameOverwriting(levelName) {
+                    showOverwriteNameAlert = true
                 } else {
                     showSaveAlert = true
                 }
@@ -209,6 +223,7 @@ protocol LevelDesignerPaletteDelegate: AnyObject {
     func renderLoadLevelView()
     
     func isNameInvalid(_ name: String) -> Bool
+    func isNameOverwriting(_ name: String) -> Bool
     
     func saveLevel(levelName: String)
     
