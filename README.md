@@ -60,7 +60,10 @@ Please write all of the additional features that you have implemented so that
 your grader can award you credit.
 
 ### Audio
-Add audio to clicking buttons when selecting the `Level Designer` or `Game`, when selecting the different power ups, when the ball collides with objects, when the glowing pegs are removed, when the game wins/loses.
+- Add audio to clicking buttons when selecting the `Level Designer` or `Game`, when selecting the different power ups, when the ball collides with objects, when the glowing pegs are removed, when the game wins/loses. This is done with the use of `SoundManager`, which handles all sound. Since the `rootVm` has an instance of `SoundManager`, every other view model can access the `playSound` method. Actions from the view triggers the `playSound` function of the respective view models, which triggers the `playSound` function of the `rootVm`. The `SoundManager` will preinitialise some sound instances, and play the sound asynchronously, adding more instances as required.
+- Improve overall aesthetic - including custom fonts, backgrounds
+- Score feature
+- Selected object in the level designer are highlighted
 
 ## Tests
 If you decide to write how you are going to do your tests instead of writing

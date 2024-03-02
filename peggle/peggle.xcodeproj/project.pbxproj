@@ -28,13 +28,11 @@
 		0A3BE5E32B7121D700276847 /* physics_engineUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5E22B7121D700276847 /* physics_engineUITestsLaunchTests.swift */; };
 		0A3BE5F02B71DC5900276847 /* PhysicsEngineConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5EF2B71DC5900276847 /* PhysicsEngineConstants.swift */; };
 		0A3BE5F22B71DC9300276847 /* RoundPhysicsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5F12B71DC9300276847 /* RoundPhysicsObject.swift */; };
-		0A3BE5F62B71DE1400276847 /* WorldPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5F52B71DE1400276847 /* WorldPhysics.swift */; };
-		0A3BE5F82B71DF8900276847 /* CollisionPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5F72B71DF8900276847 /* CollisionPhysics.swift */; };
+		0A3BE5F82B71DF8900276847 /* WorldPhysicsBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5F72B71DF8900276847 /* WorldPhysicsBehaviour.swift */; };
 		0A3BE5FA2B71E04B00276847 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3BE5F92B71E04B00276847 /* CGExtensions.swift */; };
 		0A447CF32B8D844500B29A88 /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A447CF22B8D844500B29A88 /* Obstacle.swift */; };
 		0A447CF52B8D8E7F00B29A88 /* ObstacleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A447CF42B8D8E7F00B29A88 /* ObstacleView.swift */; };
 		0A99EDEA2B7364BF0062758F /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A99EDE92B7364BF0062758F /* Ball.swift */; };
-		0A99EDF12B77BB100062758F /* WorldPhysicsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A99EDF02B77BB100062758F /* WorldPhysicsTests.swift */; };
 		0A9F3CDE2B85DEDD004CEA71 /* BucketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9F3CDD2B85DEDD004CEA71 /* BucketView.swift */; };
 		0A9F3CE12B85E007004CEA71 /* RectangularPhysicsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9F3CE02B85E007004CEA71 /* RectangularPhysicsObject.swift */; };
 		0A9F3CE32B85E064004CEA71 /* GameBucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9F3CE22B85E064004CEA71 /* GameBucket.swift */; };
@@ -42,6 +40,20 @@
 		0A9F3CED2B88F11A004CEA71 /* BoardObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9F3CEC2B88F11A004CEA71 /* BoardObject.swift */; };
 		0A9F3CEF2B898F1D004CEA71 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9F3CEE2B898F1D004CEA71 /* CGPoint+Extensions.swift */; };
 		0A9F3CF12B899FE5004CEA71 /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9F3CF02B899FE5004CEA71 /* GameObject.swift */; };
+		0AA18E652B8E228D0039E5EF /* ObjectShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA18E642B8E228D0039E5EF /* ObjectShape.swift */; };
+		0AA18E672B8E28ED0039E5EF /* GameObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA18E662B8E28ED0039E5EF /* GameObstacle.swift */; };
+		0AA18E712B8F54750039E5EF /* cannon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E6A2B8F54750039E5EF /* cannon.mp3 */; };
+		0AA18E722B8F54750039E5EF /* bounce.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E6B2B8F54750039E5EF /* bounce.mp3 */; };
+		0AA18E732B8F54750039E5EF /* win.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E6C2B8F54750039E5EF /* win.mp3 */; };
+		0AA18E742B8F54750039E5EF /* interface.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E6D2B8F54750039E5EF /* interface.mp3 */; };
+		0AA18E752B8F54750039E5EF /* game-over.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E6E2B8F54750039E5EF /* game-over.mp3 */; };
+		0AA18E762B8F54750039E5EF /* sound-effect-twinklesparkle-115095.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E6F2B8F54750039E5EF /* sound-effect-twinklesparkle-115095.mp3 */; };
+		0AA18E772B8F54750039E5EF /* clear.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E702B8F54750039E5EF /* clear.mp3 */; };
+		0AA18E792B8F56210039E5EF /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA18E782B8F56210039E5EF /* SoundManager.swift */; };
+		0AA18E7B2B8F5A470039E5EF /* select.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E7A2B8F5A470039E5EF /* select.mp3 */; };
+		0AA18E7D2B8F5E160039E5EF /* bubble.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E7C2B8F5E160039E5EF /* bubble.mp3 */; };
+		0AA18E832B8F627B0039E5EF /* tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E822B8F627B0039E5EF /* tick.mp3 */; };
+		0AA18E852B90CF8E0039E5EF /* CollisionPhysicsBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA18E842B90CF8E0039E5EF /* CollisionPhysicsBehaviour.swift */; };
 		0AA669832B7CD4A100916547 /* HomeVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669822B7CD4A100916547 /* HomeVm.swift */; };
 		0AA669852B7CD4AC00916547 /* LevelDesignerVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669842B7CD4AC00916547 /* LevelDesignerVm.swift */; };
 		0AA669892B7CD4E600916547 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669882B7CD4E600916547 /* HomeView.swift */; };
@@ -112,13 +124,11 @@
 		0A3BE5E22B7121D700276847 /* physics_engineUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = physics_engineUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		0A3BE5EF2B71DC5900276847 /* PhysicsEngineConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsEngineConstants.swift; sourceTree = "<group>"; };
 		0A3BE5F12B71DC9300276847 /* RoundPhysicsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundPhysicsObject.swift; sourceTree = "<group>"; };
-		0A3BE5F52B71DE1400276847 /* WorldPhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPhysics.swift; sourceTree = "<group>"; };
-		0A3BE5F72B71DF8900276847 /* CollisionPhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionPhysics.swift; sourceTree = "<group>"; };
+		0A3BE5F72B71DF8900276847 /* WorldPhysicsBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPhysicsBehaviour.swift; sourceTree = "<group>"; };
 		0A3BE5F92B71E04B00276847 /* CGExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGExtensions.swift; sourceTree = "<group>"; };
 		0A447CF22B8D844500B29A88 /* Obstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
 		0A447CF42B8D8E7F00B29A88 /* ObstacleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObstacleView.swift; sourceTree = "<group>"; };
 		0A99EDE92B7364BF0062758F /* Ball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
-		0A99EDF02B77BB100062758F /* WorldPhysicsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPhysicsTests.swift; sourceTree = "<group>"; };
 		0A9F3CDD2B85DEDD004CEA71 /* BucketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketView.swift; sourceTree = "<group>"; };
 		0A9F3CE02B85E007004CEA71 /* RectangularPhysicsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularPhysicsObject.swift; sourceTree = "<group>"; };
 		0A9F3CE22B85E064004CEA71 /* GameBucket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBucket.swift; sourceTree = "<group>"; };
@@ -126,6 +136,20 @@
 		0A9F3CEC2B88F11A004CEA71 /* BoardObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardObject.swift; sourceTree = "<group>"; };
 		0A9F3CEE2B898F1D004CEA71 /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		0A9F3CF02B899FE5004CEA71 /* GameObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
+		0AA18E642B8E228D0039E5EF /* ObjectShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectShape.swift; sourceTree = "<group>"; };
+		0AA18E662B8E28ED0039E5EF /* GameObstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameObstacle.swift; sourceTree = "<group>"; };
+		0AA18E6A2B8F54750039E5EF /* cannon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cannon.mp3; sourceTree = "<group>"; };
+		0AA18E6B2B8F54750039E5EF /* bounce.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bounce.mp3; sourceTree = "<group>"; };
+		0AA18E6C2B8F54750039E5EF /* win.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = win.mp3; sourceTree = "<group>"; };
+		0AA18E6D2B8F54750039E5EF /* interface.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = interface.mp3; sourceTree = "<group>"; };
+		0AA18E6E2B8F54750039E5EF /* game-over.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "game-over.mp3"; sourceTree = "<group>"; };
+		0AA18E6F2B8F54750039E5EF /* sound-effect-twinklesparkle-115095.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "sound-effect-twinklesparkle-115095.mp3"; sourceTree = "<group>"; };
+		0AA18E702B8F54750039E5EF /* clear.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = clear.mp3; sourceTree = "<group>"; };
+		0AA18E782B8F56210039E5EF /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		0AA18E7A2B8F5A470039E5EF /* select.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = select.mp3; sourceTree = "<group>"; };
+		0AA18E7C2B8F5E160039E5EF /* bubble.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bubble.mp3; sourceTree = "<group>"; };
+		0AA18E822B8F627B0039E5EF /* tick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tick.mp3; sourceTree = "<group>"; };
+		0AA18E842B90CF8E0039E5EF /* CollisionPhysicsBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionPhysicsBehaviour.swift; sourceTree = "<group>"; };
 		0AA669822B7CD4A100916547 /* HomeVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVm.swift; sourceTree = "<group>"; };
 		0AA669842B7CD4AC00916547 /* LevelDesignerVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelDesignerVm.swift; sourceTree = "<group>"; };
 		0AA669882B7CD4E600916547 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -181,7 +205,6 @@
 		0A394BC82B7CDC7B002E6F03 /* PhysicsEngineTests */ = {
 			isa = PBXGroup;
 			children = (
-				0A99EDF02B77BB100062758F /* WorldPhysicsTests.swift */,
 			);
 			path = PhysicsEngineTests;
 			sourceTree = "<group>";
@@ -224,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				0A3BE5C42B7121D600276847 /* app.swift */,
+				0AA18E692B8F532F0039E5EF /* Sound */,
 				0A3BE5C82B7121D700276847 /* Assets.xcassets */,
 				0A3BE5CA2B7121D700276847 /* peggle.entitlements */,
 				0AA669802B7CD44B00916547 /* Game */,
@@ -266,6 +290,23 @@
 				0A3BE5F12B71DC9300276847 /* RoundPhysicsObject.swift */,
 			);
 			path = PhysicsObject;
+			sourceTree = "<group>";
+		};
+		0AA18E692B8F532F0039E5EF /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				0AA18E6B2B8F54750039E5EF /* bounce.mp3 */,
+				0AA18E702B8F54750039E5EF /* clear.mp3 */,
+				0AA18E6D2B8F54750039E5EF /* interface.mp3 */,
+				0AA18E7C2B8F5E160039E5EF /* bubble.mp3 */,
+				0AA18E6E2B8F54750039E5EF /* game-over.mp3 */,
+				0AA18E6A2B8F54750039E5EF /* cannon.mp3 */,
+				0AA18E822B8F627B0039E5EF /* tick.mp3 */,
+				0AA18E7A2B8F5A470039E5EF /* select.mp3 */,
+				0AA18E6F2B8F54750039E5EF /* sound-effect-twinklesparkle-115095.mp3 */,
+				0AA18E6C2B8F54750039E5EF /* win.mp3 */,
+			);
+			path = Sound;
 			sourceTree = "<group>";
 		};
 		0AA669802B7CD44B00916547 /* Game */ = {
@@ -352,6 +393,7 @@
 			children = (
 				0A15FD992B7FBBD000FB0704 /* PhysicsGameStateManager.swift */,
 				0A39D0332B80739700B4C07F /* TimerManager.swift */,
+				0AA18E782B8F56210039E5EF /* SoundManager.swift */,
 				0AA6699A2B7CD5BB00916547 /* LocalPersistenceManager.swift */,
 				0AA6699E2B7CD5D200916547 /* Validator.swift */,
 			);
@@ -377,7 +419,9 @@
 				0A9F3CE42B85E0A4004CEA71 /* Bucket.swift */,
 				0A99EDE92B7364BF0062758F /* Ball.swift */,
 				0A447CF22B8D844500B29A88 /* Obstacle.swift */,
+				0AA18E642B8E228D0039E5EF /* ObjectShape.swift */,
 				0A394BDE2B7DE7F6002E6F03 /* GamePeg.swift */,
+				0AA18E662B8E28ED0039E5EF /* GameObstacle.swift */,
 				0A394BE02B7E0F56002E6F03 /* GameBall.swift */,
 				0AFCA7032B89D07F0073E078 /* ExplodingPower.swift */,
 				0AFCA7092B8A129B0073E078 /* SpookyBallPower.swift */,
@@ -394,8 +438,8 @@
 				0A9F3CDF2B85DFCC004CEA71 /* PhysicsObject */,
 				0A3BE5EF2B71DC5900276847 /* PhysicsEngineConstants.swift */,
 				0A3BE5F92B71E04B00276847 /* CGExtensions.swift */,
-				0A3BE5F52B71DE1400276847 /* WorldPhysics.swift */,
-				0A3BE5F72B71DF8900276847 /* CollisionPhysics.swift */,
+				0A3BE5F72B71DF8900276847 /* WorldPhysicsBehaviour.swift */,
+				0AA18E842B90CF8E0039E5EF /* CollisionPhysicsBehaviour.swift */,
 			);
 			path = PhysicsEngine;
 			sourceTree = "<group>";
@@ -504,8 +548,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AA18E7B2B8F5A470039E5EF /* select.mp3 in Resources */,
+				0AA18E732B8F54750039E5EF /* win.mp3 in Resources */,
+				0AA18E832B8F627B0039E5EF /* tick.mp3 in Resources */,
 				0A3BE5CD2B7121D700276847 /* Preview Assets.xcassets in Resources */,
+				0AA18E742B8F54750039E5EF /* interface.mp3 in Resources */,
+				0AA18E752B8F54750039E5EF /* game-over.mp3 in Resources */,
+				0AA18E7D2B8F5E160039E5EF /* bubble.mp3 in Resources */,
+				0AA18E722B8F54750039E5EF /* bounce.mp3 in Resources */,
+				0AA18E712B8F54750039E5EF /* cannon.mp3 in Resources */,
+				0AA18E762B8F54750039E5EF /* sound-effect-twinklesparkle-115095.mp3 in Resources */,
 				0A3BE5C92B7121D700276847 /* Assets.xcassets in Resources */,
+				0AA18E772B8F54750039E5EF /* clear.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,12 +584,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A3BE5F62B71DE1400276847 /* WorldPhysics.swift in Sources */,
 				0AFCA70A2B8A129B0073E078 /* SpookyBallPower.swift in Sources */,
 				0A39D0342B80739700B4C07F /* TimerManager.swift in Sources */,
 				0A3BE5F22B71DC9300276847 /* RoundPhysicsObject.swift in Sources */,
 				0AA669892B7CD4E600916547 /* HomeView.swift in Sources */,
 				0AA669AB2B7CD63E00916547 /* Level.swift in Sources */,
+				0AA18E792B8F56210039E5EF /* SoundManager.swift in Sources */,
 				0A394BD32B7CE815002E6F03 /* GameView.swift in Sources */,
 				0A39D0322B805C9400B4C07F /* HittableObject.swift in Sources */,
 				0AFCA70E2B8C932D0073E078 /* GameSelectPowerView.swift in Sources */,
@@ -551,10 +605,11 @@
 				0A3BE5FA2B71E04B00276847 /* CGExtensions.swift in Sources */,
 				0AA6698C2B7CD50200916547 /* LevelDesignerView.swift in Sources */,
 				0AA669A22B7CD5F600916547 /* LevelPersistence.swift in Sources */,
+				0AA18E652B8E228D0039E5EF /* ObjectShape.swift in Sources */,
 				0A394BD92B7CE903002E6F03 /* GameBoardView.swift in Sources */,
 				0AFCA70C2B8C92080073E078 /* PowerView.swift in Sources */,
 				0A9F3CED2B88F11A004CEA71 /* BoardObject.swift in Sources */,
-				0A3BE5F82B71DF8900276847 /* CollisionPhysics.swift in Sources */,
+				0A3BE5F82B71DF8900276847 /* WorldPhysicsBehaviour.swift in Sources */,
 				0AA6699D2B7CD5C800916547 /* Constants.swift in Sources */,
 				0A394BD52B7CE8F0002E6F03 /* GameTopView.swift in Sources */,
 				0AFCA7082B89D0BC0073E078 /* PowerOnView.swift in Sources */,
@@ -573,10 +628,12 @@
 				0A394BD72B7CE8F8002E6F03 /* GameBottomView.swift in Sources */,
 				0A9F3CE52B85E0A4004CEA71 /* Bucket.swift in Sources */,
 				0A9F3CEF2B898F1D004CEA71 /* CGPoint+Extensions.swift in Sources */,
+				0AA18E852B90CF8E0039E5EF /* CollisionPhysicsBehaviour.swift in Sources */,
 				0A9F3CE12B85E007004CEA71 /* RectangularPhysicsObject.swift in Sources */,
 				0A39D03A2B81A27E00B4C07F /* BallView.swift in Sources */,
 				0A9F3CE32B85E064004CEA71 /* GameBucket.swift in Sources */,
 				0A39D0382B81A0DC00B4C07F /* PhysicsObject.swift in Sources */,
+				0AA18E672B8E28ED0039E5EF /* GameObstacle.swift in Sources */,
 				0AA6699B2B7CD5BB00916547 /* LocalPersistenceManager.swift in Sources */,
 				0AA669902B7CD51A00916547 /* BoardView.swift in Sources */,
 				0ACD02DB2B7F391C0034459C /* UnclosableModalView.swift in Sources */,
@@ -593,7 +650,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A99EDF12B77BB100062758F /* WorldPhysicsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
