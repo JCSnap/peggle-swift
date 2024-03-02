@@ -153,6 +153,8 @@ struct EditObjectView: View {
                 if !viewModel.objects.isEmpty && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) {
                     Text("Value: \(viewModel.objects[viewModel.selectedObjectIndex].size, specifier: "%.2f")")
                         .foregroundStyle(.black)
+                } else {
+                    WhiteSpace()
                 }
             }
             VStack {
@@ -167,6 +169,8 @@ struct EditObjectView: View {
                 if !viewModel.objects.isEmpty && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) {
                     Text("Value: \(viewModel.objects[viewModel.selectedObjectIndex].angle, specifier: "%.2f")")
                         .foregroundStyle(.black)
+                } else {
+                    WhiteSpace()
                 }
             }
         }
@@ -200,6 +204,14 @@ struct ActionButtonsView: View {
                 .foregroundStyle(.black)
             Button("START", action: viewModel.startLevel)
         }
+    }
+}
+
+struct WhiteSpace: View {
+    var body: some View {
+        Rectangle()
+            .opacity(0)
+            .frame(width: .infinity, height: 17)
     }
 }
 
