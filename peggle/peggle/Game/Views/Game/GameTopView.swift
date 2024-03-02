@@ -47,11 +47,8 @@ struct BallCountView: View {
 
     var body: some View {
         HStack {
-            Text("Ball(s) left:")
-                .font(.largeTitle)
-                .bold()
-            Text("\(viewModel.ballCountRemaining)")
-                .font(.largeTitle)
+            MainText(text: "Ball(s) left: ", size: 40, color: .black)
+            MainText(text: "\(viewModel.ballCountRemaining)", size: 40, color: .brown)
         }
     }
 }
@@ -60,11 +57,10 @@ struct ScoreView: View {
 
     var body: some View {
         HStack {
-            Text("Score:")
-                .font(.largeTitle)
-                .bold()
-            Text("\(viewModel.score)/\(viewModel.maxScore)")
-                .font(.largeTitle)
+            MainText(text: "Score: ", size: 40, color: .black)
+            MainText(text: "\(viewModel.computedScore)", size: 40, color: .green)
+            MainText(text: "Orange: ", size: 40, color: .black)
+            MainText(text: "\(viewModel.score)/\(viewModel.maxScore)", size: 40, color: .orange)
         }
     }
 }
@@ -72,6 +68,7 @@ struct ScoreView: View {
 protocol GameTopViewDelegate: AnyObject {
     var ballCountRemaining: Int { get }
     var score: Int { get }
+    var computedScore: Int { get }
     var maxScore: Int { get }
     
     func goToHomeView()
