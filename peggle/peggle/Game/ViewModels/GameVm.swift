@@ -24,7 +24,8 @@ class GameVm:
     private let powerConstructors: [PowerType: () -> Power] = [
         .exploding: { ExplodingPower() },
         .spookyBall: { SpookyBallPower() },
-        .reverseGravity: { ReverseGravityPower() }
+        .reverseGravity: { ReverseGravityPower() },
+        .poop: { PoopPower() }
     ]
     private var powerActivationCount: Int = 0
     var canActivatePower: Bool {

@@ -9,7 +9,7 @@ import Foundation
 
 struct Ball {
     var center: CGPoint
-    let radius: CGFloat
+    var radius: CGFloat
 
     init(center: CGPoint, radius: CGFloat = Constants.defaultAssetRadius) {
         self.center = center

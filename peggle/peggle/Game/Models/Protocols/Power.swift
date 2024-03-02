@@ -12,5 +12,5 @@ protocol Power {
 }
 
 enum PowerType {
-    case exploding, spookyBall, reverseGravity
+    case exploding, spookyBall, reverseGravity, poop
 }

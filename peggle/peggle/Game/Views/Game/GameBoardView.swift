@@ -17,7 +17,7 @@ struct GameBoardView: View {
                     .resizable()
                 PegsView(viewModel: viewModel)
                 ObstaclesView(viewModel: viewModel)
-                BallView()
+                BallView(radius: viewModel.ball.radius, ballType: viewModel.ball.type)
                     .position(viewModel.ball.center)
                 CannonView()
                     .rotationEffect(.radians(Double(viewModel.cannonAngle)))

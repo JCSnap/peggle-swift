@@ -17,37 +17,51 @@ struct GameSelectPowerView: View {
             Text("Select your power")
                 .font(.largeTitle)
                 .foregroundStyle(.black)
-            HStack {
-                Button(action: {
-                    selectedPowerType = .exploding
-                    viewModel.playSound(sound: .select)
-                }) {
-                    VStack {
-                        PowerView(powerType: .exploding)
-                        MainText(text: "EXPLODING", size: 15, color: .black)
+            VStack {
+                HStack {
+                    Button(action: {
+                        selectedPowerType = .exploding
+                        viewModel.playSound(sound: .select)
+                    }) {
+                        VStack {
+                            PowerView(powerType: .exploding)
+                            MainText(text: "EXPLODING", size: 15, color: .black)
+                        }
                     }
-                }
-                .border(selectedPowerType == .exploding ? Color.blue : Color.clear, width: 5)
-                Button(action: {
-                    selectedPowerType = .spookyBall
-                    viewModel.playSound(sound: .select)
-                }) {
-                    VStack {
-                        PowerView(powerType: .spookyBall)
-                        MainText(text: "SPOOKYBALL", size: 15, color: .black)
+                    .border(selectedPowerType == .exploding ? Color.blue : Color.clear, width: 5)
+                    Button(action: {
+                        selectedPowerType = .spookyBall
+                        viewModel.playSound(sound: .select)
+                    }) {
+                        VStack {
+                            PowerView(powerType: .spookyBall)
+                            MainText(text: "SPOOKYBALL", size: 15, color: .black)
+                        }
                     }
-                }
-                .border(selectedPowerType == .spookyBall ? Color.blue : Color.clear, width: 5)
-                Button(action: {
-                    selectedPowerType = .reverseGravity
-                    viewModel.playSound(sound: .select)
-                }) {
-                    VStack {
-                        PowerView(powerType: .reverseGravity)
-                        MainText(text: "REVERSE GRAVITY", size: 15, color: .black)
+                    .border(selectedPowerType == .spookyBall ? Color.blue : Color.clear, width: 5)
+                    Button(action: {
+                        selectedPowerType = .reverseGravity
+                        viewModel.playSound(sound: .select)
+                    }) {
+                        VStack {
+                            PowerView(powerType: .reverseGravity)
+                            MainText(text: "REVERSE GRAVITY", size: 15, color: .black)
+                        }
                     }
+                    .border(selectedPowerType == .reverseGravity ? Color.blue : Color.clear, width: 5)
                 }
-                .border(selectedPowerType == .reverseGravity ? Color.blue : Color.clear, width: 5)
+                HStack {
+                    Button(action: {
+                        selectedPowerType = .poop
+                        viewModel.playSound(sound: .select)
+                    }) {
+                        VStack {
+                            PowerView(powerType: .poop)
+                            MainText(text: "POOP", size: 15, color: .black)
+                        }
+                    }
+                    .border(selectedPowerType == .poop ? Color.blue : Color.clear, width: 5)
+                }
             }
             Button("OK") {
                 isPowerSelected = true

@@ -9,6 +9,7 @@ import Foundation
 
 struct GameBall: RoundPhysicsObject {
     var ball: Ball
+    var type: BallType
     var velocity: CGVector
     var mass: CGFloat
     var isStatic: Bool
@@ -17,12 +18,14 @@ struct GameBall: RoundPhysicsObject {
         set { ball.center = newValue }
     }
     var radius: CGFloat {
-        ball.radius
+        get { ball.radius }
+        set { ball.radius = newValue }
     }
     var angle: CGFloat = .zero
 
     init(ball: Ball, velocity: CGVector = Constants.defaultBallVelocity, mass: CGFloat = Constants.defaultBallMass) {
         self.ball = ball
+        self.type = .normal
         self.velocity = velocity
         self.isStatic = false
         if mass <= 0 {
@@ -31,4 +34,8 @@ struct GameBall: RoundPhysicsObject {
             self.mass = mass
         }
     }
+}
+
+enum BallType {
+    case normal, poop
 }
