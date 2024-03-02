@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class PhysicsGameStateManager {
+class GameStateManager {
     var level: Level?
     var ball = GameBall(ball: Ball(center: .zero))
     var ballCountRemaining: Int = Constants.defaultBallCount

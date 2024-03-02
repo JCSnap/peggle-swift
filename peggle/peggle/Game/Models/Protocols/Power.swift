@@ -8,7 +8,7 @@
 import Foundation
 
 protocol Power {
-    func effectWhenActivated(gameStateManager: inout PhysicsGameStateManager)
+    func effectWhenActivated(gameStateManager: inout GameStateManager)
 }
 
 enum PowerType {

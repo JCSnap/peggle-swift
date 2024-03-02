@@ -16,7 +16,7 @@ class GameVm:
     GameOverViewDelegate,
     GameSelectPowerViewDelegate {
     private var rootVm: GameRootDelegate
-    private var gameStateManager = PhysicsGameStateManager()
+    private var gameStateManager = GameStateManager()
     private var persistenceManager: LevelPersistence.Type = Constants.defaultPersistenceManager
     private var timerManager = TimerManager(timeInterval: Constants.timeInterval)
     private var power: Power = ExplodingPower()

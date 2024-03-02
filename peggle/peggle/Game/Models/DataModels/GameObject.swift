@@ -22,7 +22,7 @@ class GameObject: HittableObject, PhysicsObject {
         self.isStatic = isStatic
     }
     
-    func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
+    func effectWhenHit(gameStateManager: inout GameStateManager) {
         print("Default behaviour is do nothing, override for new behaviour")
     }
 }

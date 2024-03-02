@@ -10,7 +10,7 @@ import Foundation
 struct SpookyBallPower: Power {
     var type: PowerType = .spookyBall
     
-    func effectWhenActivated(gameStateManager: inout PhysicsGameStateManager) {
+    func effectWhenActivated(gameStateManager: inout GameStateManager) {
         gameStateManager.createEffectWhereBallWillNotLeaveScreen()
     }
 }

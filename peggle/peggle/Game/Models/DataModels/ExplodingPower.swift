@@ -10,7 +10,7 @@ import Foundation
 struct ExplodingPower: Power {
     var type: PowerType = .exploding
     
-    func effectWhenActivated(gameStateManager: inout PhysicsGameStateManager) {
+    func effectWhenActivated(gameStateManager: inout GameStateManager) {
         gameStateManager.explodeExplodingPegs()
     }
 }

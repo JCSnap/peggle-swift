@@ -85,13 +85,13 @@ class GamePeg: GameObject, RoundPhysicsObject {
         self.health -= toDeduct
     }
 
-    override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
+    override func effectWhenHit(gameStateManager: inout GameStateManager) {
         collisionCount += 1
     }
 }
 
 class NormalGamePeg: GamePeg {
-    override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
+    override func effectWhenHit(gameStateManager: inout GameStateManager) {
         super.effectWhenHit(gameStateManager: &gameStateManager)
         if !self.isGlowing {
             self.glowUp()
@@ -101,7 +101,7 @@ class NormalGamePeg: GamePeg {
 }
 
 class ScoringGamePeg: GamePeg {
-    override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
+    override func effectWhenHit(gameStateManager: inout GameStateManager) {
         super.effectWhenHit(gameStateManager: &gameStateManager)
         if !self.isGlowing {
             self.glowUp()
@@ -112,7 +112,7 @@ class ScoringGamePeg: GamePeg {
 }
 
 class ExplodingGamePeg: GamePeg {
-    override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
+    override func effectWhenHit(gameStateManager: inout GameStateManager) {
         super.effectWhenHit(gameStateManager: &gameStateManager)
         if !self.isGlowing {
             self.glowUp()
@@ -122,7 +122,7 @@ class ExplodingGamePeg: GamePeg {
 }
 
 class StubbornGamePeg: GamePeg {
-    override func effectWhenHit(gameStateManager: inout PhysicsGameStateManager) {
+    override func effectWhenHit(gameStateManager: inout GameStateManager) {
         super.effectWhenHit(gameStateManager: &gameStateManager)
         if !self.isGlowing {
             self.glowUp()
