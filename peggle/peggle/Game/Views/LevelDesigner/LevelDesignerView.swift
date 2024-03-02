@@ -25,5 +25,8 @@ struct LevelDesignerView: View {
             }
         }
         .padding()
+        .onDisappear {
+            levelDesignerVm.cleanUp()
+        }
     }
 }

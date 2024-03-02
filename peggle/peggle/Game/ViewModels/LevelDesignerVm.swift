@@ -153,6 +153,12 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
         let levels = getNamesOfAvailableLevels()
         return levels.contains(name)
     }
+    
+    func cleanUp() {
+        self.selectedObjectType = .peg(.normal)
+        self.board = Board()
+        self.isInsertMode = true
+    }
 }
 
 extension LevelDesignerVm {
