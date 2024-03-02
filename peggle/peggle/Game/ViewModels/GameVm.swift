@@ -26,7 +26,10 @@ class GameVm:
         .spookyBall: { SpookyBallPower() },
         .reverseGravity: { ReverseGravityPower() }
     ]
-    
+    private var powerActivationCount: Int = 0
+    var canActivatePower: Bool {
+        powerActivationCount < 1
+    }
     var level: Level? {
         gameStateManager.level
     }
@@ -150,6 +153,7 @@ class GameVm:
     
     func activatePower() {
         power.effectWhenActivated(gameStateManager: gameStateManager)
+        powerActivationCount += 1
     }
     
     private func updateGameState() {

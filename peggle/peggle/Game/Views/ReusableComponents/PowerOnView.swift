@@ -12,7 +12,7 @@ struct PowerOnView: View {
         Image("green-star")
             .resizable()
             .scaledToFit()
-            .frame(width: Constants.defaultAssetRadius * 2, height: Constants.defaultAssetRadius * 2)
+            .frame(width: 90, height: 90)
     }
 }
 

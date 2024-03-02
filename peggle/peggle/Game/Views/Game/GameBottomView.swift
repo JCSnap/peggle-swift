@@ -20,8 +20,10 @@ struct GameBottomView: View {
                 .frame(width: 200, height: 100)
                 .font(.largeTitle)
             }
-            Button(action: viewModel.activatePower) {
-                PowerOnView()
+            if viewModel.canActivatePower && !viewModel.isAiming {
+                Button(action: viewModel.activatePower) {
+                    PowerOnView()
+                }
             }
         }
         .frame(width: .infinity, height: 100)
@@ -30,6 +32,7 @@ struct GameBottomView: View {
 
 protocol GameBottomViewDelegate: AnyObject {
     var isAiming: Bool { get }
+    var canActivatePower: Bool { get }
 
     func startGame()
     func activatePower()
