@@ -23,16 +23,13 @@ struct GameOverModalContent: View {
 
     var body: some View {
         let text = condition == .lose ? "You lost" : "You won!"
+        let titleColor: any ShapeStyle = condition == .lose ? .red : .green
+        
         VStack {
-            Text("\(text)")
-                .font(.largeTitle)
-                .foregroundStyle(.black)
-            Text("Score: \(viewModel.score)")
-                .font(.title2)
-                .foregroundStyle(.black)
-            Text("Ball(s) Remaining: \(viewModel.ballCountRemaining)")
-                .font(.title2)
-                .foregroundStyle(.black)
+            MainText(text: text, size: 100, color: titleColor)
+            MainText(text: "Score: \(viewModel.computedScore)", size: 40, color: .black)
+            MainText(text: "Ball(s) Left: \(viewModel.ballCountRemaining)", size: 40, color: .black)
+            MainText(text: "Orange: \(viewModel.score)/\(viewModel.maxScore)", size: 40, color: .black)
             Button("Return to Home") {
                 viewModel.goToHomeView()
             }
@@ -44,6 +41,8 @@ struct GameOverModalContent: View {
 protocol GameOverViewDelegate: AnyObject {
     var ballCountRemaining: Int { get }
     var score: Int { get }
+    var maxScore: Int { get }
+    var computedScore: Int { get }
 
     func goToHomeView()
     func cleanUp()
