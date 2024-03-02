@@ -80,12 +80,37 @@ extension RoundPhysicsObject {
         return isCollidingWithAxisAlignedRect(center: rotatedCenter, object: object)
     }
     
+    func isColliding<T: RectangularPhysicsObject>(with object: T, on side: Side) -> Bool {
+        switch side {
+        case .left:
+            let leftEdge = object.center.x - object.width / 2
+            let isInVerticalRange = self.center.y >= object.center.y - object.height / 2 && self.center.y <= object.center.y + object.height / 2
+            return self.center.x - self.radius < leftEdge && isInVerticalRange
+            
+        case .right:
+            let rightEdge = object.center.x + object.width / 2
+            let isInVerticalRange = self.center.y >= object.center.y - object.height / 2 && self.center.y <= object.center.y + object.height / 2
+            return self.center.x + self.radius > rightEdge && isInVerticalRange
+            
+        case .top:
+            let topEdge = object.center.y - object.height / 2
+            let isInHorizontalRange = self.center.x >= object.center.x - object.width / 2 && self.center.x <= object.center.x + object.width / 2
+            return self.center.y - self.radius < topEdge && self.center.y + self.radius > topEdge && isInHorizontalRange
+
+        case .bottom:
+            let bottomEdge = object.center.y + object.height / 2
+            let isInHorizontalRange = self.center.x >= object.center.x - object.width / 2 && self.center.x <= object.center.x + object.width / 2
+            return self.center.y + self.radius > bottomEdge && self.center.y - self.radius < bottomEdge && isInHorizontalRange
+
+        }
+    }
+    
     func isColliding(with bounds: CGRect) -> Bool {
         return self.center.x - self.radius < bounds.minX || self.center.x + self.radius > bounds.maxX ||
         self.center.y - self.radius < bounds.minY || self.center.y + self.radius > bounds.maxY
     }
     
-    func isObjectCollidingWithBoundarySide(bounds: CGRect, side: BoundsSide) -> Bool {
+    func isObjectCollidingWithBoundarySide(bounds: CGRect, side: Side) -> Bool {
         switch side {
         case .left:
             return self.center.x - self.radius <= bounds.minX
@@ -222,7 +247,7 @@ extension RoundPhysicsObject {
             y: max(object.center.y - object.height / 2, min(center.y, object.center.y + object.height / 2))
         )
     }
-    
+  
     private func calculateInitialCollisionNormal(to closestPoint: CGPoint) -> CGVector {
         return (self.center - closestPoint).normalized
     }

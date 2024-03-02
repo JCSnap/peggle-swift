@@ -19,6 +19,7 @@ class GameVm:
     private var gameStateManager = GameStateManager()
     private var persistenceManager: LevelPersistence.Type = Constants.defaultPersistenceManager
     private var timerManager = TimerManager(timeInterval: Constants.timeInterval)
+    private var scoreManager = ScoreManager()
     private var power: Power = ExplodingPower()
     private let powerConstructors: [PowerType: () -> Power] = [
         .exploding: { ExplodingPower() },
@@ -148,7 +149,7 @@ class GameVm:
         checkAndHandleBoundaryCollisions()
         checkAndHandleBallStuck()
         checkAndHandleBallExit()
-        if ball.isColliding(with: bucket) {
+        if ball.isColliding(with: bucket, on: .top) {
             bucket.effectWhenHit(gameStateManager: &gameStateManager)
             removePegAndTransitionToNextStage()
         }
@@ -204,8 +205,19 @@ class GameVm:
     }
     
     private func handleCollisions() {
+        handleCollisionWithBucket()
+        handleCollisionsBetweenBallAndObjects()
+        handleCollisionsBetweenObjectsAndObjects()
+    }
+    
+    private func handleCollisionWithBucket() {
+        if ball.isColliding(with: bucket) {
+            ball.handleCollision(with: &bucket)
+        }
+    }
+    
+    private func handleCollisionsBetweenBallAndObjects() {
         let objects = self.objects
-        
         for object in objects {
             if var peg = object as? GamePeg {
                 if self.ball.isColliding(with: peg) {
@@ -220,8 +232,10 @@ class GameVm:
                 }
             }
         }
- 
-        
+    }
+    
+    private func handleCollisionsBetweenObjectsAndObjects() {
+        let objects = self.objects
         for i in 0..<objects.count {
             for j in (i + 1)..<objects.count {
                 if var peg1 = self.objects[i] as? GamePeg, var peg2 = self.objects[j] as? GamePeg, peg1.isColliding(with: peg2) {

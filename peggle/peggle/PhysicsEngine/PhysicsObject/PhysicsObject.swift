@@ -52,6 +52,6 @@ enum Axis {
     case horizontal, vertical
 }
 
-enum BoundsSide {
+enum Side {
     case left, right, top, bottom
 }
