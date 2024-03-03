@@ -10,7 +10,7 @@ import SwiftUI
 struct GameBottomView: View {
     @State var viewModel: GameBottomViewDelegate
     @State var activatedPower: Bool = false
-    @State var showPoopOverlay: Bool = false
+    @State var showPowerOverlay: Bool = false
 
     var body: some View {
         HStack {
@@ -25,9 +25,7 @@ struct GameBottomView: View {
                 Button(action: {
                     viewModel.activatePower()
                     activatedPower = true
-                    if viewModel.selectedPowerType == .poop {
-                        showPoopOverlay = true
-                    }
+                    showPowerOverlay = true
                 }) {
                     PowerOnView()
                 }
@@ -39,7 +37,7 @@ struct GameBottomView: View {
             alignment: .top
         )
         .overlay(
-            showPoopOverlay ? PoopView() : nil,
+            showPowerOverlay ? PowerOverlayView(powerSelected: viewModel.selectedPowerType) : nil,
             alignment: .top
         )
     }
@@ -64,11 +62,12 @@ struct ActivatedPowerView: View {
     }
 }
 
-struct PoopView: View {
+struct PowerOverlayView: View {
     @State private var opacity: CGFloat = 1.0
+    var powerSelected: PowerType
     
     var body: some View {
-        MainText(text: "It's POOP TIME", size: 100, color: .brown)
+        MainText(text: powerText, size: 100, color: powerTextColor)
             .frame(width: 700, height: 200)
             .foregroundStyle(.brown)
             .offset(y: -700)
@@ -80,6 +79,26 @@ struct PoopView: View {
                     }
                 }
             }
+    }
+    
+    private var powerText: String {
+        let powerTexts: [PowerType: String] = [
+            .exploding: "BOOM TIME 💥",
+            .reverseGravity: "GRAVITY ◀️",
+            .spookyBall: "GHOST 👻",
+            .poop: "It's POOP TIME 💩"
+        ]
+        return powerTexts[powerSelected] ?? "POWER!"
+    }
+    
+    private var powerTextColor: any ShapeStyle {
+        let powerTextColors: [PowerType: any ShapeStyle] = [
+            .exploding: .black,
+            .reverseGravity: .green,
+            .spookyBall: .white,
+            .poop: .brown
+        ]
+        return powerTextColors[powerSelected] ?? .black
     }
 }
 
