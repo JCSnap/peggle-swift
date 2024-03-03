@@ -39,13 +39,15 @@ struct LoadLevelView: View {
                                         .background(Color.white)
                                         .cornerRadius(8)
                                 }
-                                Button(action: {
-                                    self.selectedLevelNameToDelete = levelName
-                                    self.showDeleteAlert = true
-                                }) {
-                                    Image(systemName: "trash")
-                                        .foregroundColor(.red)
-                                        .padding()
+                                if !viewModel.preloadedLevelNames.contains(levelName) {
+                                    Button(action: {
+                                        self.selectedLevelNameToDelete = levelName
+                                        self.showDeleteAlert = true
+                                    }) {
+                                        Image(systemName: "trash")
+                                            .foregroundColor(.red)
+                                            .padding()
+                                    }
                                 }
                             }
                         }
@@ -67,6 +69,7 @@ struct LoadLevelView: View {
 
 protocol LevelDesignerLoadLevelDelegate: AnyObject {
     var isLoadLevelViewPresented: Bool { get }
+    var preloadedLevelNames: [String] { get }
 
     func loadLevel(withName name: String)
 

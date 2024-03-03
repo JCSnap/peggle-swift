@@ -50,6 +50,9 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
             return obstacle
         }
     }
+    var preloadedLevelNames: [String] {
+        preloadedLevelManager.preloadedLevelNames
+    }
 
     func addObject(at point: CGPoint) {
         switch selectedObjectType {
@@ -151,6 +154,10 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
 
     func startLevel() {
         rootVm.goToGameViewWithBoard(board)
+    }
+    
+    func isNameOverwritingPreloadedLevel(_ name: String) -> Bool {
+        return preloadedLevelNames.contains(name)
     }
     
     func isNameOverwriting(_ name: String) -> Bool {

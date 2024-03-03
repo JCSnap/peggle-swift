@@ -12,12 +12,14 @@ struct PaletteView: View {
     @State private var levelName: String = ""
     @State private var showSaveAlert = false
     @State private var showInvalidNameAlert = false
+    @State private var showCannotOverwritePreloadedLevel = false
     @State private var showOverwriteNameAlert = false
     @State private var showResetAlert = false
     
     var body: some View {
         let resetAlertText = "Are you sure you want to reset? This action cannot be reversed"
         let saveAlertText = "Save level with: \(levelName)?"
+        let cannotOverwritePreloadedLevelText = "Level name cannot be the same as any preloaded level!"
         let overwriteNameAlertText = "\(levelName) already exists. Do you want to overwrite it?"
         let invalidNameAlertText = "Invalid Level Name"
         let invalidNameAlertMessage =
@@ -30,6 +32,7 @@ struct PaletteView: View {
             PegSelectionView(viewModel: viewModel)
             EditObjectView(viewModel: viewModel)
             ActionButtonsView(levelName: $levelName, showSaveAlert: $showSaveAlert,
+                              showCannotOverwritePreloadedLevel: $showCannotOverwritePreloadedLevel,
                               showOverwriteNameAlert: $showOverwriteNameAlert,
                               showInvalidNameAlert: $showInvalidNameAlert,
                               showResetAlert: $showResetAlert, viewModel: viewModel)
@@ -42,6 +45,9 @@ struct PaletteView: View {
                 Button("OK") {
                     viewModel.saveLevel(levelName: levelName)
                 }
+            }
+            .alert(cannotOverwritePreloadedLevelText, isPresented: $showCannotOverwritePreloadedLevel) {
+                Button("OK", role: .cancel) { }
             }
             .alert(overwriteNameAlertText, isPresented: $showOverwriteNameAlert) {
                 Button("CANCEL", role: .cancel) { }
@@ -181,6 +187,7 @@ struct EditObjectView: View {
 struct ActionButtonsView: View {
     @Binding var levelName: String
     @Binding var showSaveAlert: Bool
+    @Binding var showCannotOverwritePreloadedLevel: Bool
     @Binding var showOverwriteNameAlert: Bool
     @Binding var showInvalidNameAlert: Bool
     @Binding var showResetAlert: Bool
@@ -193,6 +200,8 @@ struct ActionButtonsView: View {
             Button("SAVE") {
                 if viewModel.isNameInvalid(levelName) {
                     showInvalidNameAlert = true
+                } else if viewModel.isNameOverwritingPreloadedLevel(levelName) {
+                    showCannotOverwritePreloadedLevel = true
                 } else if viewModel.isNameOverwriting(levelName) {
                     showOverwriteNameAlert = true
                 } else {
@@ -236,6 +245,7 @@ protocol LevelDesignerPaletteDelegate: AnyObject {
     
     func isNameInvalid(_ name: String) -> Bool
     func isNameOverwriting(_ name: String) -> Bool
+    func isNameOverwritingPreloadedLevel(_ name: String) -> Bool
     
     func saveLevel(levelName: String)
     
