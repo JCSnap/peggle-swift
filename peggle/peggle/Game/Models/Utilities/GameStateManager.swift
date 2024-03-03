@@ -176,6 +176,9 @@ class GameStateManager {
         objects = []
         ballCountRemaining = Constants.defaultBallCount
         score = 0
+        computedScore = 0
+        previousComputedScore = 0
+        reverseGravity = false
         finalScore = nil
         isGameOver = .playing
     }
