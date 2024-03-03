@@ -151,7 +151,7 @@ struct EditObjectView: View {
                         .padding()
                 }
                 if !viewModel.objects.isEmpty && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) {
-                    Text("Value: \(viewModel.objects[viewModel.selectedObjectIndex].size, specifier: "%.2f")")
+                    Text("Size: \(viewModel.objects[viewModel.selectedObjectIndex].size, specifier: "%.2f")")
                         .foregroundStyle(.black)
                 } else {
                     WhiteSpace()
@@ -167,7 +167,7 @@ struct EditObjectView: View {
                         .padding()
                 }
                 if !viewModel.objects.isEmpty && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) {
-                    Text("Value: \(viewModel.objects[viewModel.selectedObjectIndex].angle, specifier: "%.2f")")
+                    Text("Radian: \(viewModel.objects[viewModel.selectedObjectIndex].angle, specifier: "%.2f")")
                         .foregroundStyle(.black)
                 } else {
                     WhiteSpace()
