@@ -1,33 +1,9 @@
+# Developer Guide
+- Protocol oriented programming is used for powers and peg. Thus all powers have the `effectWhenActivated(GameStateManager)` function, which can then apply their effect. Similarly, pegs have the GameStateManager `effectWhenActivated(GameStateManager)` function.
+- `Peg` and `Obstacle` are subclasses of `BoardObject`, which can be played on a board. Likewise, `GamePeg` and `GameObstacle` are subclasses of `GameObjects`. Inheritance is used to create different game pegs (eg. ExplodingGamePeg inherits from GamePeg). On the other hand, composition is used to create different obstacle shapes (I was thinking that it might be possible for us to extend it the future such that obstacles can have changing shapes, changing peg types seem more unlikely on the other hand).
+
 # Design
-
-This app uses the MVVM architecture, generally following this [variation](https://matteomanferdini.com/mvvm-swiftui/).
-
-
-
-## Structure
-
-```
-peggle/
-├── peggle/
-│   ├── Views/
-│   │   ├── ReusableComponents
-│   │   ├── Home
-│   │   ├── LevelDesigner
-│   │   ├── OtherScreenFolder1
-│   │   ├── OtherScreenFolder2
-│   │   └── ContentView.swift
-│   ├── Models/
-│   │   ├── Utilities
-│   │   ├── Protocols
-│   │   └── DataModels
-│   └── ViewModels
-├── peggleTests
-└── peggleUITests
-docs/
-├── images
-├── plantuml
-└── README.md
-```
+This app uses the MVVM architecture, generally following this [variation](https://matteomanferdini.com/mvvm-swiftui/). Anything below here are mainly from ps2 and ps3, with slight modification.
 
 ### Views
 
@@ -59,6 +35,7 @@ Here is a entity diagram for the models and view models:
 
 ![Model and ViewModel Entity Diagram](./images/model-view-model-entity-diagram.png)
 
+This is the from ps2.
 ### View and View Models
 
 ![View and ViewModel Entity Diagram](./images/view-view-model-entity-diagram.png)
@@ -94,4 +71,59 @@ Since `LevelDesignerVm` contains a `LevelPersistence`, we can be sure that funct
   - `BoardView`: The "canvas" for the pegs to be placed
     - Within the view, it can be further segmented into the `PegInteractiveView` to render the pegs, and `InvisibleLayerView` to capture the taps
   - `LoadLevelView`: The modal popup that shows all the available level when user clicks on the `LOAD` button
+
+
+# Design
+Game related files from ps2 is under the `Game` folder, Physics Engine related files are under the `PhysicsEngine` folder.
+
+## Root View Model
+
+I have created a root view model to pass data between view models. Every other view models will be instantiated with a reference to the root view model, and if they want to interact with other view models, they can call the root view model functions. For instance, the home view requires navigation the the level designer view when the level designer button is pressed, and to the game view when the game button is pressed.  
+The delegate pattern is also used to ensure that only the functions needed are exposed to the individual view models.
+
+## Views
+Like the previous problem set, the views will contain a reference to its view model through the delegate of each views. This makes sure that only the relevant functions and variables are being exposed to the views.
+
+## Physics Objects
+
+Physics objects are objects that can be handled by the physics engine, and they contain basic physics properties such as mass, velocity. For extension, new physics object protocols that conforms to `PhysicsObject` can be created. For instance, `RoundedPhysicsObject` has all the properties of `PhysicsObject`, with an additional `radius` property. A `RectangularPhysicsObject` could perhaps have additional width and height property.
+
+## Physics Engine
+`PhysicsObject` conforms to `CollisionPhysicsBehaviour` and `WorldPhysicsBehaviour`. Generally, world physics behaviour is generalisable across different physics shape, such as applying force or gravity. The shape does not matter much. For `CollisionPhysicsBehaviour`, the different subclasses (eg. RoundPhysicsObject) will override the parent class when implementing the different functions to handle collisions.
+
+## Turning Models to Game Objects
+
+![Physics Class Diagram](./images/physics-class.png)
+
+Note that the diagram is outdated due to refactoring. Instead of directly modifying the `Peg` and `Ball` models, we create another layer of abstraction - `GamePeg` and `GameBall`. This is because the `Peg` and `Ball` should be decoupled from the game as much as possible, and their main responsibility is to store simple data. The game engine will be responsible for this conversion before the game starts. The physics states only matter for the duration of the game itself. For the `GamePeg`, a factory method is used to create a different `GamePeg` based on the peg type. For example, passing in a blue peg will create a `BlueGamePeg`, while passing in an orange peg will create an `OrangeGamePeg`.  
+Both `BlueGamePeg` and `OrangeGamePeg` inherits from `GamePeg`, which conforms to `PegBehaviour`. The `PegBehaviour` requires the `GamePeg` to have a certain behaviour when being collided with, by taking in a game state manager and modifying the game state. The `BlueGamePeg` and `OrangeGamePeg` can then override the parent behaviour to implement their own behaviours. For instance, the `OrangeGamePeg` will add a score in the game state while `BlueGamePeg` will not.
+
+### Game Engine
+
+![Game Engine Class Diagram](./images/game-engine-class.png)
+
+Image is outdated due to refactoring.
+The game engine is basically the game view model in this case. It's responsibility is to - convert the models that game entities (GameObjects), manage the game loop and states.  
+To improve readability, I have created a `GameStateManager` and a `TimerManager` that help separate some responsibilities from the game engine. The `GameStateManager` manages the game states like pegs remaining, ball count, score etc. while the `TimerManager` abstracts away the implementation details of the game loop, exposing just the necessary functions like `startTimer` and `invalidateTimer` to the game engine.
+
+### Lifecycle of a game
+
+When the game view is first rendered, it will check if there is a specific level to load (eg. if you press `START` from the level designer you want to load that into the game directly).
+
+1. There is a specific level to load. In that case, we move straight to the next step
+2. There is no specific level to load. We then render the load level view for the user to choose, then proceed with the next step
+
+![Game flow](./images/game-flow.png)
+(Sorry for the formatting, deduct one ball lead to `User aims cannon`) .
+Once the level is loaded, the user will be able to aim their cannon by dragging on the screen. When the `LAUNCH` button is pressed, the game engine will ask `TimerManager` to start the loop.
+
+When the loop is active, it will call the `updateGameState` function repeatedly, the count depends on the FPS set (current default is 60 FPS, which means the function will be called 60 times every second).
+
+The responsibility of the `updateGameState` function is to update the states (positions. glow etc.), apply physics to the objects, check for actionable changes (eg. ball exits screen). The loop will continue until an actionable change is detected, in which case the game loop will be terminated and the actionable change will be handled accordingly.
+
+When the ball exits the screen, this is detected in the game loop, which will trigger the animation for peg removal. After the animation is done, it will either:
+
+1. End the game and render the game over view
+2. Continue the game, player goes back to the aiming stage with the `LAUNCH` button.
+
 
