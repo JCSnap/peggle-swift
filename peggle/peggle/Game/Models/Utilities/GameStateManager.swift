@@ -157,10 +157,21 @@ class GameStateManager {
         let explodingPegs = objects.compactMap { $0 as? GamePeg }.filter { $0.type == .exploding }
             for peg in objects.compactMap({ $0 as? GamePeg }) {
                 for explodingPeg in explodingPegs {
+                    if !explodingPeg.isGlowing {
+                        continue
+                    }
                     let distance = explodingPeg.peg.distance(from: peg.center)
                     if distance <= withRadius {
-                        peg.effectWhenHit(gameStateManager: self)
-                        peg.isVisible = false
+                        if peg.type == .exploding {
+                            let durationBeforeChainExplosion = 0.9
+                            DispatchQueue.main.asyncAfter(deadline: .now() + durationBeforeChainExplosion) {
+                                peg.effectWhenHit(gameStateManager: self)
+                                self.explodeExplodingPegs()
+                            }
+                        } else {
+                            peg.effectWhenHit(gameStateManager: self)
+                            peg.isVisible = false
+                        }
                     }
                 }
             }
