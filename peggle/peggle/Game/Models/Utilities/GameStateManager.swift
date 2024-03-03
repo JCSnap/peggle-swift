@@ -160,6 +160,7 @@ class GameStateManager {
                     if !explodingPeg.isGlowing {
                         continue
                     }
+                    applyKnockballToBallAfterExploding(explodingPeg, withRadius: withRadius)
                     let distance = explodingPeg.peg.distance(from: peg.center)
                     if distance <= withRadius {
                         if peg.type == .exploding {
@@ -229,6 +230,17 @@ class GameStateManager {
         self.ball = GameBall(ball: Ball(center: ScreenPosition.topCenter.point(for: screenBounds)),
                                 velocity: Constants.defaultBallVelocity)
         self.ball.velocity = .zero
+    }
+    
+    private func applyKnockballToBallAfterExploding(_ peg: GamePeg, withRadius radius: CGFloat) {
+        let distance = peg.peg.distance(from: ball.center)
+        if distance <= radius {
+            let directionVector = CGVector(dx: ball.center.x - peg.center.x, dy: ball.center.y - peg.center.y)
+            let normalizedDirection = directionVector.normalized
+            let forceMagnitude = Constants.defaultBlastRadius
+            let blastInterval = Constants.defaultBlastInterval
+            ball.applyForceInDirection(force: forceMagnitude, deltaTime: blastInterval, direction: normalizedDirection)
+        }
     }
 }
 

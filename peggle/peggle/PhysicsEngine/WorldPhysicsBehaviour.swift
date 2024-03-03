@@ -10,7 +10,7 @@ import Foundation
 protocol WorldPhysicsBehaviour {
     mutating func applyGravity(deltaTime: TimeInterval, gravity: CGFloat, reverse: Bool)
     mutating func applyFriction(deltaTime: TimeInterval, frictionCoefficient: CGFloat)
-    
+    mutating func applyForceInDirection(force: CGFloat, deltaTime: TimeInterval, direction: CGVector)
 }
 
 extension WorldPhysicsBehaviour {
@@ -20,5 +20,4 @@ extension WorldPhysicsBehaviour {
     mutating func applyFriction(deltaTime: TimeInterval, frictionCoefficient: CGFloat = PhysicsEngineConstants.defaultFrictionCoefficient) {
         applyFriction(deltaTime: deltaTime, frictionCoefficient: frictionCoefficient)
     }
-    
 }

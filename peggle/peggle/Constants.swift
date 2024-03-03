@@ -24,11 +24,14 @@ struct Constants {
     
     static let defaultPowerType: PowerType = .spookyBall
     
-    static let defaultBlastRadius = 100.0
-    static let defaultBlastDelay = 0.2
+    static let defaultBlastRadius = 150.0
+    static let defaultBlastDelay = 0.1
 
     static let defaultCannonForce = 8_000.0
     static let defaultCannonTimeInterval = 1.0
+    
+    static let defaultBlastForce = 60000.0
+    static let defaultBlastInterval = 0.1
     
     static let defaultBucketSize = CGSize(width: 100, height: 100)
     static let defaultBucketMass = 20.0

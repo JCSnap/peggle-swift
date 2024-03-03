@@ -50,6 +50,14 @@ extension PhysicsObject {
         self.velocity.dx += accelerationX * CGFloat(deltaTime)
         self.velocity.dy += accelerationY * CGFloat(deltaTime)
     }
+    
+    mutating func applyForceInDirection(force: CGFloat, deltaTime: TimeInterval, direction: CGVector) {
+        let accelerationMagnitude = force / mass
+        let accelerationVector = CGVector(dx: direction.dx * accelerationMagnitude, dy: direction.dy * accelerationMagnitude)
+        
+        velocity.dx += accelerationVector.dx * CGFloat(deltaTime)
+        velocity.dy += accelerationVector.dy * CGFloat(deltaTime)
+    }
 }
 
 enum Axis {
