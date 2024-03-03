@@ -12,11 +12,6 @@ class GamePeg: GameObject, RoundPhysicsObject {
     var isGlowing: Bool {
         peg.isGlowing
     }
-    private var _health: CGFloat
-    var health: CGFloat {
-        get { _health }
-        set { _health = min(max(newValue, 0), 100) }
-    }
     var isVisible = true
     override var center: CGPoint {
         get { peg.center }
@@ -61,8 +56,7 @@ class GamePeg: GameObject, RoundPhysicsObject {
         } else {
             massToInit = mass
         }
-        self._health = Constants.defaultPegMaxHealth
-        super.init(center: peg.center, velocity: velocity, mass: massToInit, isStatic: isStatic)
+        super.init(center: peg.center, velocity: velocity, mass: massToInit, isStatic: isStatic, health: peg.health)
     }
 
     func incrementCollisionCount() {
@@ -75,13 +69,6 @@ class GamePeg: GameObject, RoundPhysicsObject {
 
     func glowUp() {
         peg.glowUp()
-    }
-    
-    func deductHealthBasedOnImpact(impactVelocity: CGVector) {
-        let defaultMagnitude = Constants.defaultBallVelocity.magnitude
-        let scalingFactor = 3.0
-        let toDeduct = impactVelocity.magnitude / (defaultMagnitude * scalingFactor) * Constants.defaultPegMaxHealth
-        self.health -= toDeduct
     }
 
     override func effectWhenHit(gameStateManager: GameStateManager) {

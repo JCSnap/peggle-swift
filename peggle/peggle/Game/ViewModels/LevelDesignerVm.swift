@@ -94,6 +94,10 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
     func updateObjectAngle(index: Int, newAngleInDegree: CGFloat) {
         board.updateObjectAngle(index: index, newAngleInDegree: newAngleInDegree)
     }
+    
+    func updateObjectHealth(index: Int, newHealth: CGFloat) {
+        board.updateObjectHealth(index: index, newHealth: newHealth)
+    }
 
     func setBoardSize(_ size: CGSize) {
         board.setBoardSize(size)

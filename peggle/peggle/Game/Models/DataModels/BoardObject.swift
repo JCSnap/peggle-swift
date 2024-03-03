@@ -13,11 +13,14 @@ class BoardObject: Hashable {
     var size: CGFloat {
         .zero
     }
+    var health: CGFloat
     
-    init(center: CGPoint, angle: CGFloat = .zero) {
+    init(center: CGPoint, angle: CGFloat = .zero, health: CGFloat = Constants.defaultHealth) {
         self.center = center
         self.angle = angle
+        self.health = health
     }
+    
     func overlaps<T: BoardObject>(with other: T) -> Bool {
         print("Subclasses need to implement this method")
         return false
@@ -46,5 +49,9 @@ class BoardObject: Hashable {
     
     func updateAngle(to newAngle: CGFloat) {
         self.angle = newAngle
+    }
+    
+    func updateHealth(to newHealth: CGFloat) {
+        self.health = newHealth
     }
 }

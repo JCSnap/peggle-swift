@@ -48,4 +48,6 @@ struct Constants {
     static let defaultBallCount = 5
     
     static let defaultBounds = CGRect(origin: .zero, size: CGSize(width: 800, height: 800))
+    
+    static let defaultHealth = 1.0
 }

@@ -15,10 +15,10 @@ class Peg: BoardObject {
         radius
     }
 
-    init(center: CGPoint, type: ObjectType.PegType, radius: CGFloat = Constants.defaultAssetRadius, angle: CGFloat = .zero) {
+    init(center: CGPoint, type: ObjectType.PegType, radius: CGFloat = Constants.defaultAssetRadius, angle: CGFloat = .zero, health: CGFloat = Constants.defaultHealth) {
         self.type = type
         self.radius = radius
-        super.init(center: center, angle: angle)
+        super.init(center: center, angle: angle, health: health)
     }
     
     required convenience init(from decoder: Decoder) throws {
@@ -29,7 +29,8 @@ class Peg: BoardObject {
         let type = try container.decode(ObjectType.PegType.self, forKey: .pegType)
         let radius = try container.decode(CGFloat.self, forKey: .radius)
         let angle = try container.decode(CGFloat.self, forKey: .angle)
-        self.init(center: center, type: type, radius: radius, angle: angle)
+        let health = try container.decode(CGFloat.self, forKey: .health)
+        self.init(center: center, type: type, radius: radius, angle: angle, health: health)
     }
     
     
@@ -86,6 +87,7 @@ extension Peg: Codable {
         case pegType
         case radius
         case angle
+        case health
     }
 
     func encode(to encoder: Encoder) throws {
@@ -95,6 +97,7 @@ extension Peg: Codable {
         try container.encode(type, forKey: .pegType)
         try container.encode(radius, forKey: .radius)
         try container.encode(angle, forKey: .angle)
+        try container.encode(health, forKey: .health)
     }
 }
 

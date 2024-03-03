@@ -61,6 +61,12 @@ struct Board {
             objectToEdit.updateAngle(to: oldAngle)
         }
     }
+    
+    mutating func updateObjectHealth(index: Int, newHealth: CGFloat) {
+        guard index < objects.count else { return }
+        let objectToEdit = objects[index]
+        objectToEdit.updateHealth(to: newHealth)
+    }
 
     mutating func setBoardSize(_ size: CGSize) {
         boardSize = size

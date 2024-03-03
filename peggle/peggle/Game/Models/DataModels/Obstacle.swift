@@ -14,13 +14,13 @@ class Obstacle: BoardObject {
         shape.size
     }
     
-    init(center: CGPoint, type: ObjectType.ObstacleType, shape: ObjectShape, size: CGFloat = Constants.rectangleObstacleSize, angle: CGFloat = .zero) {
+    init(center: CGPoint, type: ObjectType.ObstacleType, shape: ObjectShape, size: CGFloat = Constants.rectangleObstacleSize, angle: CGFloat = .zero, health: CGFloat = Constants.defaultHealth) {
         self.type = type
         self.shape = shape
-        super.init(center: center, angle: angle)
+        super.init(center: center, angle: angle, health: health)
     }
     
-    convenience init(center: CGPoint, type: ObjectType.ObstacleType, size: CGFloat = Constants.rectangleObstacleSize, angle: CGFloat = .zero) {
+    convenience init(center: CGPoint, type: ObjectType.ObstacleType, size: CGFloat = Constants.rectangleObstacleSize, angle: CGFloat = .zero, health: CGFloat = Constants.defaultHealth) {
         let shape: ObjectShape
         switch type {
         case .rectangle:
@@ -30,7 +30,7 @@ class Obstacle: BoardObject {
         case .circle:
             shape = CircleShape(center: center, angle: angle)
         }
-        self.init(center: center, type: type, shape: shape, angle: angle)
+        self.init(center: center, type: type, shape: shape, angle: angle, health: health)
     }
     
     required convenience init(from decoder: Decoder) throws {
@@ -43,6 +43,7 @@ class Obstacle: BoardObject {
                 throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "Invalid obstacle type")
             }
         let angle = try container.decode(CGFloat.self, forKey: .angle)
+        let health = try container.decode(CGFloat.self, forKey: .health)
         
         let shapeType = try container.decode(String.self, forKey: .shapeType)
         let shape: ObjectShape
@@ -57,7 +58,7 @@ class Obstacle: BoardObject {
             shape = try RectangleShape(from: decoder)
         }
         
-        self.init(center: center, type: type, shape: shape, angle: angle)
+        self.init(center: center, type: type, shape: shape, angle: angle, health: health)
     }
     
     override func isInBoundary(within size: CGSize) -> Bool {
@@ -92,6 +93,7 @@ extension Obstacle: Codable {
         case shapeType
         case angle
         case size
+        case health
     }
     
     func encode(to encoder: Encoder) throws {
@@ -102,6 +104,7 @@ extension Obstacle: Codable {
         
         try container.encode(angle, forKey: .angle)
         try container.encode(size, forKey: .size)
+        try container.encode(health, forKey: .health)
         
         let shapeType = String(describing: Swift.type(of: shape))
         try container.encode(shapeType, forKey: .shapeType)

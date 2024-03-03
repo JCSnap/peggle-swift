@@ -117,6 +117,8 @@ struct EditObjectView: View {
     var viewModel: LevelDesignerPaletteDelegate
     @State private var sizeSliderValue: CGFloat = 0
     @State private var angleSliderValue: CGFloat = 0
+    @State private var healthSliderValue: CGFloat = 0
+    
     private var sizeBinding: Binding<CGFloat> {
         Binding<CGFloat>(
             get: {
@@ -139,6 +141,19 @@ struct EditObjectView: View {
             set: {
                 guard viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else { return }
                 viewModel.updateObjectAngle(index: viewModel.selectedObjectIndex, newAngleInDegree: $0)
+            }
+        )
+    }
+    private var healthBinding: Binding<CGFloat> {
+        Binding<CGFloat>(
+            get: {
+                guard !viewModel.objects.isEmpty && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else { return 0 }
+                let health = viewModel.objects[viewModel.selectedObjectIndex].health
+                return health
+            },
+            set: {
+                guard viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else { return }
+                viewModel.updateObjectHealth(index: viewModel.selectedObjectIndex, newHealth: $0)
             }
         )
     }
@@ -172,6 +187,22 @@ struct EditObjectView: View {
                 }
                 if !viewModel.objects.isEmpty && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) {
                     Text("Radian: \(viewModel.objects[viewModel.selectedObjectIndex].angle, specifier: "%.2f")")
+                        .foregroundStyle(.black)
+                } else {
+                    WhiteSpace()
+                }
+            }
+            VStack {
+                HStack {
+                    Text("Edit health")
+                        .font(.headline)
+                        .foregroundStyle(.black)
+                    
+                    Slider(value: healthBinding, in: 1...100)
+                        .padding()
+                }
+                if !viewModel.objects.isEmpty && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) {
+                    Text("Health: \(viewModel.objects[viewModel.selectedObjectIndex].health, specifier: "%.2f")")
                         .foregroundStyle(.black)
                 } else {
                     WhiteSpace()
@@ -237,6 +268,7 @@ protocol LevelDesignerPaletteDelegate: AnyObject {
     // MARK: Edit objects
     func updateObjectSize(index: Int, newSize: CGFloat)
     func updateObjectAngle(index: Int, newAngleInDegree: CGFloat)
+    func updateObjectHealth(index: Int, newHealth: CGFloat)
     
     // MARK: Actions
     func renderLoadLevelView()

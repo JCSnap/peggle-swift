@@ -24,9 +24,9 @@ class GameObstacle: GameObject {
         obstacle.size
     }
     
-    init(obstacle: Obstacle) {
+    init(obstacle: Obstacle, velocity: CGVector = Constants.defaultObstacleVelocity, mass: CGFloat = Constants.defaultObstacleMass, isStatic: Bool = true) {
         self.obstacle = obstacle
-        super.init(center: obstacle.center, velocity: Constants.defaultObstacleVelocity, mass: Constants.defaultObstacleMass, isStatic: true)
+        super.init(center: obstacle.center, velocity: velocity, mass: mass, isStatic: isStatic, health: obstacle.health)
     }
     
     // factory
@@ -70,5 +70,10 @@ class GameRectangleObstacle: GameObstacle, RectangularPhysicsObject {
         let shape = RectangleShape(center: obstacle.center, angle: obstacle.angle, width: width, height: height)
         obstacle.shape = shape
         super.init(obstacle: obstacle)
+    }
+    
+    override func effectWhenHit(gameStateManager: GameStateManager) {
+        super.effectWhenHit(gameStateManager: gameStateManager)
+        deductHealthBasedOnImpact(impactVelocity: gameStateManager.ball.velocity)
     }
 }
