@@ -10,11 +10,11 @@ import Foundation
 struct Board {
     var objects: [BoardObject] = []
     var boardSize: CGSize = .zero
-    
+
     init(withSize boardSize: CGSize = CGSize()) {
         self.boardSize = boardSize
     }
-    
+
     mutating func addObject(_ object: BoardObject) {
         if isWithinBoardAndNotOverlapping(object: object) {
             objects.append(object)
@@ -24,21 +24,21 @@ struct Board {
     mutating func replaceObject(at index: Int, with newObject: BoardObject) {
         objects[index] = newObject
     }
-    
+
     mutating func deleteBoardObject(_ object: BoardObject) {
         objects.removeAll { $0 == object }
     }
-    
+
     mutating func updateObjectPosition(index: Int, newPoint: CGPoint) {
         guard index < objects.count else { return }
         let oldObject = objects[index]
         let newObject = createNewObject(at: newPoint, from: oldObject)
- 
+
         if isWithinBoardAndNotOverlapping(object: newObject, index: index) {
             objects[index] = newObject
         }
     }
-    
+
     mutating func updateObjectSize(index: Int, newSize: CGFloat) {
         guard index < objects.count else { return }
         let objectToEdit = objects[index]
@@ -50,7 +50,7 @@ struct Board {
             objectToEdit.updateSize(to: newSize)
         }
     }
-    
+
     mutating func updateObjectAngle(index: Int, newAngleInDegree: CGFloat) {
         guard index < objects.count else { return }
         let objectToEdit = objects[index]
@@ -61,7 +61,7 @@ struct Board {
             objectToEdit.updateAngle(to: oldAngle)
         }
     }
-    
+
     mutating func updateObjectHealth(index: Int, newHealth: CGFloat) {
         guard index < objects.count else { return }
         let objectToEdit = objects[index]
@@ -71,11 +71,11 @@ struct Board {
     mutating func setBoardSize(_ size: CGSize) {
         boardSize = size
     }
-    
+
     func getIndexOf(object: BoardObject) -> Int {
         objects.firstIndex(where: { $0 === object }) ?? 0
     }
-    
+
     private func createNewObject(at point: CGPoint, from object: BoardObject) -> BoardObject {
         if let peg = object as? Peg {
             return Peg(center: point, type: peg.type, radius: peg.radius)
@@ -85,7 +85,7 @@ struct Board {
             fatalError("Object needs to be a subclass of BoardObject")
         }
     }
-                
+
     private func isWithinBoardAndNotOverlapping(object: BoardObject, index: Int? = nil) -> Bool {
         isWithinBoard(object) && !isOverlapping(object, excludingIndex: index)
     }
@@ -95,24 +95,24 @@ extension Board: Hashable & Codable {
     static func == (lhs: Board, rhs: Board) -> Bool {
         lhs.objects == rhs.objects
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(objects)
     }
-    
+
     enum BoardObjectType: String, Codable {
         case peg = "Peg"
         case obstacle = "Obstacle"
     }
-    
+
     private enum CodingKeys: String, CodingKey {
         case objects, boardSize
     }
-    
+
     private enum ObjectTypeKey: String, CodingKey {
         case type
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         var objectsArray = try container.nestedUnkeyedContainer(forKey: .objects)
@@ -121,7 +121,7 @@ extension Board: Hashable & Codable {
         while !objectsArray.isAtEnd {
             let objectContainer = try objectsArray.nestedContainer(keyedBy: ObjectTypeKey.self)
             let type = try objectContainer.decode(String.self, forKey: .type)
-            
+
             switch type {
             case "Peg":
                 let peg = try objectsArray.decode(Peg.self)
@@ -138,11 +138,10 @@ extension Board: Hashable & Codable {
         self.boardSize = try container.decode(CGSize.self, forKey: .boardSize)
     }
 
-    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(boardSize, forKey: .boardSize)
-        
+
         var objectsArray = container.nestedUnkeyedContainer(forKey: .objects)
         for object in objects {
             var objectContainer = objectsArray.nestedContainer(keyedBy: ObjectTypeKey.self)
@@ -169,21 +168,20 @@ extension Board {
         }
         return false
     }
-    
+
     internal func isWithinBoard(_ object: BoardObject) -> Bool {
         object.isInBoundary(within: self.boardSize)
     }
 }
 
-
 enum ObjectType: Equatable, Codable {
     case peg(PegType)
     case obstacle(ObstacleType)
-    
+
     enum PegType: Codable {
         case normal, scoring, exploding, stubborn
     }
-    
+
     enum ObstacleType: Codable {
         case rectangle, triangle, circle
     }

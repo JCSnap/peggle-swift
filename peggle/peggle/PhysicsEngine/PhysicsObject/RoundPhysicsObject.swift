@@ -22,7 +22,7 @@ extension RoundPhysicsObject {
         self.reflectVelocityIfNeeded(axis: .vertical, within: bounds)
         self.applyPositionalCorrectionWithBounds(within: bounds)
     }
-    
+
     mutating func handleCollision<T: PhysicsObject>(with object: inout T) {
         if object is RoundPhysicsObject {
             handleCollision(with: &object)
@@ -30,12 +30,12 @@ extension RoundPhysicsObject {
             handleCollision(with: &object)
         }
     }
-    
+
     mutating func handleCollision<T: RoundPhysicsObject>(with object: inout T) {
         if !self.isColliding(with: object) || (self.isStatic && object.isStatic) {
             return
         }
-        
+
         if !self.isStatic && !object.isStatic {
             self.applyPositionalCorrection(asItCollidesWith: &object)
             let impulse = self.getImpulse(with: object)
@@ -51,47 +51,47 @@ extension RoundPhysicsObject {
             object.velocity += impulse
         }
     }
-    
+
     mutating func handleCollision<T: RectangularPhysicsObject>(with object: inout T) {
         guard self.isColliding(with: object) && !self.isStatic else { return }
-        
+
         let closestPoint = self.getClosestPoint(to: object)
         let initialCollisionNormal = calculateInitialCollisionNormal(to: closestPoint)
         let (overlapX, overlapY) = calculateOverlap(with: object)
-        
+
         let (differenceVector, collisionNormal) = determineCorrectionVectorAndNormal(
             overlapX: overlapX,
             overlapY: overlapY,
             initialNormal: initialCollisionNormal,
             objectAngle: object.angle
         )
-        
+
         applyPositionalCorrection(differenceVector)
         applyVelocityCorrection(collisionNormal, with: object)
     }
-    
+
     func isColliding<T: RoundPhysicsObject>(with object: T) -> Bool {
         let distance = (self.center - object.center).magnitude
         return distance <= (self.radius + object.radius)
     }
-    
+
     func isColliding<T: RectangularPhysicsObject>(with object: T) -> Bool {
         let rotatedCenter = getRotatedPoint(point: self.center, around: object.center, by: object.angle)
         return isCollidingWithAxisAlignedRect(center: rotatedCenter, object: object)
     }
-    
+
     func isColliding<T: RectangularPhysicsObject>(with object: T, on side: Side) -> Bool {
         switch side {
         case .left:
             let leftEdge = object.center.x - object.width / 2
             let isInVerticalRange = self.center.y >= object.center.y - object.height / 2 && self.center.y <= object.center.y + object.height / 2
             return self.center.x - self.radius < leftEdge && isInVerticalRange
-            
+
         case .right:
             let rightEdge = object.center.x + object.width / 2
             let isInVerticalRange = self.center.y >= object.center.y - object.height / 2 && self.center.y <= object.center.y + object.height / 2
             return self.center.x + self.radius > rightEdge && isInVerticalRange
-            
+
         case .top:
             let topEdge = object.center.y - object.height / 2
             let isInHorizontalRange = self.center.x >= object.center.x - object.width / 2 && self.center.x <= object.center.x + object.width / 2
@@ -104,12 +104,12 @@ extension RoundPhysicsObject {
 
         }
     }
-    
+
     func isColliding(with bounds: CGRect) -> Bool {
-        return self.center.x - self.radius < bounds.minX || self.center.x + self.radius > bounds.maxX ||
+        self.center.x - self.radius < bounds.minX || self.center.x + self.radius > bounds.maxX ||
         self.center.y - self.radius < bounds.minY || self.center.y + self.radius > bounds.maxY
     }
-    
+
     func isObjectCollidingWithBoundarySide(bounds: CGRect, side: Side) -> Bool {
         switch side {
         case .left:
@@ -138,12 +138,12 @@ extension RoundPhysicsObject {
             }
         }
     }
-    
+
     private mutating func applyPositionalCorrectionWithBounds(within bounds: CGRect) {
         self.applyPositionalCorrectionForHorizontalBounds(within: bounds)
         self.applyPositionalCorrectionForVerticalBounds(within: bounds)
     }
-    
+
     private mutating func applyPositionalCorrectionForHorizontalBounds(within bounds: CGRect) {
         let leftBound = bounds.minX + self.radius
         let rightBound = bounds.maxX - self.radius
@@ -164,7 +164,7 @@ extension RoundPhysicsObject {
             self.center.y = bottomBound
         }
     }
-    
+
     private func getImpulse<T: RoundPhysicsObject>(with object: T) -> CGVector {
         let vector = self.center - object.center
         let normal = vector.normalized
@@ -176,20 +176,20 @@ extension RoundPhysicsObject {
 
         return normal * impulseMagnitude
     }
-    
+
     private func getImpulse<T: RectangularPhysicsObject>(with object: T) -> CGVector {
         let closestPoint = getClosestPoint(to: object)
         let impactVector = CGVector(dx: self.center.x - closestPoint.x, dy: self.center.y - closestPoint.y)
         let normal = impactVector.normalized
-        
+
         let relativeVelocity = self.velocity - object.velocity
-        
+
         let velocityAlongNormal = relativeVelocity.dotProduct(with: normal)
-        
+
         let restitution = PhysicsEngineConstants.defaultRestitution
-        
+
         let impulseMagnitude = PhysicsEngineConstants.bounceFactor * -(1 + restitution) * velocityAlongNormal / 2
-        
+
         return normal * impulseMagnitude
     }
 
@@ -202,7 +202,7 @@ extension RoundPhysicsObject {
 
         self.center += correctionVector
     }
-    
+
     private mutating func applyPositionalCorrection<T: RectangularPhysicsObject>(asItCollidesWith object: inout T) {
         if !self.isColliding(with: object) {
             return
@@ -210,21 +210,21 @@ extension RoundPhysicsObject {
         let closestPoint = self.getClosestPoint(to: object)
         let overlapVector = CGVector(dx: self.center.x - closestPoint.x, dy: self.center.y - closestPoint.y)
         let penetrationDepth = self.radius - overlapVector.magnitude
-        
+
         let correctionDirection = overlapVector.normalized
-        
+
         let correctionVector = correctionDirection * penetrationDepth
-        
+
         self.center += correctionVector
     }
-    
+
     private func getClosestPoint<T: RectangularPhysicsObject>(to object: T) -> CGPoint {
-        return CGPoint(
+        CGPoint(
             x: max(object.center.x - object.width / 2, min(self.center.x, object.center.x + object.width / 2)),
             y: max(object.center.y - object.height / 2, min(self.center.y, object.center.y + object.height / 2))
         )
     }
-    
+
     private func getRotatedPoint(point: CGPoint, around center: CGPoint, by angle: CGFloat) -> CGPoint {
         let cosAngle = cos(-angle)
         let sinAngle = sin(-angle)
@@ -242,14 +242,14 @@ extension RoundPhysicsObject {
     }
 
     private func getClosestPointToAxisAlignedRect<T: RectangularPhysicsObject>(center: CGPoint, object: T) -> CGPoint {
-        return CGPoint(
+        CGPoint(
             x: max(object.center.x - object.width / 2, min(center.x, object.center.x + object.width / 2)),
             y: max(object.center.y - object.height / 2, min(center.y, object.center.y + object.height / 2))
         )
     }
-  
+
     private func calculateInitialCollisionNormal(to closestPoint: CGPoint) -> CGVector {
-        return (self.center - closestPoint).normalized
+        (self.center - closestPoint).normalized
     }
 
     private func calculateOverlap<T: RectangularPhysicsObject>(with object: T) -> (CGFloat, CGFloat) {

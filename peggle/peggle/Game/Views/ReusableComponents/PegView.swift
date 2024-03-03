@@ -12,7 +12,7 @@ struct PegView: View {
     let radius: CGFloat
     let isGlowing: Bool
     let angle: Angle
-    
+
     init(pegType: ObjectType.PegType, radius: CGFloat = Constants.defaultAssetRadius, isGlowing: Bool, angle: Angle = .zero) {
         self.pegType = pegType
         self.radius = radius

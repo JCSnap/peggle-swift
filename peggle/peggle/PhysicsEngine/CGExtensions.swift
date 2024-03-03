@@ -19,7 +19,7 @@ extension CGPoint {
     var magnitude: CGFloat {
         sqrt(x * x + y * y)
     }
-    
+
     var normalized: CGPoint {
         let length = sqrt(self.x * self.x + self.y * self.y)
         guard length != 0 else { return CGPoint(x: 0, y: 0) }

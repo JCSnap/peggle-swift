@@ -9,7 +9,7 @@ import Foundation
 
 struct PoopPower: Power {
     var type: PowerType = .poop
-    
+
     func effectWhenActivated(gameStateManager: GameStateManager) {
         gameStateManager.ball.type = .poop
         gameStateManager.ball.radius *= 4

@@ -40,7 +40,7 @@ class SoundManager {
                     print("Failed to preload sound: \(soundName), error: \(error)")
                 }
             }
-            
+
             players[soundType] = playersForSound
         }
     }
@@ -55,7 +55,6 @@ class SoundManager {
         }
     }
 }
-
 
 enum SoundType {
     case bounce, clear, interface, gameOver, cannon, win, select, bubble, tick

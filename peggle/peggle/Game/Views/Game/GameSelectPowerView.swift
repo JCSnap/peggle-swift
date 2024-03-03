@@ -11,7 +11,7 @@ struct GameSelectPowerView: View {
     @Binding var isPowerSelected: Bool
     var viewModel: GameSelectPowerViewDelegate
     @State private var selectedPowerType: PowerType = .exploding
-    
+
     var body: some View {
         VStack {
             MainText(text: "Select Your Power", size: 50, color: .black)

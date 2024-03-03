@@ -9,8 +9,8 @@ import SwiftUI
 
 struct GameBottomView: View {
     @State var viewModel: GameBottomViewDelegate
-    @State var activatedPower: Bool = false
-    @State var showPowerOverlay: Bool = false
+    @State var activatedPower = false
+    @State var showPowerOverlay = false
 
     var body: some View {
         HStack {
@@ -45,7 +45,7 @@ struct GameBottomView: View {
 
 struct ActivatedPowerView: View {
     @State private var opacity: CGFloat = 1.0
-    
+
     var body: some View {
         MainText(text: "Power Activated", size: 30, color: .black)
             .frame(width: 500, height: 200)
@@ -65,7 +65,7 @@ struct ActivatedPowerView: View {
 struct PowerOverlayView: View {
     @State private var opacity: CGFloat = 1.0
     var powerSelected: PowerType
-    
+
     var body: some View {
         MainText(text: powerText, size: 100, color: powerTextColor)
             .frame(width: 700, height: 200)
@@ -80,7 +80,7 @@ struct PowerOverlayView: View {
                 }
             }
     }
-    
+
     private var powerText: String {
         let powerTexts: [PowerType: String] = [
             .exploding: "BOOM TIME 💥",
@@ -90,7 +90,7 @@ struct PowerOverlayView: View {
         ]
         return powerTexts[powerSelected] ?? "POWER!"
     }
-    
+
     private var powerTextColor: any ShapeStyle {
         let powerTextColors: [PowerType: any ShapeStyle] = [
             .exploding: .black,
@@ -106,7 +106,7 @@ protocol GameBottomViewDelegate: AnyObject {
     var isAiming: Bool { get }
     var canActivatePower: Bool { get }
     var selectedPowerType: PowerType { get }
-    
+
     func startGame()
     func activatePower()
 }

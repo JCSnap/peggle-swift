@@ -13,7 +13,7 @@ class GameStateManager {
     var ball = GameBall(ball: Ball(center: .zero))
     var ballCountRemaining: Int = Constants.defaultBallCount
     var objects: [GameObject] = []
-    var bucket: GameBucket = GameBucket(bucket: Bucket(center: CGPoint(x: -100, y: -100)))
+    var bucket = GameBucket(bucket: Bucket(center: CGPoint(x: -100, y: -100)))
     var cannonAngle: CGFloat = .zero
     var computedScore: Int = 0
     var previousComputedScore: Int = 0
@@ -33,8 +33,8 @@ class GameStateManager {
         level != nil
     }
     var maxScore: Int = 0
-    var allowBallExitToInterruptPlayAndRemovePegs: Bool = true
-    var reverseGravity: Bool = false
+    var allowBallExitToInterruptPlayAndRemovePegs = true
+    var reverseGravity = false
 
     func hasReachedObjective() -> Bool {
         let gamePegs = objects.compactMap { $0 as? GamePeg }
@@ -85,7 +85,7 @@ class GameStateManager {
         }
         resetAllCollisionCounts()
     }
-    
+
     func handleBallEntersBucket() {
         ballCountRemaining += 2
         handleBallExitScreen()
@@ -99,15 +99,15 @@ class GameStateManager {
             return false
         }
     }
-    
+
     func addComputedScore(_ score: Int) {
         self.computedScore += score
     }
-    
+
     func updatePreviousComputedScore() {
         previousComputedScore = computedScore
     }
-    
+
     func addComputedScoreBasedOnBallSpeed() {
         let defaultSpeed = Constants.defaultBallVelocity.magnitude
         let currentSpeed = ball.velocity.magnitude
@@ -116,7 +116,7 @@ class GameStateManager {
         let scoreToAdd = Int(currentSpeed / defaultSpeed * scaleFactor)
         addComputedScore(scoreToAdd)
     }
-    
+
     func updateComputedScoreBasedOnBallRemaining() {
         let scaleFactor = 500
         addComputedScore(scaleFactor * ballCountRemaining)
@@ -138,7 +138,7 @@ class GameStateManager {
             self.removeInvisiblePegs()
         }
     }
-    
+
     func resetAllCollisionCounts() {
         objects.forEach { object in
             (object as? GamePeg)?.resetCollisionCount()
@@ -152,7 +152,7 @@ class GameStateManager {
             }
         }
     }
- 
+
     func explodeExplodingPegs(withRadius: CGFloat = Constants.defaultBlastRadius) {
         let explodingPegs = objects.compactMap { $0 as? GamePeg }.filter { $0.type == .exploding }
             for peg in objects.compactMap({ $0 as? GamePeg }) {
@@ -181,7 +181,7 @@ class GameStateManager {
             self.removeInvisiblePegs()
         }
     }
-    
+
     func createEffectWhereBallWillNotLeaveScreen() {
         ball.type = .spooky
         self.allowBallExitToInterruptPlayAndRemovePegs = false
@@ -190,7 +190,7 @@ class GameStateManager {
             self.ball.type = .normal
         }
     }
-    
+
     func cleanUp() {
         cannonAngle = .zero
         level = nil
@@ -208,14 +208,14 @@ class GameStateManager {
         ball.center = CGPoint(x: -100, y: -100)
         ball.velocity = .zero
     }
-    
+
     private func makeBallReappearAtTopAtTheSameXPosition() {
         let positionToReappear = CGPoint(x: ball.center.x, y: 10)
         // to prevent ball from accelerating too much
         let newVelocity = CGVector(dx: ball.velocity.dx / 2, dy: 0)
         self.ball = GameBall(ball: Ball(center: positionToReappear), velocity: newVelocity, type: ball.type)
     }
-    
+
     private func stopBallAndRepositionBallConditionallyBasedOnBallCount() {
         if ballCountRemaining == 0 {
             hideBallFromScreen()
@@ -225,13 +225,13 @@ class GameStateManager {
         }
         ball.isStatic = true
     }
-    
+
     private func resetBallAtStartingPosition() {
         self.ball = GameBall(ball: Ball(center: ScreenPosition.topCenter.point(for: screenBounds)),
                                 velocity: Constants.defaultBallVelocity)
         self.ball.velocity = .zero
     }
-    
+
     private func applyKnockballToBallAfterExploding(_ peg: GamePeg, withRadius radius: CGFloat) {
         let distance = peg.peg.distance(from: ball.center)
         if distance <= radius {

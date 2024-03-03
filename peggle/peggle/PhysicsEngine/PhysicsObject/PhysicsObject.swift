@@ -26,14 +26,14 @@ extension PhysicsObject {
             self.velocity.dy -= gravity * CGFloat(deltaTime)
         }
     }
-    
+
     mutating func applyFriction(deltaTime: TimeInterval, frictionCoefficient: CGFloat = PhysicsEngineConstants.defaultFrictionCoefficient) {
         if self.isStatic || self.velocity.magnitude == 0 {
             return
         }
         self.velocity = self.velocity * PhysicsEngineConstants.defaultFrictionCoefficient
     }
-    
+
     mutating func updateObjectPosition(timeInterval: TimeInterval) {
         let newCenter = CGPoint(x: self.center.x + self.velocity.dx * CGFloat(timeInterval),
                                 y: self.center.y + self.velocity.dy * CGFloat(timeInterval))
@@ -50,11 +50,11 @@ extension PhysicsObject {
         self.velocity.dx += accelerationX * CGFloat(deltaTime)
         self.velocity.dy += accelerationY * CGFloat(deltaTime)
     }
-    
+
     mutating func applyForceInDirection(force: CGFloat, deltaTime: TimeInterval, direction: CGVector) {
         let accelerationMagnitude = force / mass
         let accelerationVector = CGVector(dx: direction.dx * accelerationMagnitude, dy: direction.dy * accelerationMagnitude)
-        
+
         velocity.dx += accelerationVector.dx * CGFloat(deltaTime)
         velocity.dy += accelerationVector.dy * CGFloat(deltaTime)
     }

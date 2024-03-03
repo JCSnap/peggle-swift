@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GameView: View {
     @State var gameVm: GameVm
-    @State var isPowerSelected: Bool = false
+    @State var isPowerSelected = false
 
     var body: some View {
         ZStack {
@@ -42,5 +42,3 @@ struct GameView: View {
         }
     }
 }
-
-

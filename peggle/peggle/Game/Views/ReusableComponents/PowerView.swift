@@ -9,15 +9,15 @@ import SwiftUI
 
 struct PowerView: View {
     let powerType: PowerType
-    let size: CGSize = CGSize(width: 100, height: 100)
-    
+    let size = CGSize(width: 100, height: 100)
+
     var body: some View {
         Image(powerImage)
             .resizable()
             .scaledToFit()
             .frame(width: size.width, height: size.height)
     }
-    
+
     private var powerImage: String {
         let imageNames: [PowerType: String] = [
             .exploding: "explosion-power",

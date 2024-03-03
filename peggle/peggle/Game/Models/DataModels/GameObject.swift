@@ -19,7 +19,7 @@ class GameObject: HittableObject, PhysicsObject {
         get { _health }
         set { _health = min(max(newValue, 0), 100) }
     }
-    
+
     init (center: CGPoint, angle: CGFloat = .zero, velocity: CGVector, mass: CGFloat, isStatic: Bool, health: CGFloat = Constants.defaultHealth) {
         self.center = center
         self.angle = angle
@@ -28,14 +28,14 @@ class GameObject: HittableObject, PhysicsObject {
         self.isStatic = isStatic
         self._health = health
     }
-    
+
     func deductHealthBasedOnImpact(impactVelocity: CGVector) {
         let defaultMagnitude = Constants.defaultBallVelocity.magnitude
         let scalingFactor = 3.0
         let toDeduct = impactVelocity.magnitude / (defaultMagnitude * scalingFactor) * Constants.defaultPegMaxHealth
         self.health -= toDeduct
     }
-    
+
     func effectWhenHit(gameStateManager: GameStateManager) {
         collisionCount += 1
     }
@@ -45,7 +45,7 @@ extension GameObject: Hashable {
     static func == (lhs: GameObject, rhs: GameObject) -> Bool {
         lhs.center == rhs.center
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(center)
     }

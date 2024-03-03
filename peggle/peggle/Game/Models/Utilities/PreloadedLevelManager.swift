@@ -9,11 +9,11 @@ import Foundation
 
 class PreloadedLevelManager {
     var bounds: CGRect
-    
+
     init(bounds: CGRect = Constants.defaultBounds) {
         self.bounds = bounds
     }
-    
+
     func createAllLevels() -> [Level] {
         var allLevels: [Level] = []
         allLevels.append(createPreloadedLevelOne())
@@ -22,11 +22,11 @@ class PreloadedLevelManager {
         // TODO: add more
         return allLevels
     }
-    
+
     var preloadedLevelNames: [String] {
         ["Oranges are Stubborn 🍊", "Variations are Good 👍", "No Escape ☠️"]
     }
-    
+
     func createPreloadedLevelOne() -> Level {
         let levelName = preloadedLevelNames[0]
         var board = Board(withSize: bounds.size)
@@ -48,7 +48,7 @@ class PreloadedLevelManager {
         let level = Level(name: levelName, board: board)
         return level
     }
-    
+
     func createPreloadedLevelTwo() -> Level {
         let levelName = preloadedLevelNames[1]
         var board = Board(withSize: bounds.size)
@@ -61,7 +61,7 @@ class PreloadedLevelManager {
         let level = Level(name: levelName, board: board)
         return level
     }
-    
+
     func createPreloadedLevelThree() -> Level {
         let levelName = preloadedLevelNames[2]
         var board = Board(withSize: bounds.size)
@@ -73,7 +73,7 @@ class PreloadedLevelManager {
         board.objects = objects
         return Level(name: levelName, board: board)
     }
-    
+
     private func createDiagonalScorePegs(count: Int, atY: CGFloat) -> [BoardObject] {
         let radius = bounds.size.width / 50.0
         let offset = radius / 2.5
@@ -89,7 +89,7 @@ class PreloadedLevelManager {
         }
         return objects
     }
-    
+
     private func createReverseDiagonalStubbornPegs(count: Int, atY: CGFloat) -> [BoardObject] {
         let radius = bounds.size.width / 50.0
         let offset = radius / 3
@@ -105,7 +105,7 @@ class PreloadedLevelManager {
         }
         return objects
     }
-    
+
     private func createHorizontalLineOfAlternatingBlueAndOrangePegs(count: Int, atY: CGFloat, blueStart: Bool = true) -> [BoardObject] {
         let pegRadius = bounds.size.width / CGFloat(count) / 2.0
         if atY > bounds.size.width - pegRadius {
@@ -125,10 +125,10 @@ class PreloadedLevelManager {
         }
         return objects
     }
-    
+
     private func createBlocksOfDifferentSizesAndAnglesAtCorners() -> [BoardObject] {
         let sizes = [20, 30, 40, 50]
-        let angles = [2.25, 0.72, 1.07, 3,03]
+        let angles = [2.25, 0.72, 1.07, 3, 03]
         let maxX = bounds.size.width
         let maxY = bounds.size.height
         let offsets = sizes.map { $0 * 3 }
@@ -146,7 +146,7 @@ class PreloadedLevelManager {
         }
         return objects
     }
-    
+
     private func createScatteredPegsOfDifferentTypesAndSizesAndAngles() -> [BoardObject] {
         let sizes = [20.5, 40.5, 30, 20, 50, 25, 26.6, 24.3, 29, 29, 23, 40]
         let angles = [2.2, 4.2, 2.1, 1.0, 0, 0, 0.5, 2.2, 1.2, 3.2, 2.2, 1.3]

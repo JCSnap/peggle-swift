@@ -48,7 +48,7 @@ struct BoardView: View {
                             : nil
                         )
                 }
-        
+
                 InvisibleLayerView(viewModel: viewModel)
             }
             .onAppear {
@@ -129,7 +129,6 @@ struct InteractiveView<Content: View>: View {
             })
     }
 }
-
 
 protocol LevelDesignerBoardDelegate: AnyObject {
     var isInsertMode: Bool { get }

@@ -26,7 +26,7 @@ struct HomeView: View {
                         homeVm.goToLevelDesignerView()
                     }
                 )
-                
+
                 MenuButton(
                     title: "GAME",
                     action: {

@@ -49,7 +49,7 @@ struct PegsView: View {
 
     var body: some View {
         let pegs = viewModel.pegs
-        
+
         ForEach(pegs.indices, id: \.self) { index in
             ZStack {
                 if pegs[index].isGlowing {
@@ -93,7 +93,7 @@ struct ComputedScoreView: View {
     var pegRadius: CGFloat
     @State var scoreSize: CGFloat
     @State private var opacity = 1.0
-    
+
     var body: some View {
         MainText(text: "\(score)", size: scoreSize, color: .red)
             .offset(y: pegRadius + 5)
@@ -110,10 +110,10 @@ struct ComputedScoreView: View {
 
 struct ObstaclesView: View {
     let viewModel: GameBoardViewDelegate
-    
+
     var body: some View {
         let obstacles = viewModel.obstacles
-        
+
         ForEach(obstacles.indices, id: \.self) { index in
             ObstacleView(type: obstacles[index].type, size: obstacles[index].size, angle: obstacles[index].angle)
                 .position(obstacles[index].center)

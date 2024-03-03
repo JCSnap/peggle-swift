@@ -18,7 +18,7 @@ class RootVm: HomeRootDelegate, LevelDesignerRootDelegate, GameRootDelegate {
         self.soundManager = SoundManager()
         self.selectedTab = 0
     }
-    
+
     func goToHomeView() {
         selectedTab = 0
     }
@@ -39,7 +39,7 @@ class RootVm: HomeRootDelegate, LevelDesignerRootDelegate, GameRootDelegate {
     func clearBoardCache() {
         selectedBoard = nil
     }
-    
+
     func playSound(sound: SoundType) {
         soundManager.playSound(sound: sound)
     }

@@ -9,7 +9,7 @@ import Foundation
 
 struct ReverseGravityPower: Power {
     var type: PowerType = .reverseGravity
-    
+
     func effectWhenActivated(gameStateManager: GameStateManager) {
         gameStateManager.reverseGravity = true
         print("reverse gravity activated")

@@ -19,12 +19,11 @@ struct GameOverView: View {
 struct GameOverModalContent: View {
     var viewModel: GameOverViewDelegate
     let condition: GameStage
-    
 
     var body: some View {
         let text = condition == .lose ? "You lost" : "You won!"
         let titleColor: any ShapeStyle = condition == .lose ? .red : .green
-        
+
         VStack {
             MainText(text: text, size: 100, color: titleColor)
             MainText(text: "Score: \(viewModel.computedScore)", size: 40, color: .black)

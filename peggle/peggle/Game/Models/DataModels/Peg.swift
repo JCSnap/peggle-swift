@@ -10,7 +10,7 @@ import Foundation
 class Peg: BoardObject {
     var type: ObjectType.PegType
     var radius: CGFloat
-    var isGlowing: Bool = false
+    var isGlowing = false
     override var size: CGFloat {
         radius
     }
@@ -20,7 +20,7 @@ class Peg: BoardObject {
         self.radius = radius
         super.init(center: center, angle: angle, health: health)
     }
-    
+
     required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let x = try container.decode(CGFloat.self, forKey: .centerX)
@@ -32,12 +32,11 @@ class Peg: BoardObject {
         let health = try container.decode(CGFloat.self, forKey: .health)
         self.init(center: center, type: type, radius: radius, angle: angle, health: health)
     }
-    
-    
+
     func glowUp() {
         isGlowing = true
     }
-    
+
     func isPointInPeg(point: CGPoint) -> Bool {
         distance(from: point) <= radius
     }
@@ -58,11 +57,11 @@ class Peg: BoardObject {
         center.y - self.radius >= 0 &&           // Bottom
         center.y + self.radius <= size.height    // Top
     }
-    
+
     override func updateSize(to newSize: CGFloat) {
         self.radius = newSize
     }
-    
+
     override func hash(into hasher: inout Hasher) {
         hasher.combine(center.x)
         hasher.combine(center.y)
@@ -109,4 +108,3 @@ extension Peg {
         return sqrt(dx * dx + dy * dy)
     }
 }
-

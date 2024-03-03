@@ -25,14 +25,14 @@ struct GameBucket: RectangularPhysicsObject & HittableObject {
         get { bucket.height }
         set { bucket.height = newValue }
     }
-    
+
     init(bucket: Bucket, velocity: CGVector = Constants.defaultBucketVelocity, mass: CGFloat = Constants.defaultBucketMass) {
         self.bucket = bucket
         self.velocity = velocity
         self.mass = mass
         self.isStatic = true
     }
-    
+
     // TODO: handle differently if collide is with side vs top (enter)
     func effectWhenHit(gameStateManager: GameStateManager) {
         gameStateManager.handleBallEntersBucket()

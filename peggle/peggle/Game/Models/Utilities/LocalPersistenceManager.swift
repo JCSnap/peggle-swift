@@ -105,7 +105,7 @@ extension LocalPersistenceManager {
         do {
             let decoder = JSONDecoder()
             return try decoder.decode(Level.self, from: jsonData)
-        } catch let error {
+        } catch {
             print(error.localizedDescription)
             throw PersistenceError.readError
         }

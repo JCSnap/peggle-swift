@@ -14,7 +14,7 @@ class HomeVm: HomeViewDelegate {
     init(rootVm: HomeRootDelegate) {
         self.rootVm = rootVm
     }
-    
+
     func playSound(sound: SoundType) {
         rootVm.playSound(sound: sound)
     }

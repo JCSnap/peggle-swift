@@ -21,11 +21,11 @@ extension RectangularPhysicsObject {
     mutating func handleCollision<T: RoundPhysicsObject>(with object: inout T) {
         object.handleCollision(with: &self)
     }
-    
+
     mutating func handleCollision<T: RectangularPhysicsObject>(with object: inout T) {
         // TODO: implement in future, not needed now
     }
-    
+
     mutating func handleBoundaryCollision(within bounds: CGRect, applyPositionalCorrection: Bool = true) {
         self.reflectVelocityIfNeeded(axis: .horizontal, within: bounds)
         self.reflectVelocityIfNeeded(axis: .vertical, within: bounds)
@@ -33,15 +33,15 @@ extension RectangularPhysicsObject {
             self.applyPositionalCorrectionWithBounds(within: bounds)
         }
     }
-    
+
     func isColliding<T: RoundPhysicsObject>(with object: T) -> Bool {
         object.isColliding(with: self)
     }
-    
+
     func isColliding<T: RectangularPhysicsObject>(with object: T) -> Bool {
-        return false
+        false
     }
-    
+
     private mutating func reflectVelocityIfNeeded(axis: Axis, within bounds: CGRect) {
         switch axis {
         case .horizontal:
@@ -54,12 +54,12 @@ extension RectangularPhysicsObject {
             }
         }
     }
-    
+
     private mutating func applyPositionalCorrectionWithBounds(within bounds: CGRect) {
         self.applyPositionalCorrectionForHorizontalBounds(within: bounds)
         self.applyPositionalCorrectionForVerticalBounds(within: bounds)
     }
-    
+
     private mutating func applyPositionalCorrectionForHorizontalBounds(within bounds: CGRect) {
         let leftBound = bounds.minX + self.width
         let rightBound = bounds.maxX - self.width

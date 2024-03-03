@@ -14,7 +14,7 @@ struct LoadLevelView: View {
 
     var body: some View {
         let deleteLevelText = "Are you sure you want to delete \(selectedLevelNameToDelete)"
-        
+
         ZStack {
             Color.black.opacity(0.4)
                 .edgesIgnoringSafeArea(.all)
@@ -74,7 +74,7 @@ protocol LevelDesignerLoadLevelDelegate: AnyObject {
     func loadLevel(withName name: String)
 
     func getNamesOfAvailableLevels() -> [String]
-    
+
     func deleteLevel(_ levelName: String)
 
     func toggleLoadLevelView()

@@ -27,7 +27,7 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
         self.preloadedLevelManager = PreloadedLevelManager()
         self.rootVm = rootVm
     }
-    
+
     var selectedObjectIndex: Int = 0
 
     // MARK: LevelDesignerBoardDelegate
@@ -62,7 +62,7 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
             board.addObject(Obstacle(center: point, type: obstacleType))
         }
     }
-    
+
     func deleteObject(at index: Int) {
         if index >= objects.count {
             return
@@ -70,11 +70,11 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
         let object = objects[index]
         board.deleteBoardObject(object)
     }
-    
+
     func deleteObject(_ object: BoardObject) {
         board.deleteBoardObject(object)
     }
-    
+
     func getIndex(of object: BoardObject) -> Int {
         board.getIndexOf(object: object)
     }
@@ -82,19 +82,19 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
     func updateObjectPosition(index: Int, newPoint: CGPoint) {
         board.updateObjectPosition(index: index, newPoint: newPoint)
     }
-    
+
     func setSelectedObjectToLastObject() {
         selectedObjectIndex = objects.count - 1
     }
-    
+
     func updateObjectSize(index: Int, newSize: CGFloat) {
         board.updateObjectSize(index: index, newSize: newSize)
     }
-    
+
     func updateObjectAngle(index: Int, newAngleInDegree: CGFloat) {
         board.updateObjectAngle(index: index, newAngleInDegree: newAngleInDegree)
     }
-    
+
     func updateObjectHealth(index: Int, newHealth: CGFloat) {
         board.updateObjectHealth(index: index, newHealth: newHealth)
     }
@@ -121,7 +121,7 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
         }
         updateCurrentLevel(with: level)
     }
-    
+
     func deleteLevel(_ levelName: String) {
         persistenceManager.deleteLevel(name: levelName)
     }
@@ -138,7 +138,7 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
     func toggleMode() {
         self.isInsertMode.toggle()
     }
-    
+
     func playSound(sound: SoundType) {
         rootVm.playSound(sound: sound)
     }
@@ -159,23 +159,23 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
     func startLevel() {
         rootVm.goToGameViewWithBoard(board)
     }
-    
+
     func isNameOverwritingPreloadedLevel(_ name: String) -> Bool {
-        return preloadedLevelNames.contains(name)
+        preloadedLevelNames.contains(name)
     }
-    
+
     func isNameOverwriting(_ name: String) -> Bool {
         let levels = getNamesOfAvailableLevels()
         return levels.contains(name)
     }
-    
+
     func createAndSavePreloadedLevelsToPersistence() {
         let levels = preloadedLevelManager.createAllLevels()
         for level in levels {
             persistenceManager.saveLevel(level)
         }
     }
-    
+
     func cleanUp() {
         self.selectedObjectType = .peg(.normal)
         self.board = Board()

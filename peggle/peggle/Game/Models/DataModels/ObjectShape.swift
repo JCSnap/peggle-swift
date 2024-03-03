@@ -13,26 +13,26 @@ class ObjectShape: Codable {
     var size: CGFloat {
         .zero
     }
-    
+
     required init(center: CGPoint, angle: CGFloat) {
         self.center = center
         self.angle = angle
     }
-    
+
     func isInBoundary(within size: CGSize) -> Bool {
         print("Subclasses should implement this method")
         return false
     }
-    
+
     func updateSize(to newSize: CGFloat) {
         print("Subclasses should implement this method")
     }
-    
+
     func overlaps(with peg: Peg) -> Bool {
         print("Subclasses should implement this method")
         return false
     }
-    
+
     func overlaps(with shape: ObjectShape) -> Bool {
         if let rectangleShape = shape as? RectangleShape {
             return overlaps(with: rectangleShape)
@@ -44,17 +44,17 @@ class ObjectShape: Codable {
             return false
         }
     }
-    
+
     func overlaps(with rectangle: RectangleShape) -> Bool {
         print("Subclasses should implement this method")
         return false
     }
-    
+
     func overlaps(with circle: CircleShape) -> Bool {
         print("Subclasses should implement this method")
         return false
     }
-    
+
     func overlaps(with triangle: TriangleShape) -> Bool {
         print("Subclasses should implement this method")
         return false
@@ -64,7 +64,7 @@ class ObjectShape: Codable {
 class RectangleShape: ObjectShape {
     var width: CGFloat
     var height: CGFloat
-    
+
     override var size: CGFloat {
         width / Constants.rectangleWidthToHeightRatio
     }
@@ -84,13 +84,13 @@ class RectangleShape: ObjectShape {
             return CGPoint(x: center.x + rotatedX, y: center.y + rotatedY)
         }
     }
-    
+
     init(center: CGPoint, angle: CGFloat, width: CGFloat = Constants.rectangleObstacleSize * Constants.rectangleWidthToHeightRatio, height: CGFloat = Constants.rectangleObstacleSize) {
         self.width = width
         self.height = height
         super.init(center: center, angle: angle)
     }
-    
+
     func contains(point: CGPoint) -> Bool {
         let translatedX = point.x - center.x
         let translatedY = point.y - center.y
@@ -98,7 +98,7 @@ class RectangleShape: ObjectShape {
         let rotatedY = translatedX * sin(-angle) + translatedY * cos(-angle)
         return abs(rotatedX) <= width / 2 && abs(rotatedY) <= height / 2
     }
-    
+
     override func overlaps(with peg: Peg) -> Bool {
         let cosAngle = cos(-angle)
         let sinAngle = sin(-angle)
@@ -107,26 +107,26 @@ class RectangleShape: ObjectShape {
         let rotatedPegX = translatedX * cosAngle - translatedY * sinAngle + center.x
         let rotatedPegY = translatedX * sinAngle + translatedY * cosAngle + center.y
         let rotatedPegCenter = CGPoint(x: rotatedPegX, y: rotatedPegY)
-        
+
         let closestX = max(center.x - width / 2, min(rotatedPegCenter.x, center.x + width / 2))
         let closestY = max(center.y - height / 2, min(rotatedPegCenter.y, center.y + height / 2))
-        
+
         let closestPointRotatedBackX = (closestX - center.x) * cosAngle + (closestY - center.y) * sinAngle + center.x
         let closestPointRotatedBackY = -(closestX - center.x) * sinAngle + (closestY - center.y) * cosAngle + center.y
-        
+
         let distanceX = peg.center.x - closestPointRotatedBackX
         let distanceY = peg.center.y - closestPointRotatedBackY
-        
+
         return sqrt(distanceX * distanceX + distanceY * distanceY) < peg.radius
     }
-    
+
     override func overlaps(with rectangle: RectangleShape) -> Bool {
         let axes = union(axes1: self.getAxes(), axes2: rectangle.getAxes())
-        
+
         for axis in axes {
             let projection1 = self.projectOntoAxis(axis)
             let projection2 = rectangle.projectOntoAxis(axis)
-            
+
             if projection1.max < projection2.min || projection2.max < projection1.min {
                 return false
             }
@@ -134,20 +134,20 @@ class RectangleShape: ObjectShape {
 
         return true
     }
-    
+
     required init(center: CGPoint, angle: CGFloat) {
         self.width = Constants.rectangleObstacleSize * Constants.rectangleWidthToHeightRatio
         self.height = Constants.rectangleObstacleSize
         super.init(center: center, angle: angle)
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case centerX = "center_x"
         case centerY = "center_y"
         case angle
         case size
     }
-    
+
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let x = try container.decode(CGFloat.self, forKey: .centerX)
@@ -159,18 +159,18 @@ class RectangleShape: ObjectShape {
         self.height = size
         super.init(center: center, angle: angle)
     }
-    
+
     override func isInBoundary(within size: CGSize) -> Bool {
-        return corners.allSatisfy { corner in
+        corners.allSatisfy { corner in
             corner.x >= 0 && corner.x <= size.width && corner.y >= 0 && corner.y <= size.height
         }
     }
-    
+
     override func updateSize(to newSize: CGFloat) {
         self.width = Constants.rectangleWidthToHeightRatio * newSize
         self.height = newSize
     }
-    
+
     func getAxes() -> [CGPoint] {
         var axes = [CGPoint]()
         let corners = self.corners
@@ -189,7 +189,7 @@ class RectangleShape: ObjectShape {
 
     func projectOntoAxis(_ axis: CGPoint) -> (min: CGFloat, max: CGFloat) {
         let projections = corners.map { corner in
-            return (corner.x * axis.x + corner.y * axis.y)
+            (corner.x * axis.x + corner.y * axis.y)
         }
 
         guard let minProjection = projections.min(), let maxProjection = projections.max() else {
@@ -198,16 +198,16 @@ class RectangleShape: ObjectShape {
 
         return (minProjection, maxProjection)
     }
-    
+
     func union(axes1: [CGPoint], axes2: [CGPoint]) -> [CGPoint] {
         var combinedAxes = axes1
-        
+
         for axis in axes2 {
             if !combinedAxes.contains(where: { $0.isAlmostEqual(to: axis) }) {
                 combinedAxes.append(axis)
             }
         }
-        
+
         return combinedAxes
     }
 }
@@ -217,23 +217,22 @@ class CircleShape: ObjectShape {
     override var size: CGFloat {
         radius
     }
-    
+
     init(center: CGPoint, radius: CGFloat, angle: CGFloat) {
         self.radius = radius
         super.init(center: center, angle: angle)
     }
-    
+
     required init(center: CGPoint, angle: CGFloat) {
         self.radius = Constants.defaultAssetRadius
         super.init(center: center, angle: angle)
     }
-    
+
     required init(from decoder: Decoder) throws {
         fatalError("init(from:) has not been implemented")
     }
 }
 
 class TriangleShape: ObjectShape {
-    
-}
 
+}

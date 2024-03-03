@@ -15,7 +15,7 @@ struct PaletteView: View {
     @State private var showCannotOverwritePreloadedLevel = false
     @State private var showOverwriteNameAlert = false
     @State private var showResetAlert = false
-    
+
     var body: some View {
         let resetAlertText = "Are you sure you want to reset? This action cannot be reversed"
         let saveAlertText = "Save level with: \(levelName)?"
@@ -27,7 +27,7 @@ struct PaletteView: View {
         Please use a valid name that does not contain unsavable characters,
         consist only of whitespace, or more than 30 characters.
         """
-        
+
         VStack {
             PegSelectionView(viewModel: viewModel)
             EditObjectView(viewModel: viewModel)
@@ -77,9 +77,9 @@ struct PegSelectionView: View {
         (.stubborn, Color.red)
     ]
     let objectTypes: [(ObjectType.ObstacleType, Color)] = [
-        (.rectangle, Color.black),
+        (.rectangle, Color.black)
     ]
-    
+
     var body: some View {
         HStack {
             ForEach(pegTypes, id: \.0) { pegType, borderColor in
@@ -118,7 +118,7 @@ struct EditObjectView: View {
     @State private var sizeSliderValue: CGFloat = 0
     @State private var angleSliderValue: CGFloat = 0
     @State private var healthSliderValue: CGFloat = 0
-    
+
     private var sizeBinding: Binding<CGFloat> {
         Binding<CGFloat>(
             get: {
@@ -157,7 +157,7 @@ struct EditObjectView: View {
             }
         )
     }
-    
+
     var body: some View {
         HStack {
             VStack {
@@ -165,7 +165,7 @@ struct EditObjectView: View {
                     Text("Edit size")
                         .font(.headline)
                         .foregroundStyle(.black)
-                    
+
                     Slider(value: sizeBinding, in: 10...50)
                         .padding()
                 }
@@ -181,7 +181,7 @@ struct EditObjectView: View {
                     Text("Edit orientation")
                         .font(.headline)
                         .foregroundStyle(.black)
-                    
+
                     Slider(value: angleBinding, in: 0...360)
                         .padding()
                 }
@@ -197,7 +197,7 @@ struct EditObjectView: View {
                     Text("Edit health")
                         .font(.headline)
                         .foregroundStyle(.black)
-                    
+
                     Slider(value: healthBinding, in: 1...100)
                         .padding()
                 }
@@ -221,7 +221,7 @@ struct ActionButtonsView: View {
     @Binding var showInvalidNameAlert: Bool
     @Binding var showResetAlert: Bool
     var viewModel: LevelDesignerPaletteDelegate
-    
+
     var body: some View {
         HStack {
             Button("LOAD", action: viewModel.renderLoadLevelView)
@@ -258,28 +258,28 @@ protocol LevelDesignerPaletteDelegate: AnyObject {
     var isInsertMode: Bool { get }
     var selectedObjectIndex: Int { get }
     var objects: [BoardObject] { get }
-    
+
     func playSound(sound: SoundType)
-    
+
     // MARK: Peg management
     func selectObjectType(type: ObjectType)
     func toggleMode()
-    
+
     // MARK: Edit objects
     func updateObjectSize(index: Int, newSize: CGFloat)
     func updateObjectAngle(index: Int, newAngleInDegree: CGFloat)
     func updateObjectHealth(index: Int, newHealth: CGFloat)
-    
+
     // MARK: Actions
     func renderLoadLevelView()
-    
+
     func isNameInvalid(_ name: String) -> Bool
     func isNameOverwriting(_ name: String) -> Bool
     func isNameOverwritingPreloadedLevel(_ name: String) -> Bool
-    
+
     func saveLevel(levelName: String)
-    
+
     func resetLevel()
-    
+
     func startLevel()
 }
