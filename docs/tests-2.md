@@ -1,0 +1,88 @@
+On top of the unit tests for the individual models and view models, here are some tests that I would do:
+
+- Addiional unit tests
+
+  - LocalPersistance
+    - Use a mock `FileManager` to simulate file system interactiona to isolate the test from the real file system, and inject the dependency into `LocalPersistenceManager`. This might require refactoring `LocalPersistenceManager`
+    - Test save. When a valid level is passed, it should encode the level with the level's name as the file name
+    - Test save. When there is an error encoding. It should catch and handle the failure appropriately
+    - Test save. When there is an error writing. It should catch and handle the failure appropriately
+    - Test save. When there is any other error not defined. It should catch and handle the failure appropriately
+    - Test load. When the name of an existing level is passed. It should load and decode the level correctly
+    - Test load. When the name of a level that does not exist is passed. It should handle the file not found error appropriately
+    - Test load. When the name of an existing level is passed, but there is an error decoding. It should handle the failure appropriately
+    - Test delete. When the name of an existing level is passed, it should delete it the file.
+    - Test delete. When the name of a level that does not exist is passed. It should handle the failure appropriately
+    - Test delete. When the name of an existing level is passed, but there is error deleting (eg. due to permission issue), it should handle the failure appropriately
+    - Test display all level. When there are multiple levels saved, it should list all level names without the `.json` extension
+    - Test display all level. When there are no level saved, it should return an empty list
+    - Test display all level. When there is an error reading the document directory, it should handle the failure appropriately
+
+- Test launch
+  - On launch, the orientation should be portrait
+  - The `HomeView` should be visible
+  - The navigation tab should be visible
+- Test tab navigation
+
+  - When the `Level Designer` tab is tapped, the `LevelDesignerView` should be visible, and the orientation should be portrait
+  - When the `Home View` tab is tapped after navigating to the `LevelDesignerView`, the `HomeView` should be visible once again, and the orientation should be portrait
+
+- Test level designer
+  - Blue button
+    - When the blue button is tapped, the blue button should be highlighted to indicate selection
+    - When the blue button is tapped, and the orange button is tapped, and the blue button is tapped once again, the blue button should be highlighted to indicate selection
+    - When an area within the board is tapped after the blue button is tapped and selected, the board should add a blue peg at the location of tap
+    - Same as the above, but do it again. When another valid area within the board is tapped again, the board should add another blue peg at the new location (This ensures that peg type selection persists)
+  - Orange button
+    - Do the same cases as blue button
+  - Test undo button
+    - Add a peg to a point within the board. When the undo button is tapped, the undo button should be highlighted to indicate delete mode is toggled
+    - When the peg is tapped after the undo button is tapped, the peg should be removed and the board should not contain the peg anymore
+    - Do the same as above but with multiple pegs. After adding multiple pegs and selecting the undo button, tap all the pegs. All the pegs should be removed and the board should be empty
+    - When the peg is tapped without the undo button selected, the peg should remain and the board should still contain the peg
+    - When the undo button is tapped, and the blue botton is tapped, and a point within the board is tapped. The blue peg should not be added and the board should not contain a peg at that location
+    - When the undo button is tapped, and the orange button is tapped, and a point within the board is tapped. The orange peg should not be added and the board should not contain a peg at that location
+  - Test adding peg
+    - Add a blue peg to a point within the board. When the blue peg on the board is dragged to another point within the board, the board should contain the updated peg and should not contain the old peg
+    - Add a blue peg to a point within the board. When the undo button is tapped, and the blue peg on the board is dragged to another point within the board, the board should contain the updated peg and should not contain the old peg (Dragging should work in undo mode as well)
+    - Add a blue peg to a point within the board. Tap on the same point again with the blue botton selected. A peg should not be added and the board should contain only one peg at that location.
+    - Add a blue peg to a point within the board. Tap on a point beside the previous point such that newPoint.x == oldPoint.x and newPoint.y - oldPoint.y < size / 2. A peg should not be added and the board should contain only one peg at that location. (Peg that overlaps should not be added even if they are not exactly at the same point)
+    - Add a blue peg to a point outside the board, where point.x < 0, but point.y within the board. The peg should not be added and the board should not contain the peg
+    - Add a blue peg to a point outside the board, where point.y < 0, but point.x within the board. The peg should not be added and the board should not contain the peg
+    - Add a blue peg to a point outside the board, where point.x > boardEastEdge.x, but point.y within the board. The peg should not be added and the board should not contain the peg
+    - Add a blue peg to a point outside the board, where point.y > boardSouthEdge.y, but point.x within the board. The peg should not be added and the board should not contain the peg
+    - Add a blue peg to a point near the edge of the board, such that point.x + size / 2 > boardEastEdge.x. The peg should not be added and the board should not contain the peg (Peg can only be added if its entirety is within bound)
+    - Add a blue peg to a point near the edge of the board, such that point.x - size / 2 < 0. The peg should not be added and the board should not contain the peg (Peg can only be added if its entirety is within bound)
+    - Add a blue peg to a point near the edge of the board, such that point.y - size / 2 < 0. The peg should not be added and the board should not contain the peg (Peg can only be added if its entirety is within bound)
+    - Add a blue peg to a point near the edge of the board, such that point.y + size / 2 > boardSouthEdge.y. The peg should not be added and the board should not contain the peg (Peg can only be added if its entirety is within bound)
+  - Test updating peg
+    - Do the same cases as the ones above, but instead of adding directly to an invalid point, first add to a point within the board, the drag it to an invalid point
+  - Test other peg interactions
+    - Add a blue peg to a point within the board. Long press the peg. The peg should be removed and the board should not contain the peg anymore
+    - Add a blue peg to a point within the board. Tap on the undo button to select it. Long press the peg. The peg should be removed and the board should not contain the peg anymore
+  - Test reset button
+    - When the reset button is tapped, an alert modal should pop up
+    - Add multiple pegs at multiple valid points within the board. When the reset button is tapped and the confirmation button is tapped, the pegs should be removed and the board should contain 0 pegs
+    - Add multiple pegs at multiple valid points within the board. When the reset button is tapped and the cancel button is tapped, the pegs should not be removed and the board should contain the original pegs
+  - Test save and load
+    - When the load button is tapped, a modal should pop up
+    - When the save button is pressed, a modal should pop up asking for confirmation with the saved name
+    - Add multiple pegs at multiple valid points within the board. Enter a valid name in the text box and tap save. Tap on the reset button. When the load button is tapped, the name should appear as one of the option
+    - Add a blue peg at point1 within the board. Add an orange peg at another point2 within the board. Save the board with a valid name. Tap the reset button. The board should be cleared. Tap the load button. Tap on the button with the saved name. The board should now contain the two pegs at the two points.
+    - Do the same as the previous test, now add one more peg at a valid point3 within the board and save the board with the same name. Tap the reset button. Tap the load button. Tap on the button with the saved name. The board should now contain the bthe three pegs at the three points (Saving with the same name should overwrite)
+    - Add a peg at a point1 within the board. Save it with a valid name1. Tap the reset button. Add a peg at another point2 within the board. Tap the load button and tap the button with name1. The baord should not contain the peg at point2, and should contain the peg at point1 (Loading a level on a non empty board will overwrite the current board)
+    - Save the board with a valid name without adding any peg and load the level. The board should contain 0 peg.
+    - Save the board with whitespaces. An alert should pop up. The level should not be saved.
+    - Save the board with non-valid characters (eg. contain characters not defined in Unicode 3.2). An alert should pop up. The level should not be saved.
+    - Save the board with a long name (more than 30 characters but currently the max length is arbitrary). An alert should pop up. The level should not be saved.
+    - Add a peg to a valid point within the board. Save the board with name1. Save the board again with name2. Tap reset. Tap load and tap the button with name1. The board should contain the peg at the point. Tap the reset button again. Tap load and tap the button with name2. The board should contain the peg at the same point. (Levels with same pegs should save)
+    - Save around 15 levels. Tap on load. The scroll view should exist and all levels should be visible (after scrolling)
+    - Add a peg and save the level. Tap the undo button and tap on the peg. The peg should be removed (Undo should work after save)
+    - Add a peg and save the level. Long press the peg. The peg should be removed (Long press should work after save)
+    - Add a peg and save the level. Drag the peg to another valid point within the board. The board should now contain the peg in the new location, and no longer contains the peg at the old location (Dragging should work after save)
+    - Add a peg and save the level. Tap the reset button. The board should not contain the peg (Reset should work after save)
+    - Load a level with a peg. Tap the undo button and tap on the peg. The peg should be removed (Undo should work after load)
+    - Load a level with a peg. Long press the peg. The peg should be removed (Long press should work after load)
+    - Load a level with a peg. Drag the peg to another valid point within the board. The board should now contain the peg in the new location, and no longer contains the peg at the old location (Dragging should work after load)
+    - Load a level with a peg. Tap the reset button. The board should not contain the peg (Reset should work after load)
+
