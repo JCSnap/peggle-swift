@@ -20,7 +20,8 @@ struct GameView: View {
                     GameBottomView(viewModel: gameVm)
                 }
                 if !isPowerSelected {
-                    UnclosableModalView(content: GameSelectPowerView(isPowerSelected: $isPowerSelected, viewModel: gameVm))
+                    UnclosableModalView(content: GameSelectPowerView(isPowerSelected: $isPowerSelected,
+                                                                     viewModel: gameVm))
                 }
             } else {
                 GeometryReader { geometry in
@@ -38,6 +39,7 @@ struct GameView: View {
             gameVm.checkForBoardToLoad()
         }
         .onDisappear {
+            isPowerSelected = false
             gameVm.cleanUp()
         }
     }
