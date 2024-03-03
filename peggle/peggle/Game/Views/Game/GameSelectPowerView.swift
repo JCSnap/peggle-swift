@@ -19,9 +19,9 @@ struct GameSelectPowerView: View {
         .reverseGravity: "Reverse Gravity",
         .poop: "Poop"
     ]
-    
+
     var body: some View {
-        
+
         VStack {
             MainText(text: "Select Your Power", size: 50, color: .black)
             HStack {
@@ -38,7 +38,7 @@ struct GameSelectPowerView: View {
             }
         }
     }
-    
+
     private func confirmSelection() {
         isPowerSelected = true
         viewModel.playSound(sound: .interface)
@@ -46,13 +46,12 @@ struct GameSelectPowerView: View {
     }
 }
 
-
 struct PowerSelectionButton: View {
     var powerType: PowerType
     var isSelected: Bool
     var action: () -> Void
     var displayName: String
-    
+
     var body: some View {
         Button(action: action) {
             VStack {
