@@ -78,8 +78,6 @@ struct PegSelectionView: View {
     ]
     let objectTypes: [(ObjectType.ObstacleType, Color)] = [
         (.rectangle, Color.black),
-        (.triangle, Color.black),
-        (.circle, Color.black)
     ]
     
     var body: some View {
