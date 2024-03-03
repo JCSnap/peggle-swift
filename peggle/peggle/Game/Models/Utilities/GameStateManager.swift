@@ -153,6 +153,7 @@ class GameStateManager {
                 for explodingPeg in explodingPegs {
                     let distance = explodingPeg.peg.distance(from: peg.center)
                     if distance <= withRadius {
+                        peg.effectWhenHit(gameStateManager: self)
                         peg.isVisible = false
                     }
                 }
