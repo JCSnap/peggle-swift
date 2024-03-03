@@ -54,10 +54,6 @@ class GameObstacle: GameObject {
 }
 
 class GameRectangleObstacle: GameObstacle, RectangularPhysicsObject {
-    func isColliding(with object: PhysicsObject) -> Bool {
-        return false
-    }
-    
     var rectangleShape: RectangleShape {
         guard let shape = obstacle.shape as? RectangleShape else {
             fatalError("GameRectangleObstacle can only be initialized with a RectangleShape")

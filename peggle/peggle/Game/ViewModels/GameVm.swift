@@ -269,6 +269,11 @@ class GameVm:
                         self.objects[i] = peg
                         self.objects[j] = obstacle
                     }
+                } else if var obstacle = self.objects[i] as? GameRectangleObstacle, var peg = self.objects[j] as? GamePeg, obstacle.isColliding(with: peg) {
+                    obstacle.handleCollision(with: &peg)
+                    playSound(sound: .bounce)
+                    self.objects[i] = obstacle
+                    self.objects[j] = peg
                 }
             }
         }

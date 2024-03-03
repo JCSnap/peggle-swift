@@ -34,17 +34,6 @@ extension RectangularPhysicsObject {
         }
     }
     
-    func isColliding(with object: PhysicsObject) -> Bool {
-        switch object {
-        case let roundObject as RoundPhysicsObject:
-            return isColliding(with: roundObject)
-        case let rectangularObject as RectangularPhysicsObject:
-            return isColliding(with: rectangularObject)
-        default:
-            return false
-        }
-    }
-    
     func isColliding<T: RoundPhysicsObject>(with object: T) -> Bool {
         object.isColliding(with: self)
     }
