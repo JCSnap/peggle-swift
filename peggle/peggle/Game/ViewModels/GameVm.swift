@@ -77,6 +77,9 @@ class GameVm:
     var computedScore: Int {
         gameStateManager.computedScore
     }
+    var recentComputedScore: Int {
+        gameStateManager.recentComputedScore
+    }
     var scoreSize: CGFloat {
         gameStateManager.scoreSize
     }

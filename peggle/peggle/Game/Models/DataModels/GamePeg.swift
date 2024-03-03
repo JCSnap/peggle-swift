@@ -93,6 +93,7 @@ class GamePeg: GameObject, RoundPhysicsObject {
 class NormalGamePeg: GamePeg {
     override func effectWhenHit(gameStateManager: GameStateManager) {
         super.effectWhenHit(gameStateManager: gameStateManager)
+        gameStateManager.updatePreviousComputedScore()
         if !self.isGlowing {
             self.glowUp()
             gameStateManager.addComputedScore(100)
@@ -105,6 +106,7 @@ class NormalGamePeg: GamePeg {
 class ScoringGamePeg: GamePeg {
     override func effectWhenHit(gameStateManager: GameStateManager) {
         super.effectWhenHit(gameStateManager: gameStateManager)
+        gameStateManager.updatePreviousComputedScore()
         if !self.isGlowing {
             self.glowUp()
             gameStateManager.score += 1
@@ -118,6 +120,7 @@ class ScoringGamePeg: GamePeg {
 class ExplodingGamePeg: GamePeg {
     override func effectWhenHit(gameStateManager: GameStateManager) {
         super.effectWhenHit(gameStateManager: gameStateManager)
+        gameStateManager.updatePreviousComputedScore()
         if !self.isGlowing {
             self.glowUp()
             gameStateManager.addComputedScore(300)
@@ -130,6 +133,7 @@ class ExplodingGamePeg: GamePeg {
 class StubbornGamePeg: GamePeg {
     override func effectWhenHit(gameStateManager: GameStateManager) {
         super.effectWhenHit(gameStateManager: gameStateManager)
+        gameStateManager.updatePreviousComputedScore()
         if !self.isGlowing {
             self.glowUp()
             gameStateManager.addComputedScore(400)

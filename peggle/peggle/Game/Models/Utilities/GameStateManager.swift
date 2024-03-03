@@ -16,6 +16,10 @@ class GameStateManager {
     var bucket: GameBucket = GameBucket(bucket: Bucket(center: CGPoint(x: -100, y: -100)))
     var cannonAngle: CGFloat = .zero
     var computedScore: Int = 0
+    var previousComputedScore: Int = 0
+    var recentComputedScore: Int {
+        computedScore - previousComputedScore
+    }
     var scoreSize: CGFloat {
         let velocityRatio = ball.velocity.magnitude / Constants.defaultBallVelocity.magnitude
         let scaleFactor = 40.0 // this is arbitrary
@@ -98,6 +102,10 @@ class GameStateManager {
     
     func addComputedScore(_ score: Int) {
         self.computedScore += score
+    }
+    
+    func updatePreviousComputedScore() {
+        previousComputedScore = computedScore
     }
     
     func addComputedScoreBasedOnBallSpeed() {

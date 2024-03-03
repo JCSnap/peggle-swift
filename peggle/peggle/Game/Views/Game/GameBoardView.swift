@@ -65,7 +65,7 @@ struct PegsView: View {
                         .position(pegs[index].center)
                 }
                 if viewModel.mostRecentCollisionObject == pegs[index] {
-                    ComputedScoreView(score: viewModel.computedScore, pegRadius: viewModel.pegs[index].radius, scoreSize: viewModel.scoreSize)
+                    ComputedScoreView(score: viewModel.recentComputedScore, pegRadius: viewModel.pegs[index].radius, scoreSize: viewModel.scoreSize)
                         .position(pegs[index].center)
                 }
                 HealthBarView(health: viewModel.pegs[index].health, pegRadius: viewModel.pegs[index].radius)
@@ -166,7 +166,7 @@ protocol GameBoardViewDelegate: AnyObject {
     var bucket: GameBucket { get }
     var screenBounds: CGRect { get }
     var isAiming: Bool { get }
-    var computedScore: Int { get }
+    var recentComputedScore: Int { get }
     var scoreSize: CGFloat { get }
     var mostRecentCollisionObject: GameObject? { get }
 
