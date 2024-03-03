@@ -14,9 +14,7 @@ struct GameSelectPowerView: View {
     
     var body: some View {
         VStack {
-            Text("Select your power")
-                .font(.largeTitle)
-                .foregroundStyle(.black)
+            MainText(text: "Select Your Power", size: 50, color: .black)
             VStack {
                 HStack {
                     Button(action: {
@@ -63,10 +61,12 @@ struct GameSelectPowerView: View {
                     .border(selectedPowerType == .poop ? Color.blue : Color.clear, width: 5)
                 }
             }
-            Button("OK") {
+            Button(action: {
                 isPowerSelected = true
                 viewModel.playSound(sound: .interface)
                 viewModel.selectPowerType(selectedPowerType)
+            }) {
+                MainText(text: "OK", size: 50, color: .blue)
             }
         }
     }

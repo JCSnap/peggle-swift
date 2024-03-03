@@ -13,7 +13,7 @@ struct GameLoadLevelView: View {
 
     var body: some View {
         VStack {
-            Text("Load Level").font(.title).bold().foregroundStyle(.black)
+            MainText(text: "Load Level", size: 30, color: .black)
             ScrollView {
                 VStack(spacing: 20) {
                     ForEach(viewModel.getNamesOfAvailableLevels(), id: \.self) { levelName in

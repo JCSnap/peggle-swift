@@ -15,11 +15,11 @@ struct GameBottomView: View {
     var body: some View {
         HStack {
             if viewModel.isAiming {
-                Button("LAUNCH") {
+                Button(action: {
                     viewModel.startGame()
+                }) {
+                    MainText(text: "LAUNCH", size: 60, color: .green)
                 }
-                .frame(width: 200, height: 100)
-                .font(.largeTitle)
             }
             if viewModel.canActivatePower && !viewModel.isAiming {
                 Button(action: {
