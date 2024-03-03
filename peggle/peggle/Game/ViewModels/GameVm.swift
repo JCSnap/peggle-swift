@@ -317,6 +317,7 @@ class GameVm:
         gameStateManager.cleanUp()
         timerManager.invalidateTimer()
         self.isAiming = true
+        powerActivationCount = 0
         cleanupWorkItem?.cancel()
         cleanupWorkItem = nil
     }

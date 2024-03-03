@@ -113,9 +113,9 @@ class PreloadedLevelManager {
             } else if typeIndex == 1 {
                 peg = Peg(center: center, type: .scoring, radius: sizes[i], angle: angles[i])
             } else if typeIndex == 2 {
-                peg = Peg(center: center, type: .exploding, radius: sizes[i], angle: angles[i])
-            } else {
                 peg = Peg(center: center, type: .stubborn, radius: sizes[i], angle: angles[i])
+            } else {
+                peg = Peg(center: center, type: .exploding, radius: sizes[i], angle: angles[i])
             }
             pegs.append(peg)
         }
