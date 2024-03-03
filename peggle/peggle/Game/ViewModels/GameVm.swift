@@ -297,7 +297,7 @@ class GameVm:
         let currentLevels = persistenceManager.displayAllLevels()
         for level in levels {
             if currentLevels.contains(level.name) {
-                return
+                continue
             }
             persistenceManager.saveLevel(level)
         }
