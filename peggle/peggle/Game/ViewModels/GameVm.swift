@@ -20,6 +20,7 @@ class GameVm:
     private var gameStateManager = GameStateManager()
     private var persistenceManager: LevelPersistence.Type = Constants.defaultPersistenceManager
     private var timerManager = TimerManager(timeInterval: Constants.timeInterval)
+    private var preloadedLevelManager = PreloadedLevelManager()
     private var power: Power = ExplodingPower()
     private let powerConstructors: [PowerType: () -> Power] = [
         .exploding: { ExplodingPower() },
@@ -281,6 +282,18 @@ class GameVm:
             playSound(sound: .win)
         } else if result == GameStage.lose {
             playSound(sound: .gameOver)
+        }
+    }
+    
+    func createAndSavePreloadedLevelsToPersistence(boundsSize: CGSize) {
+        preloadedLevelManager.bounds = CGRect(origin: .zero, size: boundsSize)
+        let levels = preloadedLevelManager.createAllLevels()
+        let currentLevels = persistenceManager.displayAllLevels()
+        for level in levels {
+            if currentLevels.contains(level.name) {
+                return
+            }
+            persistenceManager.saveLevel(level)
         }
     }
     

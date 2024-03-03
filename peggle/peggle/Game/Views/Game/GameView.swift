@@ -23,7 +23,10 @@ struct GameView: View {
                     UnclosableModalView(content: GameSelectPowerView(isPowerSelected: $isPowerSelected, viewModel: gameVm))
                 }
             } else {
-                GameLoadLevelView(viewModel: gameVm)
+                GeometryReader { geometry in
+                    GameLoadLevelView(viewModel: gameVm, boundsSize: geometry.size)
+                        .position(CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2))
+                }
             }
             if gameVm.isGameOver == .lose {
                 GameOverView(viewModel: gameVm, condition: .lose)

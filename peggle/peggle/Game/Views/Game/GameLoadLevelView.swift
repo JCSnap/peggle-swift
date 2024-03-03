@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GameLoadLevelView: View {
     var viewModel: GameLoadLevelViewDelegate
+    var boundsSize: CGSize = Constants.defaultBounds.size
     @State private var showGoToLevelDesignerAlert = false
 
     var body: some View {
@@ -28,6 +29,7 @@ struct GameLoadLevelView: View {
             .cornerRadius(12)
             .shadow(radius: 10)
             .onAppear {
+                viewModel.createAndSavePreloadedLevelsToPersistence(boundsSize: boundsSize)
                 showGoToLevelDesignerAlert = viewModel.getNamesOfAvailableLevels().isEmpty
             }
             .alert("No level to load, go to level designer?", isPresented: $showGoToLevelDesignerAlert) {
@@ -57,6 +59,7 @@ struct LevelView: View {
 protocol GameLoadLevelViewDelegate: AnyObject {
     func getNamesOfAvailableLevels() -> [String]
     func setLevelFromPersistenceAndRenderGame(levelName: String)
+    func createAndSavePreloadedLevelsToPersistence(boundsSize: CGSize)
 
     func goToLevelDesignerView()
 }
