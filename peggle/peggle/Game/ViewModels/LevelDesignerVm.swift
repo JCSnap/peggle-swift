@@ -10,6 +10,7 @@ import Foundation
 @Observable
 class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate, LevelDesignerLoadLevelDelegate {
     private var rootVm: LevelDesignerRootDelegate
+    private var preloadedLevelManager: PreloadedLevelManager
     var selectedObjectType: ObjectType
     var board: Board
     var isInsertMode: Bool
@@ -23,6 +24,7 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
         self.board = Board()
         self.isInsertMode = true
         self.persistenceManager = Constants.defaultPersistenceManager
+        self.preloadedLevelManager = PreloadedLevelManager()
         self.rootVm = rootVm
     }
     
@@ -92,6 +94,8 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
 
     func setBoardSize(_ size: CGSize) {
         board.setBoardSize(size)
+        preloadedLevelManager.bounds = CGRect(origin: .zero, size: size)
+        createAndSavePreloadedLevelsToPersistence()
     }
 
     // MARK: LevelDesignerLoadLevelDelegate
@@ -152,6 +156,13 @@ class LevelDesignerVm: LevelDesignerPaletteDelegate, LevelDesignerBoardDelegate,
     func isNameOverwriting(_ name: String) -> Bool {
         let levels = getNamesOfAvailableLevels()
         return levels.contains(name)
+    }
+    
+    func createAndSavePreloadedLevelsToPersistence() {
+        let levels = preloadedLevelManager.createAllLevels()
+        for level in levels {
+            persistenceManager.saveLevel(level)
+        }
     }
     
     func cleanUp() {
