@@ -11,7 +11,7 @@ import AVFoundation
 class SoundManager {
     private var players: [SoundType: [AVAudioPlayer]] = [:]
     private let soundNames: [SoundType: String] = [
-        .bounce: "bounce",
+        .bounce: "bounce2",
         .clear: "clear",
         .interface: "interface",
         .gameOver: "game-over",
@@ -21,6 +21,7 @@ class SoundManager {
         .bubble: "bubble",
         .tick: "tick"
     ]
+    private let playersPerSound = 7
 
     init() {
         preloadSounds()
@@ -28,32 +29,28 @@ class SoundManager {
 
     private func preloadSounds() {
         for (soundType, soundName) in soundNames {
+            var playersForSound: [AVAudioPlayer] = []
             guard let soundURL = Bundle.main.url(forResource: soundName, withExtension: "mp3") else { continue }
-            do {
-                let player = try AVAudioPlayer(contentsOf: soundURL)
-                player.prepareToPlay()
-                players[soundType] = [player]
-            } catch {
-                print("Failed to preload sound: \(soundName), error: \(error)")
+            for _ in 0..<playersPerSound {
+                do {
+                    let player = try AVAudioPlayer(contentsOf: soundURL)
+                    player.prepareToPlay()
+                    playersForSound.append(player)
+                } catch {
+                    print("Failed to preload sound: \(soundName), error: \(error)")
+                }
             }
+            
+            players[soundType] = playersForSound
         }
     }
 
     func playSound(sound: SoundType) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self, let soundURL = Bundle.main.url(forResource: self.soundNames[sound], withExtension: "mp3") else { return }
+            guard let self = self else { return }
 
             if let player = self.players[sound]?.first(where: { !$0.isPlaying }) {
                 player.play()
-            } else {
-                do {
-                    let newPlayer = try AVAudioPlayer(contentsOf: soundURL)
-                    newPlayer.prepareToPlay()
-                    newPlayer.play()
-                    self.players[sound]?.append(newPlayer)
-                } catch {
-                    print("Failed to create sound player for \(sound): \(error)")
-                }
             }
         }
     }

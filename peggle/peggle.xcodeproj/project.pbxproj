@@ -43,7 +43,6 @@
 		0AA18E652B8E228D0039E5EF /* ObjectShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA18E642B8E228D0039E5EF /* ObjectShape.swift */; };
 		0AA18E672B8E28ED0039E5EF /* GameObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA18E662B8E28ED0039E5EF /* GameObstacle.swift */; };
 		0AA18E712B8F54750039E5EF /* cannon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E6A2B8F54750039E5EF /* cannon.mp3 */; };
-		0AA18E722B8F54750039E5EF /* bounce.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E6B2B8F54750039E5EF /* bounce.mp3 */; };
 		0AA18E732B8F54750039E5EF /* win.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E6C2B8F54750039E5EF /* win.mp3 */; };
 		0AA18E742B8F54750039E5EF /* interface.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E6D2B8F54750039E5EF /* interface.mp3 */; };
 		0AA18E752B8F54750039E5EF /* game-over.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E6E2B8F54750039E5EF /* game-over.mp3 */; };
@@ -54,6 +53,11 @@
 		0AA18E7D2B8F5E160039E5EF /* bubble.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E7C2B8F5E160039E5EF /* bubble.mp3 */; };
 		0AA18E832B8F627B0039E5EF /* tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E822B8F627B0039E5EF /* tick.mp3 */; };
 		0AA18E852B90CF8E0039E5EF /* CollisionPhysicsBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA18E842B90CF8E0039E5EF /* CollisionPhysicsBehaviour.swift */; };
+		0AA18E892B936F7D0039E5EF /* ReverseGravityPower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA18E882B936F7D0039E5EF /* ReverseGravityPower.swift */; };
+		0AA18E8B2B9380400039E5EF /* MainText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA18E8A2B9380400039E5EF /* MainText.swift */; };
+		0AA18E8D2B938A6A0039E5EF /* PoopPower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA18E8C2B938A6A0039E5EF /* PoopPower.swift */; };
+		0AA18E8F2B9429E90039E5EF /* PreloadedLevelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA18E8E2B9429E90039E5EF /* PreloadedLevelManager.swift */; };
+		0AA18E912B943E970039E5EF /* bounce2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0AA18E902B943E970039E5EF /* bounce2.mp3 */; };
 		0AA669832B7CD4A100916547 /* HomeVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669822B7CD4A100916547 /* HomeVm.swift */; };
 		0AA669852B7CD4AC00916547 /* LevelDesignerVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669842B7CD4AC00916547 /* LevelDesignerVm.swift */; };
 		0AA669892B7CD4E600916547 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA669882B7CD4E600916547 /* HomeView.swift */; };
@@ -139,7 +143,6 @@
 		0AA18E642B8E228D0039E5EF /* ObjectShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectShape.swift; sourceTree = "<group>"; };
 		0AA18E662B8E28ED0039E5EF /* GameObstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameObstacle.swift; sourceTree = "<group>"; };
 		0AA18E6A2B8F54750039E5EF /* cannon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cannon.mp3; sourceTree = "<group>"; };
-		0AA18E6B2B8F54750039E5EF /* bounce.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bounce.mp3; sourceTree = "<group>"; };
 		0AA18E6C2B8F54750039E5EF /* win.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = win.mp3; sourceTree = "<group>"; };
 		0AA18E6D2B8F54750039E5EF /* interface.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = interface.mp3; sourceTree = "<group>"; };
 		0AA18E6E2B8F54750039E5EF /* game-over.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "game-over.mp3"; sourceTree = "<group>"; };
@@ -150,6 +153,11 @@
 		0AA18E7C2B8F5E160039E5EF /* bubble.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bubble.mp3; sourceTree = "<group>"; };
 		0AA18E822B8F627B0039E5EF /* tick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tick.mp3; sourceTree = "<group>"; };
 		0AA18E842B90CF8E0039E5EF /* CollisionPhysicsBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionPhysicsBehaviour.swift; sourceTree = "<group>"; };
+		0AA18E882B936F7D0039E5EF /* ReverseGravityPower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseGravityPower.swift; sourceTree = "<group>"; };
+		0AA18E8A2B9380400039E5EF /* MainText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainText.swift; sourceTree = "<group>"; };
+		0AA18E8C2B938A6A0039E5EF /* PoopPower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoopPower.swift; sourceTree = "<group>"; };
+		0AA18E8E2B9429E90039E5EF /* PreloadedLevelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreloadedLevelManager.swift; sourceTree = "<group>"; };
+		0AA18E902B943E970039E5EF /* bounce2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bounce2.mp3; sourceTree = "<group>"; };
 		0AA669822B7CD4A100916547 /* HomeVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVm.swift; sourceTree = "<group>"; };
 		0AA669842B7CD4AC00916547 /* LevelDesignerVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelDesignerVm.swift; sourceTree = "<group>"; };
 		0AA669882B7CD4E600916547 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -295,11 +303,11 @@
 		0AA18E692B8F532F0039E5EF /* Sound */ = {
 			isa = PBXGroup;
 			children = (
-				0AA18E6B2B8F54750039E5EF /* bounce.mp3 */,
 				0AA18E702B8F54750039E5EF /* clear.mp3 */,
 				0AA18E6D2B8F54750039E5EF /* interface.mp3 */,
 				0AA18E7C2B8F5E160039E5EF /* bubble.mp3 */,
 				0AA18E6E2B8F54750039E5EF /* game-over.mp3 */,
+				0AA18E902B943E970039E5EF /* bounce2.mp3 */,
 				0AA18E6A2B8F54750039E5EF /* cannon.mp3 */,
 				0AA18E822B8F627B0039E5EF /* tick.mp3 */,
 				0AA18E7A2B8F5A470039E5EF /* select.mp3 */,
@@ -367,6 +375,7 @@
 			children = (
 				0A9F3CDD2B85DEDD004CEA71 /* BucketView.swift */,
 				0A394BE42B7E2449002E6F03 /* CannonView.swift */,
+				0AA18E8A2B9380400039E5EF /* MainText.swift */,
 				0AA669942B7CD55C00916547 /* DeleteButtonView.swift */,
 				0A39D0392B81A27E00B4C07F /* BallView.swift */,
 				0A447CF42B8D8E7F00B29A88 /* ObstacleView.swift */,
@@ -395,6 +404,7 @@
 				0A39D0332B80739700B4C07F /* TimerManager.swift */,
 				0AA18E782B8F56210039E5EF /* SoundManager.swift */,
 				0AA6699A2B7CD5BB00916547 /* LocalPersistenceManager.swift */,
+				0AA18E8E2B9429E90039E5EF /* PreloadedLevelManager.swift */,
 				0AA6699E2B7CD5D200916547 /* Validator.swift */,
 			);
 			path = Utilities;
@@ -424,6 +434,8 @@
 				0AA18E662B8E28ED0039E5EF /* GameObstacle.swift */,
 				0A394BE02B7E0F56002E6F03 /* GameBall.swift */,
 				0AFCA7032B89D07F0073E078 /* ExplodingPower.swift */,
+				0AA18E882B936F7D0039E5EF /* ReverseGravityPower.swift */,
+				0AA18E8C2B938A6A0039E5EF /* PoopPower.swift */,
 				0AFCA7092B8A129B0073E078 /* SpookyBallPower.swift */,
 				0A9F3CEC2B88F11A004CEA71 /* BoardObject.swift */,
 				0A9F3CF02B899FE5004CEA71 /* GameObject.swift */,
@@ -555,8 +567,8 @@
 				0AA18E742B8F54750039E5EF /* interface.mp3 in Resources */,
 				0AA18E752B8F54750039E5EF /* game-over.mp3 in Resources */,
 				0AA18E7D2B8F5E160039E5EF /* bubble.mp3 in Resources */,
-				0AA18E722B8F54750039E5EF /* bounce.mp3 in Resources */,
 				0AA18E712B8F54750039E5EF /* cannon.mp3 in Resources */,
+				0AA18E912B943E970039E5EF /* bounce2.mp3 in Resources */,
 				0AA18E762B8F54750039E5EF /* sound-effect-twinklesparkle-115095.mp3 in Resources */,
 				0A3BE5C92B7121D700276847 /* Assets.xcassets in Resources */,
 				0AA18E772B8F54750039E5EF /* clear.mp3 in Resources */,
@@ -599,6 +611,7 @@
 				0A447CF32B8D844500B29A88 /* Obstacle.swift in Sources */,
 				0AA669922B7CD52900916547 /* LoadLevelView.swift in Sources */,
 				0AA669832B7CD4A100916547 /* HomeVm.swift in Sources */,
+				0AA18E8F2B9429E90039E5EF /* PreloadedLevelManager.swift in Sources */,
 				0A394BDF2B7DE7F6002E6F03 /* GamePeg.swift in Sources */,
 				0A394BE52B7E2449002E6F03 /* CannonView.swift in Sources */,
 				0A15FD9A2B7FBBD000FB0704 /* GameStateManager.swift in Sources */,
@@ -611,8 +624,11 @@
 				0A9F3CED2B88F11A004CEA71 /* BoardObject.swift in Sources */,
 				0A3BE5F82B71DF8900276847 /* WorldPhysicsBehaviour.swift in Sources */,
 				0AA6699D2B7CD5C800916547 /* Constants.swift in Sources */,
+				0AA18E892B936F7D0039E5EF /* ReverseGravityPower.swift in Sources */,
+				0AA18E8B2B9380400039E5EF /* MainText.swift in Sources */,
 				0A394BD52B7CE8F0002E6F03 /* GameTopView.swift in Sources */,
 				0AFCA7082B89D0BC0073E078 /* PowerOnView.swift in Sources */,
+				0AA18E8D2B938A6A0039E5EF /* PoopPower.swift in Sources */,
 				0AA669952B7CD55C00916547 /* DeleteButtonView.swift in Sources */,
 				0AA669852B7CD4AC00916547 /* LevelDesignerVm.swift in Sources */,
 				0A3BE5C52B7121D600276847 /* app.swift in Sources */,
