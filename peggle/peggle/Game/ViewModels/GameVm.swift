@@ -186,10 +186,10 @@ class GameVm:
     }
     // a peg is to "stuck-causing" if its collision count is greater than an arbitrary threshold
     private func checkAndHandleBallStuck() {
-        let isBallStuck = self.pegs.contains(where: { $0.collisionCount > Constants.collisionThresholdToBeConsideredStuck })
+        let isBallStuck = self.objects.contains(where: { $0.collisionCount > Constants.collisionThresholdToBeConsideredStuck })
         
         if isBallStuck {
-            self.gameStateManager.removePegsPrematurelyWith(collisionsMoreThan: Constants.collisionThresholdToBeConsideredStuck)
+            self.gameStateManager.removeObjectsPrematurelyWith(collisionsMoreThan: Constants.collisionThresholdToBeConsideredStuck)
         }
     }
     
@@ -246,6 +246,7 @@ class GameVm:
                 }
             } else if var rectangleObstacle = object as? GameRectangleObstacle {
                 if self.ball.isColliding(with: rectangleObstacle) {
+                    rectangleObstacle.effectWhenHit(gameStateManager: self.gameStateManager)
                     playSound(sound: .bounce)
                     self.ball.handleCollision(with: &rectangleObstacle)
                 }

@@ -13,6 +13,7 @@ class GameObject: HittableObject, PhysicsObject {
     var velocity: CGVector
     var mass: CGFloat
     var isStatic: Bool
+    var collisionCount: Int = 0
     
     init (center: CGPoint, angle: CGFloat = .zero, velocity: CGVector, mass: CGFloat, isStatic: Bool) {
         self.center = center
@@ -23,7 +24,7 @@ class GameObject: HittableObject, PhysicsObject {
     }
     
     func effectWhenHit(gameStateManager: GameStateManager) {
-        print("Default behaviour is do nothing, override for new behaviour")
+        collisionCount += 1
     }
 }
 

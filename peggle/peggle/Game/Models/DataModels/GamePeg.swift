@@ -9,7 +9,6 @@ import Foundation
 
 class GamePeg: GameObject, RoundPhysicsObject {
     var peg: Peg
-    var collisionCount: Int = 0
     var isGlowing: Bool {
         peg.isGlowing
     }

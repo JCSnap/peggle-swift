@@ -122,11 +122,17 @@ class GameStateManager {
         addComputedScore(scaleFactor * ballCountRemaining)
     }
 
-    func removePegsPrematurelyWith(collisionsMoreThan threshold: Int) {
+    func removeObjectsPrematurelyWith(collisionsMoreThan threshold: Int) {
         objects.forEach { object in
             if let gamePeg = object as? GamePeg, gamePeg.collisionCount > threshold {
                 gamePeg.isVisible = false
             }
+        }
+        objects = objects.filter { object in
+            if let obstacle = object as? GameObstacle {
+                return obstacle.collisionCount <= threshold
+            }
+            return true
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.defaultAnimationDuration) {
             self.removeInvisiblePegs()

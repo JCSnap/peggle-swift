@@ -17,7 +17,6 @@ class GameObstacle: GameObject {
         get { obstacle.angle }
         set { obstacle.angle = newValue }
     }
-    var collisionCount: Int = 0
     var type: ObjectType.ObstacleType {
         obstacle.type
     }
