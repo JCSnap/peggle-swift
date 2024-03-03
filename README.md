@@ -37,8 +37,9 @@ Drag on the screen. Shoot by pressing the `LAUNCH` button at the bottom of the s
 
 ### Win and Lose Conditions
 - Win when there is no more orange peg to collect, this means that if the game starts off without any orange pegs, it is considered a win the moment the ball goes out of frame
-- Lose when balls run out before all orange pegs are collected
+- Lose when balls run out before all orange pegs are collected. Start off with 5 balls.
 - Apart from the win condition, user can try to get higher score. Score is computed based on the pegs hit (including non scoring pegs like blue and green etc.), the speed at which these pegs at hit by the ball, and the balls remaining.
+- Measures taken to fulfill requirements - remove pegs and obstacles prematurely if they cause the ball to be stuck. (eg. The `No Escape` preloaded level). This means that the ball will always exit the frame within the finite time. Objects are removed prematurely based on some arbitrary collision threshold. We assume that if a ball is stuck, it would keep on colliding with the same few objects, and they should thus be removed after a threshold.
 
 ### Others
 - Ball in bucket adds one ball (not just saves the current ball, but adds a ball on top of the one exited)
@@ -83,16 +84,101 @@ For different powers, different tags are going to be shown on the screen when th
 - Include information like score, ball left
 
 ## Tests
-If you decide to write how you are going to do your tests instead of writing
-actual tests, please write in this section. If you decide to write all of your
-tests in code, please delete this section.
+For previous tests, go to `docs`
 
 ### Test navigation
 - Pressing the "Game" button from home should bring to the game view
   - If there is no level, a pop up should appear to direct the user to the level designer (this should not happen since we implemented preloaded levels in this problem set)
-  - There should be 3 preloaded levels that users can choose to load
-  - Clicking on any of the levels should bring users to the game view
+  - Clicking on the level designer button should bring to the level designer
 
+### Test cannon
+- When dragging on the screen, the cannon should aim at the direction of the drag, the dotted lines should also point towards the direction of the drag
+- When launch button is pressed, the ball should be ejected in the direction of the cannon and the dotted line.
+- When dragging on the screen and the launch button is not pressed, the ball should not be ejected
+
+### Test bucket
+- When the launch button is pressed for the first time, the bucket should start moving from left to right and from right to left, changing direction every time it hits the bound
+- When the ball collides with the bucket at its sides, the ball should be reflected and bounce off from the bucket
+- When the ball enters the bucket by colliding with the top of the bucket, the ball count should increment by one, there should be a sound effect
+- When the ball does not enter the bucket, the ball count should not increment
+- When the ball exits the frame, the bucket should continue moving from left and right, even at the aiming stage
+
+### Test win and lose condition
+- When there is no more orange pegs on the board, the win condition should be triggered. A view should pop up to notify the user of the win, along with stats such as balls remaining, total score, orange pegs collected, and a button to return to main menu
+- When the user runs out of balls before all orange pegs are collected, the lose condition should be triggered. A view should pop up to notify the uesr of the lose, along with the same states, and a button to return to the main menu
+- If neither the win condition nor the lose condition is met, the same pop up should not appear. User should be able to continue playing by aiming their cannon and launching the ball
+- When the game is being played, it should always terminate to either a win or lose state. In the event where a ball is stuck (due to pegs or obstacles blocking the ball from exiting the frame and decrementing the ball count or removing orange pegs), then the blocks and pegs blocking should be removed prematurely such that the ball can continue play.
+- If the ball is not stuck, the blocks or pegs should not be removed prematurely
+
+### Test power ups
+- When the user picks the exploding power up, and the power is activated by clicking on the green star, all green pegs that are glowing should explode and remove pegs within 150 block radius.
+- When the user picks the exploding power up, and the power is activated by clicking on the green star, all green pegs that are glowing should explode and pegs beyond a 150 block radius should not be removed
+- When the user picks the exploding power up, and the power is activated by clicking on the green star, green pegs that are not glowing should not explode and remove pegs within 150 block radius.
+- When the user picks the exploding power up, and the power is activated by clicking on the green star, green pegs that are not glowing should not explode and remove pegs within 150 block radius.
+- When the user picks the exploding power up, and the power is activated by clicking on the green star, green pegs within the radius should explode after a fixed duration (chain reaction) and not immediately
+- When the user picks the exploding power up, and the power is activated by clicking on the green star, green pegs not within the radius should not explode.
+- When the user picks the exploding power up, and the power is activated by clicking on the green star, if the ball is within the radius, it should be knockedback due to the explosion
+- When the user picks the spooky ball power up, and the power is activated by clicking on the green star, the ball should turn into a spooky ball (UI change) for a fixed duration
+- During that duration, when the ball exits the frame, it should not remove the ball or trigger the remove peg animation. The game should play as per normal and the peg should reappear at the top of the screen at the same x position with similar y velocity.
+- After the duration, the ball should exit the frame as per normal, and the ball count should be deducted.
+
+### Test rectangular blocks
+- User should be able to add a rectangular block in the level designer, and also pegs at the same time
+- User should be able to save a level with rectangular blocks and pegs
+- Users should not be able to add a rectangular block if doing so will cause it to overlap with another object (peg or block) or go outside bounds
+- Users should not be able to drag a rectangular block to a position where it will overlap with another object (peg or block) or go outside bounds
+- Users should be able to delete the block after long pressing it, or selecting the undo button and clicking on it
+
+### Test rotatable pegs/blocks
+- After adding a peg/block or selecting it, users should see the interface to rotate it at the bottom of the level designer
+- Moving the slider should rotate the peg/block in real time
+- User should be able to rotate the peg/block to any angle. The slider should be continuous and not discrete.
+- User should be able to save the level after rotating the peg/block
+- Loading a game with rotated peg/block should render the game with the rotated peg/block
+- If rotating the peg/block will cause it to overlap with another object or go out of bound, the rotation should not be allowed to happen.
+- The physics should work on rotated blocks/pegs. Eg. a ball colliding with a slanted rectangular block should reflect in the expected direction
+
+### Test resizable pegs/blocks
+- After adding a peg/block or selecting it, users should see the interface to resize it at the bottom of the level designer
+- Moving the slider should resize the peg/block in real time
+- User should be able to resize the peg/block to any size between 10 and 50. The slider should be continuous and not discrete.
+- User should be able to save the level after resizing the peg/block
+- Loading a game with resized peg/block should render the game with the resized peg/block
+- If resizing the peg/block will cause it to overlap with another object or go out of bound, the resize should not be allowed to happen.
+- The physics should work on resized blocks/pegs. Eg. a ball colliding with a bigger peg should reflect in the expected direction
+
+### Test stubborn peg
+- Usyers should be able to add stubborn pegs to the level in the level designer alongside other pegs and blocks.
+- Users should be able to save a level containing stubborn pegs along with other objects without any issues.
+- Stubborn pegs added to the level should retain their properties (e.g., position, size) when the level is loaded again.
+- Upon impact from a ball or another peg, stubborn pegs should move according to the conservation of momentum, reflecting realistic physics behavior.
+- The velocity and direction of stubborn pegs' movement after impact should correlate with the impacting object's velocity and angle of impact.
+- Stubborn pegs should be able to influence the movement of balls and other movable objects upon collision, adhering to realistic physics interactions. 
+- Users should not be able to place a stubborn peg in a position that causes it to overlap with existing objects or exceed the game board's boundaries.
+- Stubborn pegs should not overlap with other objects or exit the game board due to their movement post-collision. If such a scenario is imminent, the movement should be adjusted to prevent overlap or out-of-bound situations.
+- Stubborn pegs should bounce off the game board's walls when they collide, with the bounce angle corresponding to the angle of incidence, similar to how balls behave.
+
+### Test health
+- Pegs with HPs should have a clear visual distinction from regular pegs, ensuring players can easily identify them.
+- A green rectangular health bar should be displayed on or near each peg with HP, accurately representing the peg's current health status.
+- The health bar should decrease proportionally as the peg takes damage, providing immediate visual feedback on the peg's remaining HP.
+- Users should be able to add pegs with HPs in the level designer without any issues using the slider after the object has been selected, alongside other pegs and obstacles.
+- Levels containing pegs with HPs should be savable, and these pegs should retain their HP properties when the level is reloaded.
+- The amount of damage dealt to pegs with HPs should be proportionate to collision speed.
+- Pegs should glow at first hit, but removed when their HP reaches 0.
+- Pegs should not be removed when their HP is not 0, even if they are glowing.
+
+### Test preloaded levels
+- There should be 3 preloaded levels that users can choose to load
+- Clicking on any of the levels should bring users to the game view
+- Preloaded levels should maintain consistent layout and appearance across various iPad screen sizes, ensuring a uniform gameplay experience.
+- Pegs positioned at strategic points, such as corners, should retain their relative placement on the board, irrespective of the device used.
+- The game board in preloaded levels should be appropriately letterboxed to accommodate different screen aspect ratios, ensuring the gameplay area remains consistent while non-interactive margins adjust accordingly.
+- Letterboxing should effectively utilize the screen space, expanding the game board vertically or horizontally as needed, without distorting the gameplay area.
+- Levels designed to be fully visible without scrolling on one iPad model should exhibit the same non-scrolling behavior on all other models, preserving the gameplay dynamics.
+- Players should be capable of loading preloaded levels into the Level Designer for modifications while maintaining the integrity of the original preloaded content.
+- Modifications to preloaded levels within the Level Designer should be savable as new level with different names
+- Users should not be able to overwrite preloaded levels
 
 ## Written Answers
 
