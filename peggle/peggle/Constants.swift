@@ -46,4 +46,6 @@ struct Constants {
     static let defaultBallVelocity = CGVector(dx: 0, dy: 750.0)
 
     static let defaultBallCount = 5
+    
+    static let defaultBounds = CGRect(origin: .zero, size: CGSize(width: 800, height: 800))
 }
