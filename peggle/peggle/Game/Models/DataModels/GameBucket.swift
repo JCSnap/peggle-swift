@@ -26,7 +26,8 @@ struct GameBucket: RectangularPhysicsObject & HittableObject {
         set { bucket.height = newValue }
     }
 
-    init(bucket: Bucket, velocity: CGVector = Constants.defaultBucketVelocity, mass: CGFloat = Constants.defaultBucketMass) {
+    init(bucket: Bucket, velocity: CGVector = Constants.defaultBucketVelocity,
+         mass: CGFloat = Constants.defaultBucketMass) {
         self.bucket = bucket
         self.velocity = velocity
         self.mass = mass

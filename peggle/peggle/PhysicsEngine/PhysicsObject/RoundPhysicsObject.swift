@@ -53,7 +53,9 @@ extension RoundPhysicsObject {
     }
 
     mutating func handleCollision<T: RectangularPhysicsObject>(with object: inout T) {
-        guard self.isColliding(with: object) && !self.isStatic else { return }
+        guard self.isColliding(with: object) && !self.isStatic else {
+            return
+        }
 
         let closestPoint = self.getClosestPoint(to: object)
         let initialCollisionNormal = calculateInitialCollisionNormal(to: closestPoint)
@@ -84,23 +86,29 @@ extension RoundPhysicsObject {
         switch side {
         case .left:
             let leftEdge = object.center.x - object.width / 2
-            let isInVerticalRange = self.center.y >= object.center.y - object.height / 2 && self.center.y <= object.center.y + object.height / 2
+            let isInVerticalRange = self.center.y >= object.center.y - object.height / 2
+            && self.center.y <= object.center.y + object.height / 2
             return self.center.x - self.radius < leftEdge && isInVerticalRange
 
         case .right:
             let rightEdge = object.center.x + object.width / 2
-            let isInVerticalRange = self.center.y >= object.center.y - object.height / 2 && self.center.y <= object.center.y + object.height / 2
+            let isInVerticalRange = self.center.y >= object.center.y - object.height / 2
+            && self.center.y <= object.center.y + object.height / 2
             return self.center.x + self.radius > rightEdge && isInVerticalRange
 
         case .top:
             let topEdge = object.center.y - object.height / 2
-            let isInHorizontalRange = self.center.x >= object.center.x - object.width / 2 && self.center.x <= object.center.x + object.width / 2
-            return self.center.y - self.radius < topEdge && self.center.y + self.radius > topEdge && isInHorizontalRange
+            let isInHorizontalRange = self.center.x >= object.center.x - object.width / 2
+            && self.center.x <= object.center.x + object.width / 2
+            return self.center.y - self.radius < topEdge && self.center.y + self.radius > topEdge
+            && isInHorizontalRange
 
         case .bottom:
             let bottomEdge = object.center.y + object.height / 2
-            let isInHorizontalRange = self.center.x >= object.center.x - object.width / 2 && self.center.x <= object.center.x + object.width / 2
-            return self.center.y + self.radius > bottomEdge && self.center.y - self.radius < bottomEdge && isInHorizontalRange
+            let isInHorizontalRange = self.center.x >= object.center.x - object.width / 2
+            && self.center.x <= object.center.x + object.width / 2
+            return self.center.y + self.radius > bottomEdge && self.center.y - self.radius < bottomEdge
+            && isInHorizontalRange
 
         }
     }
@@ -265,7 +273,8 @@ extension RoundPhysicsObject {
         objectAngle: CGFloat
     ) -> (CGVector, CGVector) {
         let isHorizontalCorrection = overlapX < overlapY
-        let directionSign: CGFloat = isHorizontalCorrection ? (initialNormal.dx > 0 ? 1 : -1) : (initialNormal.dy > 0 ? 1 : -1)
+        let directionSign: CGFloat = isHorizontalCorrection ?
+        (initialNormal.dx > 0 ? 1 : -1) : (initialNormal.dy > 0 ? 1 : -1)
 
         var differenceVector: CGVector
         var correctedNormal: CGVector
@@ -299,6 +308,7 @@ extension RoundPhysicsObject {
     private func rotateVector(_ vector: CGVector, by angle: CGFloat) -> CGVector {
         let cosAngle = cos(angle)
         let sinAngle = sin(angle)
-        return CGVector(dx: vector.dx * cosAngle - vector.dy * sinAngle, dy: vector.dx * sinAngle + vector.dy * cosAngle)
+        return CGVector(dx: vector.dx * cosAngle - vector.dy * sinAngle,
+                        dy: vector.dx * sinAngle + vector.dy * cosAngle)
     }
 }

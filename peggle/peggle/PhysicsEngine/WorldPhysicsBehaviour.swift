@@ -14,10 +14,14 @@ protocol WorldPhysicsBehaviour {
 }
 
 extension WorldPhysicsBehaviour {
-    mutating func applyGravity(deltaTime: TimeInterval, gravity: CGFloat = PhysicsEngineConstants.earthGravity, reverse: Bool = false) {
+    mutating func applyGravity(deltaTime: TimeInterval,
+                               gravity: CGFloat = PhysicsEngineConstants.earthGravity,
+                               reverse: Bool = false) {
         applyGravity(deltaTime: deltaTime, gravity: gravity, reverse: reverse)
     }
-    mutating func applyFriction(deltaTime: TimeInterval, frictionCoefficient: CGFloat = PhysicsEngineConstants.defaultFrictionCoefficient) {
+    mutating func applyFriction(deltaTime: TimeInterval,
+                                frictionCoefficient: CGFloat =
+                                PhysicsEngineConstants.defaultFrictionCoefficient) {
         applyFriction(deltaTime: deltaTime, frictionCoefficient: frictionCoefficient)
     }
 }

@@ -17,7 +17,7 @@ struct UnclosableModalView<Content: View>: View {
             Color.black.opacity(0.4)
                 .edgesIgnoringSafeArea(.all)
             content
-                .frame(width: 400, height: 500)
+                .frame(width: 500, height: 500)
                 .background(Color.white)
                 .cornerRadius(12)
                 .shadow(radius: 10)

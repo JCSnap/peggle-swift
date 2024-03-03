@@ -20,7 +20,8 @@ class GameObject: HittableObject, PhysicsObject {
         set { _health = min(max(newValue, 0), 100) }
     }
 
-    init (center: CGPoint, angle: CGFloat = .zero, velocity: CGVector, mass: CGFloat, isStatic: Bool, health: CGFloat = Constants.defaultHealth) {
+    init (center: CGPoint, velocity: CGVector, mass: CGFloat, isStatic: Bool,
+          angle: CGFloat = .zero, health: CGFloat = Constants.defaultHealth) {
         self.center = center
         self.angle = angle
         self.velocity = velocity

@@ -17,7 +17,8 @@ struct GameBoardView: View {
                     .resizable()
                 PegsView(viewModel: viewModel)
                 ObstaclesView(viewModel: viewModel)
-                BallView(radius: viewModel.ball.radius, ballType: viewModel.ball.type)
+                BallView(ballType: viewModel.ball.type,
+                         radius: viewModel.ball.radius)
                     .position(viewModel.ball.center)
                 CannonView()
                     .rotationEffect(.radians(Double(viewModel.cannonAngle)))
@@ -53,19 +54,24 @@ struct PegsView: View {
         ForEach(pegs.indices, id: \.self) { index in
             ZStack {
                 if pegs[index].isGlowing {
-                    PegView(pegType: pegs[index].type, radius: pegs[index].radius,
-                            isGlowing: pegs[index].isGlowing, angle: .radians(pegs[index].angle))
+                    PegView(pegType: pegs[index].type,
+                            isGlowing: pegs[index].isGlowing, radius: pegs[index].radius,
+                            angle: .radians(pegs[index].angle))
                     .position(pegs[index].center)
                     .opacity(pegs[index].isVisible ? 1 : 0)
                     .animation(
                         .easeOut(duration: Constants.defaultAnimationDuration),
                         value: pegs[index].isVisible)
                 } else {
-                    PegView(pegType: pegs[index].type, radius: pegs[index].radius, isGlowing: pegs[index].isGlowing, angle: .radians(pegs[index].angle))
+                    PegView(pegType: pegs[index].type, isGlowing: pegs[index].isGlowing,
+                            radius: pegs[index].radius,
+                            angle: .radians(pegs[index].angle))
                         .position(pegs[index].center)
                 }
                 if viewModel.mostRecentCollisionObject == pegs[index] {
-                    ComputedScoreView(score: viewModel.recentComputedScore, pegRadius: viewModel.pegs[index].radius, scoreSize: viewModel.scoreSize)
+                    ComputedScoreView(score: viewModel.recentComputedScore,
+                                      pegRadius: viewModel.pegs[index].radius,
+                                      scoreSize: viewModel.scoreSize)
                         .position(pegs[index].center)
                 }
                 HealthBarView(health: viewModel.pegs[index].health, pegRadius: viewModel.pegs[index].radius)

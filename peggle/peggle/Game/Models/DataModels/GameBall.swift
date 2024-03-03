@@ -23,7 +23,8 @@ struct GameBall: RoundPhysicsObject {
     }
     var angle: CGFloat = .zero
 
-    init(ball: Ball, velocity: CGVector = Constants.defaultBallVelocity, mass: CGFloat = Constants.defaultBallMass, type: BallType = .normal) {
+    init(ball: Ball, velocity: CGVector = Constants.defaultBallVelocity,
+         mass: CGFloat = Constants.defaultBallMass, type: BallType = .normal) {
         self.ball = ball
         self.type = type
         self.velocity = velocity

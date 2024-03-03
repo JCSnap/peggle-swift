@@ -11,7 +11,7 @@ struct BallView: View {
     let radius: CGFloat
     var ballType: BallType
 
-    init(radius: CGFloat = Constants.defaultAssetRadius, ballType: BallType) {
+    init(ballType: BallType, radius: CGFloat = Constants.defaultAssetRadius) {
         self.radius = radius
         self.ballType = ballType
     }

@@ -47,7 +47,9 @@ class SoundManager {
 
     func playSound(sound: SoundType) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else { return }
+            guard let self = self else {
+                return
+            }
 
             if let player = self.players[sound]?.first(where: { !$0.isPlaying }) {
                 player.play()

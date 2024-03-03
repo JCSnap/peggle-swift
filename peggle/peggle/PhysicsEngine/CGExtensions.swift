@@ -22,7 +22,9 @@ extension CGPoint {
 
     var normalized: CGPoint {
         let length = sqrt(self.x * self.x + self.y * self.y)
-        guard length != 0 else { return CGPoint(x: 0, y: 0) }
+        guard length != 0 else {
+            return CGPoint(x: 0, y: 0)
+        }
         return CGPoint(x: self.x / length, y: self.y / length)
     }
 
@@ -77,6 +79,10 @@ extension CGVector {
 
     static func * (vector: CGVector, scalar: CGFloat) -> CGVector {
         CGVector(dx: vector.dx * scalar, dy: vector.dy * scalar)
+    }
+
+    static func *= (vector: inout CGVector, scalar: CGFloat) {
+        vector = vector * scalar
     }
 
     func dotProduct(with other: CGVector) -> CGFloat {

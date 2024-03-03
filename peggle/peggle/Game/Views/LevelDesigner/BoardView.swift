@@ -21,7 +21,8 @@ struct BoardView: View {
                     let peg = viewModel.pegs[index]
                     let absoluteIndex = viewModel.getIndex(of: peg)
                     let isSelected = absoluteIndex == viewModel.selectedObjectIndex
-                    let pegView = PegView(pegType: peg.type, radius: peg.radius, isGlowing: peg.isGlowing, angle: .radians(peg.angle))
+                    let pegView = PegView(pegType: peg.type, isGlowing: peg.isGlowing,
+                                          radius: peg.radius, angle: .radians(peg.angle))
                     InteractiveView(content: pegView, viewModel: viewModel, object: peg, index: absoluteIndex)
                         .overlay(
                             isSelected ? Rectangle()
@@ -42,7 +43,8 @@ struct BoardView: View {
                             isSelected ? Rectangle()
                                 .stroke(lineWidth: 2)
                                 .foregroundColor(.white)
-                                .frame(width: obstacle.size * Constants.rectangleWidthToHeightRatio, height: obstacle.size)
+                                .frame(width: obstacle.size * Constants.rectangleWidthToHeightRatio,
+                                       height: obstacle.size)
                                 .rotationEffect(.radians(obstacle.angle))
                                 .position(obstacle.center)
                             : nil

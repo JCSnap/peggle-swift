@@ -15,7 +15,8 @@ class Peg: BoardObject {
         radius
     }
 
-    init(center: CGPoint, type: ObjectType.PegType, radius: CGFloat = Constants.defaultAssetRadius, angle: CGFloat = .zero, health: CGFloat = Constants.defaultHealth) {
+    init(center: CGPoint, type: ObjectType.PegType, radius: CGFloat = Constants.defaultAssetRadius,
+         angle: CGFloat = .zero, health: CGFloat = Constants.defaultHealth) {
         self.type = type
         self.radius = radius
         super.init(center: center, angle: angle, health: health)

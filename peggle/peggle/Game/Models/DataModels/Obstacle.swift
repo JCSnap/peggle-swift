@@ -14,17 +14,22 @@ class Obstacle: BoardObject {
         shape.size
     }
 
-    init(center: CGPoint, type: ObjectType.ObstacleType, shape: ObjectShape, size: CGFloat = Constants.rectangleObstacleSize, angle: CGFloat = .zero, health: CGFloat = Constants.defaultHealth) {
+    init(center: CGPoint, type: ObjectType.ObstacleType, shape: ObjectShape,
+         size: CGFloat = Constants.rectangleObstacleSize, angle: CGFloat = .zero,
+         health: CGFloat = Constants.defaultHealth) {
         self.type = type
         self.shape = shape
         super.init(center: center, angle: angle, health: health)
     }
 
-    convenience init(center: CGPoint, type: ObjectType.ObstacleType, size: CGFloat = Constants.rectangleObstacleSize, angle: CGFloat = .zero, health: CGFloat = Constants.defaultHealth) {
+    convenience init(center: CGPoint, type: ObjectType.ObstacleType,
+                     size: CGFloat = Constants.rectangleObstacleSize,
+                     angle: CGFloat = .zero, health: CGFloat = Constants.defaultHealth) {
         let shape: ObjectShape
         switch type {
         case .rectangle:
-            shape = RectangleShape(center: center, angle: angle, width: size * Constants.rectangleWidthToHeightRatio, height: size)
+            shape = RectangleShape(center: center, angle: angle,
+                                   width: size * Constants.rectangleWidthToHeightRatio, height: size)
         case .triangle:
             shape = TriangleShape(center: center, angle: angle)
         case .circle:
@@ -40,7 +45,8 @@ class Obstacle: BoardObject {
         let center = CGPoint(x: x, y: y)
         let typeString = try container.decode(String.self, forKey: .type)
             guard let type = ObjectType.ObstacleType(stringValue: typeString) else {
-                throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "Invalid obstacle type")
+                throw DecodingError.dataCorruptedError(forKey: .type, in: container,
+                                                       debugDescription: "Invalid obstacle type")
             }
         let angle = try container.decode(CGFloat.self, forKey: .angle)
         let health = try container.decode(CGFloat.self, forKey: .health)
@@ -51,9 +57,9 @@ class Obstacle: BoardObject {
         case String(describing: RectangleShape.self):
             shape = try RectangleShape(from: decoder)
         case String(describing: TriangleShape.self):
-            shape = try TriangleShape(from: decoder)
+            shape = try RectangleShape(from: decoder)
         case String(describing: CircleShape.self):
-            shape = try CircleShape(from: decoder)
+            shape = try RectangleShape(from: decoder)
         default:
             shape = try RectangleShape(from: decoder)
         }

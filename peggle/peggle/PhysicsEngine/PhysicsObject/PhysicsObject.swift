@@ -16,7 +16,9 @@ protocol PhysicsObject: WorldPhysicsBehaviour {
 }
 
 extension PhysicsObject {
-    mutating func applyGravity(deltaTime: TimeInterval, gravity: CGFloat = PhysicsEngineConstants.earthGravity, reverse: Bool = false) {
+    mutating func applyGravity(deltaTime: TimeInterval,
+                               gravity: CGFloat = PhysicsEngineConstants.earthGravity,
+                               reverse: Bool = false) {
         if self.isStatic {
             return
         }
@@ -27,11 +29,12 @@ extension PhysicsObject {
         }
     }
 
-    mutating func applyFriction(deltaTime: TimeInterval, frictionCoefficient: CGFloat = PhysicsEngineConstants.defaultFrictionCoefficient) {
+    mutating func applyFriction(deltaTime: TimeInterval,
+                                frictionCoefficient: CGFloat = PhysicsEngineConstants.defaultFrictionCoefficient) {
         if self.isStatic || self.velocity.magnitude == 0 {
             return
         }
-        self.velocity = self.velocity * PhysicsEngineConstants.defaultFrictionCoefficient
+        self.velocity *= PhysicsEngineConstants.defaultFrictionCoefficient
     }
 
     mutating func updateObjectPosition(timeInterval: TimeInterval) {
@@ -53,7 +56,8 @@ extension PhysicsObject {
 
     mutating func applyForceInDirection(force: CGFloat, deltaTime: TimeInterval, direction: CGVector) {
         let accelerationMagnitude = force / mass
-        let accelerationVector = CGVector(dx: direction.dx * accelerationMagnitude, dy: direction.dy * accelerationMagnitude)
+        let accelerationVector = CGVector(dx: direction.dx * accelerationMagnitude,
+                                          dy: direction.dy * accelerationMagnitude)
 
         velocity.dx += accelerationVector.dx * CGFloat(deltaTime)
         velocity.dy += accelerationVector.dy * CGFloat(deltaTime)

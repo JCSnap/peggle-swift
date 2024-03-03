@@ -24,13 +24,15 @@ class GameObstacle: GameObject {
         obstacle.size
     }
 
-    init(obstacle: Obstacle, velocity: CGVector = Constants.defaultObstacleVelocity, mass: CGFloat = Constants.defaultObstacleMass, isStatic: Bool = true) {
+    init(obstacle: Obstacle, velocity: CGVector = Constants.defaultObstacleVelocity,
+         mass: CGFloat = Constants.defaultObstacleMass, isStatic: Bool = true) {
         self.obstacle = obstacle
         super.init(center: obstacle.center, velocity: velocity, mass: mass, isStatic: isStatic, health: obstacle.health)
     }
 
     // factory
-    static func createGameObstacle(from obstacle: Obstacle, velocity: CGVector = Constants.defaultObstacleVelocity, mass: CGFloat = Constants.defaultObstacleMass) -> GameObstacle {
+    static func createGameObstacle(from obstacle: Obstacle, velocity: CGVector = Constants.defaultObstacleVelocity,
+                                   mass: CGFloat = Constants.defaultObstacleMass) -> GameObstacle {
         switch obstacle.type {
         case .rectangle:
             guard let shape = obstacle.shape as? RectangleShape else {
@@ -66,7 +68,8 @@ class GameRectangleObstacle: GameObstacle, RectangularPhysicsObject {
         rectangleShape.height
     }
 
-    init(obstacle: Obstacle, width: CGFloat = Constants.rectangleObstacleSize * Constants.rectangleWidthToHeightRatio, height: CGFloat = Constants.rectangleObstacleSize) {
+    init(obstacle: Obstacle, width: CGFloat = Constants.rectangleObstacleSize * Constants.rectangleWidthToHeightRatio,
+         height: CGFloat = Constants.rectangleObstacleSize) {
         let shape = RectangleShape(center: obstacle.center, angle: obstacle.angle, width: width, height: height)
         obstacle.shape = shape
         super.init(obstacle: obstacle)

@@ -44,7 +44,8 @@ class GameStateManager {
     func initialiseStartStates() {
         ball.isStatic = false
         ball.velocity = .zero
-        ball.applyForceWithAngle(deltaTime: Constants.defaultCannonTimeInterval, radian: cannonAngle, force: Constants.defaultCannonForce)
+        ball.applyForceWithAngle(deltaTime: Constants.defaultCannonTimeInterval,
+                                 radian: cannonAngle, force: Constants.defaultCannonForce)
     }
 
     func initialiseLevelProperties(level: Level) {
@@ -228,7 +229,7 @@ class GameStateManager {
 
     private func resetBallAtStartingPosition() {
         self.ball = GameBall(ball: Ball(center: ScreenPosition.topCenter.point(for: screenBounds)),
-                                velocity: Constants.defaultBallVelocity)
+                             velocity: Constants.defaultBallVelocity)
         self.ball.velocity = .zero
     }
 

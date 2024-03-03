@@ -97,7 +97,8 @@ struct PegSelectionView: View {
                     viewModel.selectObjectType(type: .obstacle(objectType))
                 }) {
                     ObstacleView(type: objectType, size: Constants.rectangleObstacleSize)
-                        .border(viewModel.selectedObjectType == .obstacle(objectType) ? borderColor : Color.clear, width: 3)
+                        .border(viewModel.selectedObjectType == .obstacle(objectType) ?
+                                borderColor : Color.clear, width: 3)
                 }
             }
             Spacer()
@@ -122,11 +123,16 @@ struct EditObjectView: View {
     private var sizeBinding: Binding<CGFloat> {
         Binding<CGFloat>(
             get: {
-                guard !viewModel.objects.isEmpty && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else { return 0 }
+                guard !viewModel.objects.isEmpty
+                        && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else {
+                    return 0
+                }
                 return viewModel.objects[viewModel.selectedObjectIndex].size
             },
             set: {
-                guard viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else { return }
+                guard viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else {
+                    return
+                }
                 viewModel.updateObjectSize(index: viewModel.selectedObjectIndex, newSize: $0)
             }
         )
@@ -134,12 +140,17 @@ struct EditObjectView: View {
     private var angleBinding: Binding<CGFloat> {
         Binding<CGFloat>(
             get: {
-                guard !viewModel.objects.isEmpty && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else { return 0 }
+                guard !viewModel.objects.isEmpty
+                        && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else {
+                    return 0
+                }
                 let angleInDegree = viewModel.objects[viewModel.selectedObjectIndex].angle * 180 / .pi
                 return angleInDegree
             },
             set: {
-                guard viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else { return }
+                guard viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else {
+                    return
+                }
                 viewModel.updateObjectAngle(index: viewModel.selectedObjectIndex, newAngleInDegree: $0)
             }
         )
@@ -147,12 +158,17 @@ struct EditObjectView: View {
     private var healthBinding: Binding<CGFloat> {
         Binding<CGFloat>(
             get: {
-                guard !viewModel.objects.isEmpty && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else { return 0 }
+                guard !viewModel.objects.isEmpty
+                        && viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else {
+                    return 0
+                }
                 let health = viewModel.objects[viewModel.selectedObjectIndex].health
                 return health
             },
             set: {
-                guard viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else { return }
+                guard viewModel.objects.indices.contains(viewModel.selectedObjectIndex) else {
+                    return
+                }
                 viewModel.updateObjectHealth(index: viewModel.selectedObjectIndex, newHealth: $0)
             }
         )

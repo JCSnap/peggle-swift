@@ -30,7 +30,9 @@ struct Board {
     }
 
     mutating func updateObjectPosition(index: Int, newPoint: CGPoint) {
-        guard index < objects.count else { return }
+        guard index < objects.count else {
+            return
+        }
         let oldObject = objects[index]
         let newObject = createNewObject(at: newPoint, from: oldObject)
 
@@ -40,7 +42,9 @@ struct Board {
     }
 
     mutating func updateObjectSize(index: Int, newSize: CGFloat) {
-        guard index < objects.count else { return }
+        guard index < objects.count else {
+            return
+        }
         let objectToEdit = objects[index]
         if newSize <= objectToEdit.size {
             objectToEdit.updateSize(to: newSize)
@@ -52,7 +56,9 @@ struct Board {
     }
 
     mutating func updateObjectAngle(index: Int, newAngleInDegree: CGFloat) {
-        guard index < objects.count else { return }
+        guard index < objects.count else {
+            return
+        }
         let objectToEdit = objects[index]
         let oldAngle = objectToEdit.angle
         let newAngleInRadian = newAngleInDegree * .pi / 180
@@ -63,7 +69,9 @@ struct Board {
     }
 
     mutating func updateObjectHealth(index: Int, newHealth: CGFloat) {
-        guard index < objects.count else { return }
+        guard index < objects.count else {
+            return
+        }
         let objectToEdit = objects[index]
         objectToEdit.updateHealth(to: newHealth)
     }
@@ -130,7 +138,9 @@ extension Board: Hashable & Codable {
                 let obstacle = try objectsArray.decode(Obstacle.self)
                 objects.append(obstacle)
             default:
-                throw DecodingError.dataCorruptedError(forKey: .type, in: objectContainer, debugDescription: "Unknown type")
+                throw DecodingError.dataCorruptedError(forKey: .type,
+                                                       in: objectContainer,
+                                                       debugDescription: "Unknown type")
             }
         }
 

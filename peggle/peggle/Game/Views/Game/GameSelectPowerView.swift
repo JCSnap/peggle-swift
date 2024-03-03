@@ -12,67 +12,59 @@ struct GameSelectPowerView: View {
     var viewModel: GameSelectPowerViewDelegate
     @State private var selectedPowerType: PowerType = .exploding
 
+    private let powerTypes: [PowerType] = [.exploding, .spookyBall, .reverseGravity, .poop]
+    private let powerTypeDisplayNames: [PowerType: String] = [
+        .exploding: "Exploding",
+        .spookyBall: "Spooky Ball",
+        .reverseGravity: "Reverse Gravity",
+        .poop: "Poop"
+    ]
+    
     var body: some View {
+        
         VStack {
             MainText(text: "Select Your Power", size: 50, color: .black)
-            VStack {
-                HStack {
-                    Button(action: {
-                        selectedPowerType = .exploding
+            HStack {
+                ForEach(powerTypes, id: \.self) { powerType in
+                    PowerSelectionButton(powerType: powerType,
+                                         isSelected: selectedPowerType == powerType, action: {
+                        selectedPowerType = powerType
                         viewModel.playSound(sound: .select)
-                    }) {
-                        VStack {
-                            PowerView(powerType: .exploding)
-                            MainText(text: "EXPLODING", size: 15, color: .black)
-                        }
-                    }
-                    .border(selectedPowerType == .exploding ? Color.blue : Color.clear, width: 5)
-                    Button(action: {
-                        selectedPowerType = .spookyBall
-                        viewModel.playSound(sound: .select)
-                    }) {
-                        VStack {
-                            PowerView(powerType: .spookyBall)
-                            MainText(text: "SPOOKYBALL", size: 15, color: .black)
-                        }
-                    }
-                    .border(selectedPowerType == .spookyBall ? Color.blue : Color.clear, width: 5)
-                    Button(action: {
-                        selectedPowerType = .reverseGravity
-                        viewModel.playSound(sound: .select)
-                    }) {
-                        VStack {
-                            PowerView(powerType: .reverseGravity)
-                            MainText(text: "REVERSE GRAVITY", size: 15, color: .black)
-                        }
-                    }
-                    .border(selectedPowerType == .reverseGravity ? Color.blue : Color.clear, width: 5)
-                }
-                HStack {
-                    Button(action: {
-                        selectedPowerType = .poop
-                        viewModel.playSound(sound: .select)
-                    }) {
-                        VStack {
-                            PowerView(powerType: .poop)
-                            MainText(text: "POOP", size: 15, color: .black)
-                        }
-                    }
-                    .border(selectedPowerType == .poop ? Color.blue : Color.clear, width: 5)
+                    }, displayName: powerTypeDisplayNames[powerType] ?? "")
                 }
             }
-            Button(action: {
-                isPowerSelected = true
-                viewModel.playSound(sound: .interface)
-                viewModel.selectPowerType(selectedPowerType)
-            }) {
+            Button(action: confirmSelection) {
                 MainText(text: "OK", size: 50, color: .blue)
             }
         }
     }
+    
+    private func confirmSelection() {
+        isPowerSelected = true
+        viewModel.playSound(sound: .interface)
+        viewModel.selectPowerType(selectedPowerType)
+    }
 }
 
-protocol GameSelectPowerViewDelegate {
+
+struct PowerSelectionButton: View {
+    var powerType: PowerType
+    var isSelected: Bool
+    var action: () -> Void
+    var displayName: String
+    
+    var body: some View {
+        Button(action: action) {
+            VStack {
+                PowerView(powerType: powerType)
+                MainText(text: displayName, size: 15, color: .black)
+            }
+        }
+        .border(isSelected ? Color.blue : Color.clear, width: 5)
+    }
+}
+
+protocol GameSelectPowerViewDelegate: AnyObject {
     func playSound(sound: SoundType)
     func selectPowerType(_ type: PowerType)
 }

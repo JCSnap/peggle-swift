@@ -85,7 +85,9 @@ class RectangleShape: ObjectShape {
         }
     }
 
-    init(center: CGPoint, angle: CGFloat, width: CGFloat = Constants.rectangleObstacleSize * Constants.rectangleWidthToHeightRatio, height: CGFloat = Constants.rectangleObstacleSize) {
+    init(center: CGPoint, angle: CGFloat,
+         width: CGFloat = Constants.rectangleObstacleSize * Constants.rectangleWidthToHeightRatio,
+         height: CGFloat = Constants.rectangleObstacleSize) {
         self.width = width
         self.height = height
         super.init(center: center, angle: angle)
@@ -202,10 +204,10 @@ class RectangleShape: ObjectShape {
     func union(axes1: [CGPoint], axes2: [CGPoint]) -> [CGPoint] {
         var combinedAxes = axes1
 
-        for axis in axes2 {
-            if !combinedAxes.contains(where: { $0.isAlmostEqual(to: axis) }) {
-                combinedAxes.append(axis)
-            }
+        axes2.filter { axis in
+            !combinedAxes.contains(where: { $0.isAlmostEqual(to: axis) })
+        }.forEach { axis in
+            combinedAxes.append(axis)
         }
 
         return combinedAxes
@@ -228,6 +230,7 @@ class CircleShape: ObjectShape {
         super.init(center: center, angle: angle)
     }
 
+    @available(*, unavailable, message: "This initializer cannot be used.")
     required init(from decoder: Decoder) throws {
         fatalError("init(from:) has not been implemented")
     }

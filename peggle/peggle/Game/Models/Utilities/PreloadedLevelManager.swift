@@ -67,9 +67,11 @@ class PreloadedLevelManager {
         var board = Board(withSize: bounds.size)
         var objects: [BoardObject] = []
         objects.append(contentsOf: createHorizontalLineOfAlternatingBlueAndOrangePegs(count: 12, atY: 150.0))
-        objects.append(contentsOf: createHorizontalLineOfAlternatingBlueAndOrangePegs(count: 12, atY: 300.0, blueStart: false))
+        objects.append(contentsOf:
+                        createHorizontalLineOfAlternatingBlueAndOrangePegs(count: 12, atY: 300.0, blueStart: false))
         objects.append(contentsOf: createHorizontalLineOfAlternatingBlueAndOrangePegs(count: 12, atY: 450.0))
-        objects.append(contentsOf: createHorizontalLineOfAlternatingBlueAndOrangePegs(count: 12, atY: 600.0, blueStart: false))
+        objects.append(contentsOf:
+                        createHorizontalLineOfAlternatingBlueAndOrangePegs(count: 12, atY: 600.0, blueStart: false))
         board.objects = objects
         return Level(name: levelName, board: board)
     }
@@ -106,7 +108,9 @@ class PreloadedLevelManager {
         return objects
     }
 
-    private func createHorizontalLineOfAlternatingBlueAndOrangePegs(count: Int, atY: CGFloat, blueStart: Bool = true) -> [BoardObject] {
+    private func createHorizontalLineOfAlternatingBlueAndOrangePegs(count: Int,
+                                                                    atY: CGFloat,
+                                                                    blueStart: Bool = true) -> [BoardObject] {
         let pegRadius = bounds.size.width / CGFloat(count) / 2.0
         if atY > bounds.size.width - pegRadius {
             return []
@@ -165,13 +169,17 @@ class PreloadedLevelManager {
             let center = CGPoint(x: xPosition, y: yPosition)
             var peg: Peg
             if typeIndex == 0 {
-                peg = Peg(center: center, type: .normal, radius: sizes[i], angle: angles[i], health: CGFloat(healths[i]))
+                peg = Peg(center: center, type: .normal, radius: sizes[i],
+                          angle: angles[i], health: CGFloat(healths[i]))
             } else if typeIndex == 1 {
-                peg = Peg(center: center, type: .scoring, radius: sizes[i], angle: angles[i], health: CGFloat(healths[i]))
+                peg = Peg(center: center, type: .scoring, radius: sizes[i],
+                          angle: angles[i], health: CGFloat(healths[i]))
             } else if typeIndex == 2 {
-                peg = Peg(center: center, type: .stubborn, radius: sizes[i], angle: angles[i], health: CGFloat(healths[i]))
+                peg = Peg(center: center, type: .stubborn, radius: sizes[i],
+                          angle: angles[i], health: CGFloat(healths[i]))
             } else {
-                peg = Peg(center: center, type: .exploding, radius: sizes[i], angle: angles[i], health: CGFloat(healths[i]))
+                peg = Peg(center: center, type: .exploding, radius: sizes[i],
+                          angle: angles[i], health: CGFloat(healths[i]))
             }
             pegs.append(peg)
         }

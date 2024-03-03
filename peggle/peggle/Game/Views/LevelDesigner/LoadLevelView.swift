@@ -34,10 +34,7 @@ struct LoadLevelView: View {
                                 }) {
                                     Text(levelName)
                                         .foregroundColor(.black)
-                                        .padding()
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                        .background(Color.white)
-                                        .cornerRadius(8)
                                 }
                                 if !viewModel.preloadedLevelNames.contains(levelName) {
                                     Button(action: {

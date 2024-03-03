@@ -186,15 +186,18 @@ class GameVm:
     }
     // a peg is to "stuck-causing" if its collision count is greater than an arbitrary threshold
     private func checkAndHandleBallStuck() {
-        let isBallStuck = self.objects.contains(where: { $0.collisionCount > Constants.collisionThresholdToBeConsideredStuck })
+        let isBallStuck = self.objects
+            .contains(where: { $0.collisionCount > Constants.collisionThresholdToBeConsideredStuck })
 
         if isBallStuck {
-            self.gameStateManager.removeObjectsPrematurelyWith(collisionsMoreThan: Constants.collisionThresholdToBeConsideredStuck)
+            self.gameStateManager
+                .removeObjectsPrematurelyWith(collisionsMoreThan: Constants.collisionThresholdToBeConsideredStuck)
         }
     }
 
     private func checkAndHandleBallExit() {
-        let isBallExitingScreen = ball.isObjectCollidingWithBoundarySide(bounds: self.screenBounds, side: .bottom)
+        let isBallExitingScreen = ball
+            .isObjectCollidingWithBoundarySide(bounds: self.screenBounds, side: .bottom)
 
         if isBallExitingScreen {
             self.gameStateManager.handleBallExitScreen()
@@ -231,52 +234,6 @@ class GameVm:
     private func handleCollisionWithBucket() {
         if ball.isColliding(with: bucket) {
             ball.handleCollision(with: &bucket)
-        }
-    }
-
-    private func handleCollisionsBetweenBallAndObjects() {
-        let objects = self.objects
-        for object in objects {
-            if var peg = object as? GamePeg {
-                if self.ball.isColliding(with: peg) {
-                    playSound(sound: .bounce)
-                    peg.effectWhenHit(gameStateManager: self.gameStateManager)
-                    self.ball.handleCollision(with: &peg)
-                    self.mostRecentCollisionObject = peg
-                }
-            } else if var rectangleObstacle = object as? GameRectangleObstacle {
-                if self.ball.isColliding(with: rectangleObstacle) {
-                    rectangleObstacle.effectWhenHit(gameStateManager: self.gameStateManager)
-                    playSound(sound: .bounce)
-                    self.ball.handleCollision(with: &rectangleObstacle)
-                }
-            }
-        }
-    }
-
-    private func handleCollisionsBetweenObjectsAndObjects() {
-        let objects = self.objects
-        for i in 0..<objects.count {
-            for j in (i + 1)..<objects.count {
-                if var peg1 = self.objects[i] as? GamePeg, var peg2 = self.objects[j] as? GamePeg, peg1.isColliding(with: peg2) {
-                    peg1.handleCollision(with: &peg2)
-                    playSound(sound: .bounce)
-                    self.objects[i] = peg1
-                    self.objects[j] = peg2
-                } else if var peg = self.objects[i] as? GamePeg, var obstacle = self.objects[j] as? GameRectangleObstacle, peg.isColliding(with: obstacle) {
-                    if !peg.isStatic {
-                        peg.handleCollision(with: &obstacle)
-                        playSound(sound: .bounce)
-                        self.objects[i] = peg
-                        self.objects[j] = obstacle
-                    }
-                } else if var obstacle = self.objects[i] as? GameRectangleObstacle, var peg = self.objects[j] as? GamePeg, obstacle.isColliding(with: peg) {
-                    obstacle.handleCollision(with: &peg)
-                    playSound(sound: .bounce)
-                    self.objects[i] = obstacle
-                    self.objects[j] = peg
-                }
-            }
         }
     }
 
@@ -325,6 +282,58 @@ class GameVm:
 
     deinit {
         timerManager.invalidateTimer()
+    }
+}
+
+extension GameVm {
+    private func handleCollisionsBetweenBallAndObjects() {
+        let objects = self.objects
+        for object in objects {
+            if var peg = object as? GamePeg {
+                if self.ball.isColliding(with: peg) {
+                    playSound(sound: .bounce)
+                    peg.effectWhenHit(gameStateManager: self.gameStateManager)
+                    self.ball.handleCollision(with: &peg)
+                    self.mostRecentCollisionObject = peg
+                }
+            } else if var rectangleObstacle = object as? GameRectangleObstacle {
+                if self.ball.isColliding(with: rectangleObstacle) {
+                    rectangleObstacle.effectWhenHit(gameStateManager: self.gameStateManager)
+                    playSound(sound: .bounce)
+                    self.ball.handleCollision(with: &rectangleObstacle)
+                }
+            }
+        }
+    }
+
+    private func handleCollisionsBetweenObjectsAndObjects() {
+        let objects = self.objects
+        for i in 0..<objects.count {
+            for j in (i + 1)..<objects.count {
+                if var peg1 = self.objects[i] as? GamePeg, var peg2 = self.objects[j] as? GamePeg,
+                   peg1.isColliding(with: peg2) {
+                    peg1.handleCollision(with: &peg2)
+                    playSound(sound: .bounce)
+                    self.objects[i] = peg1
+                    self.objects[j] = peg2
+                } else if var peg = self.objects[i] as? GamePeg,
+                          var obstacle = self.objects[j] as? GameRectangleObstacle,
+                          peg.isColliding(with: obstacle) {
+                    if !peg.isStatic {
+                        peg.handleCollision(with: &obstacle)
+                        playSound(sound: .bounce)
+                        self.objects[i] = peg
+                        self.objects[j] = obstacle
+                    }
+                } else if var obstacle = self.objects[i] as? GameRectangleObstacle,
+                          var peg = self.objects[j] as? GamePeg, obstacle.isColliding(with: peg) {
+                    obstacle.handleCollision(with: &peg)
+                    playSound(sound: .bounce)
+                    self.objects[i] = obstacle
+                    self.objects[j] = peg
+                }
+            }
+        }
     }
 }
 

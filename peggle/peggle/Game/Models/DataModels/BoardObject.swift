@@ -35,7 +35,7 @@ class BoardObject: Hashable {
         hasher.combine(center)
     }
 
-    static func ==(lhs: BoardObject, rhs: BoardObject) -> Bool {
+    static func == (lhs: BoardObject, rhs: BoardObject) -> Bool {
         lhs.center == rhs.center
     }
 
