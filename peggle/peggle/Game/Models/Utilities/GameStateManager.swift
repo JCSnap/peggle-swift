@@ -165,9 +165,11 @@ class GameStateManager {
     }
     
     func createEffectWhereBallWillNotLeaveScreen() {
+        ball.type = .spooky
         self.allowBallExitToInterruptPlayAndRemovePegs = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.allowBallExitToInterruptPlayAndRemovePegs = true
+            self.ball.type = .normal
         }
     }
     
@@ -193,7 +195,7 @@ class GameStateManager {
         let positionToReappear = CGPoint(x: ball.center.x, y: 10)
         // to prevent ball from accelerating too much
         let newVelocity = CGVector(dx: ball.velocity.dx / 2, dy: 0)
-        self.ball = GameBall(ball: Ball(center: positionToReappear), velocity: newVelocity)
+        self.ball = GameBall(ball: Ball(center: positionToReappear), velocity: newVelocity, type: ball.type)
     }
     
     private func stopBallAndRepositionBallConditionallyBasedOnBallCount() {

@@ -23,9 +23,9 @@ struct GameBall: RoundPhysicsObject {
     }
     var angle: CGFloat = .zero
 
-    init(ball: Ball, velocity: CGVector = Constants.defaultBallVelocity, mass: CGFloat = Constants.defaultBallMass) {
+    init(ball: Ball, velocity: CGVector = Constants.defaultBallVelocity, mass: CGFloat = Constants.defaultBallMass, type: BallType = .normal) {
         self.ball = ball
-        self.type = .normal
+        self.type = type
         self.velocity = velocity
         self.isStatic = false
         if mass <= 0 {
@@ -37,5 +37,5 @@ struct GameBall: RoundPhysicsObject {
 }
 
 enum BallType {
-    case normal, poop
+    case normal, poop, spooky
 }

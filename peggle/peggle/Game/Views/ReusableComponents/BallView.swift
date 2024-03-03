@@ -26,7 +26,8 @@ struct BallView: View {
     private var ballImage: String {
         let imageNames: [BallType: String] = [
             .normal: "ball",
-            .poop: "poop-power"
+            .poop: "poop-power",
+            .spooky: "spooky-ball-power"
         ]
         return imageNames[ballType] ?? "ball"
     }
